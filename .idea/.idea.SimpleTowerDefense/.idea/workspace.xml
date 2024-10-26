@@ -10,33 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e6f734c9-125e-4fe6-bb4a-c0c65e477346" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Enemies/SimpleEnemy.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Other/GroundActor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/SimpleDayNightActor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Tower/Tower.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TimeManager.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/ObserverPattern/Observer.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/ObserverPattern/Publisher.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Settings/GameSettings.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Utils/MyDebugUtils.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Utils/StopWatch.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Enemies/SimpleEnemy.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Other/GroundActor.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/SimpleDayNightActor.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Tower/Tower.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Managers/TimeManager.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/ObserverPattern/Observer.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/ObserverPattern/Publisher.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Settings/GameSettings.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Utils/MyDebugUtils.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Utils/MyEnums.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Utils/StopWatch.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleTowerDefense/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Enemies/EnemyPool/EnemyPool.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Enemies/EnemySpawner.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Enemies/EnemyPool/EnemyPool.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Enemies/EnemySpawner.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleTowerDefense/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleTowerDefense/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Enemies/BP_SimpleEnemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Enemies/BP_SimpleEnemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Player/BP_Tower.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Player/BP_Tower.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/MAP_Game.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/MAP_Game.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/MAT_SimpleUnlit.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/MAT_SimpleUnlit.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Enemies/SimpleEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Enemies/SimpleEnemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/SimpleDayNightActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/SimpleDayNightActor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Tower/Tower.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Tower/Tower.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TimeManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TimeManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TowerWorldManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TowerWorldManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Enemies/SimpleEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Enemies/SimpleEnemy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/SimpleDayNightActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/SimpleDayNightActor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Tower/Tower.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Tower/Tower.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Managers/TowerWorldManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Managers/TowerWorldManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Settings/GameSettings.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Settings/GameSettings.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/SimpleTowerDefense.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/SimpleTowerDefense.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,36 +72,98 @@
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://20" root0="SKIP_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2nvg3T1LttDsSIjhMfb4Ff7ZSAK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ Project.SimpleTowerDefense.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ Project.SimpleTowerDefense.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\carlos.chamizo\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\carlos.chamizo\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\carlos.chamizo\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\carlos.chamizo\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\carlos.chamizo\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\carlos.chamizo\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ Project.SimpleTowerDefense">
     <configuration name="SimpleTowerDefense" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -218,6 +272,7 @@
       <option name="presentableId" value="Default" />
       <updated>1729858764158</updated>
       <workItem from="1729858765473" duration="6779000" />
+      <workItem from="1729937508808" duration="14213000" />
     </task>
     <servers />
   </component>
@@ -226,21 +281,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TimeManager.cpp</url>
-          <line>36</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TimeManager.cpp</url>
-          <line>46</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

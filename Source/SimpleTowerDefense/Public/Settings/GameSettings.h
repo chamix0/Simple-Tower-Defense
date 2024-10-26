@@ -16,9 +16,11 @@ class SIMPLETOWERDEFENSE_API UGameSettings : public UDeveloperSettings
 
 public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "General",meta = (DisplayName = "Time of a day in seconds"))
-	float DayLenght = 10.f;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "General",meta = (DisplayName = "Max enemy health"))
-	int MaxEnemyHealth = 10.f;
-
+	float DayLength = 10.f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies",meta = (DisplayName = "Max enemy health"))
+	int MaxEnemyHealth = 20.f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies",meta = (DisplayName = "Max enemy Scale"))
+	float MaxEnemyScale = 0.5f;
+	
 	UGameSettings();
 };

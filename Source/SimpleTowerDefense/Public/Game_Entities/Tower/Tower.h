@@ -15,7 +15,6 @@ class SIMPLETOWERDEFENSE_API ATower : public ASimpleDayNightActor
 	GENERATED_BODY()
 
 private:
-
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* m_TowerMesh = nullptr;
 
@@ -30,4 +29,14 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	// Name this function however you want
+	UFUNCTION()
+	void OnTowerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+	                    const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnTowerEndOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor,
+	                       class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };

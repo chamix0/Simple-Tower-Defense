@@ -31,13 +31,13 @@ void ATimeManager::Tick(float DeltaTime)
 	m_dayStopwatch.ReceiveTick(DeltaTime);
 
 	//see if its half day
-	if (m_dayStopwatch.GetElapsedSeconds() > GetDefault<UGameSettings>()->DayLenght / 2.f && !halfDayReached)
+	if (m_dayStopwatch.GetElapsedSeconds() > GetDefault<UGameSettings>()->DayLength / 2.f && !halfDayReached)
 	{
 		halfDayReached = true;
 		m_towerWorldManager->StartNight();
 	}
 
-	if (m_dayStopwatch.GetElapsedSeconds() > GetDefault<UGameSettings>()->DayLenght)
+	if (m_dayStopwatch.GetElapsedSeconds() > GetDefault<UGameSettings>()->DayLength)
 	{
 		//start day
 		m_towerWorldManager->StartDay();
