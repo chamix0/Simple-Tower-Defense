@@ -3,6 +3,8 @@
 
 #include "Game_Entities/SimpleDayNightActor.h"
 
+#include "Managers/TowerWorldManager.h"
+
 
 // Sets default values
 ASimpleDayNightActor::ASimpleDayNightActor()
@@ -21,7 +23,7 @@ void ASimpleDayNightActor::BeginPlay()
 	m_towerWorldManager->Subscribe(this);
 
 	//initialize color
-	m_targetColor = m_dayColor;
+	m_targetColor = m_towerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
 	m_currentColor = m_targetColor;
 }
 
@@ -43,6 +45,5 @@ void ASimpleDayNightActor::update(const UTowerEvent event)
 	else if (event == UTowerEvent::IS_DAY)
 	{
 		m_targetColor = m_dayColor;
-	}	
+	}
 }
-

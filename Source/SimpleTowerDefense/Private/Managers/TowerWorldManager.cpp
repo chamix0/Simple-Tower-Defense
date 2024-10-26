@@ -15,7 +15,7 @@ void UTowerWorldManager::Deinitialize()
 	Super::Deinitialize();
 }
 
-bool UTowerWorldManager::GetIsNight() const
+bool UTowerWorldManager::GetIsDay() const
 {
 	return m_isDay;
 }
@@ -48,4 +48,9 @@ void UTowerWorldManager::AddDay()
 {
 	m_numDays++;
 	//maybe call a ui notification
+}
+
+FEnemyPool& UTowerWorldManager::GetEnemyPool() 
+{
+	return m_enemyPool;
 }

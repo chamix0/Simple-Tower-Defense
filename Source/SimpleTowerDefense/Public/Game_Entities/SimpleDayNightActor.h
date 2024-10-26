@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Managers/TowerWorldManager.h"
+#include "ObserverPattern/Observer.h"
 #include "SimpleDayNightActor.generated.h"
+
+
+class UTowerWorldManager;
 
 UCLASS()
 class SIMPLETOWERDEFENSE_API ASimpleDayNightActor : public AActor, public Observer

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Game_Entities/Enemies/EnemyPool/EnemyPool.h"
 #include "ObserverPattern/Publisher.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "TowerWorldManager.generated.h"
@@ -20,12 +21,14 @@ class SIMPLETOWERDEFENSE_API UTowerWorldManager : public UWorldSubsystem, public
 private:
 	bool m_isDay = true;
 	int m_numDays;
+	UPROPERTY()
+	FEnemyPool m_enemyPool;
 
 public:
-	bool GetIsNight() const;
+	bool GetIsDay() const;
 	void StartNight();
 	void StartDay();
 	int GetNumDays();
 	void AddDay();
-
+	FEnemyPool& GetEnemyPool();
 };
