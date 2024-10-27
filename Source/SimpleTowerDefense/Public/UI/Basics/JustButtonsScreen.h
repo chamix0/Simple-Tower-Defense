@@ -28,15 +28,7 @@ protected:
 	//current button index
 	int buttonIndex = 0;
 
-	//input method using
-	bool isUsingGamepad = false;
 
-	UPROPERTY(EditAnywhere)
-	UForceFeedbackEffect* ChangeOptionFeedback = nullptr;
-	UPROPERTY(EditAnywhere)
-	UForceFeedbackEffect* ConfirmOptionFeedback = nullptr;
-	UPROPERTY(EditAnywhere)
-	UForceFeedbackEffect* CancelOptionFeedback = nullptr;
 
 public:
 	/// Called when the widget is activated
@@ -68,9 +60,6 @@ protected:
 	virtual void HandleSelectAction();
 	UFUNCTION(BlueprintCallable)
 	virtual void HandleReturnAction();
-
-	//input method changed
-	UFUNCTION()
-	virtual void InputMethodChanged(bool isGamepad);
+	
 	void UpdateSelectedButton(int index);
 };

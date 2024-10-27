@@ -13,7 +13,7 @@ void USimpleTextWidget::Hide()
 	SetVisibility(ESlateVisibility::Collapsed);
 }
 
-void USimpleTextWidget::SetText(FText body)
+void USimpleTextWidget::SetText(FText body, bool highlighted)
 {
 	//set the current text to write but being parsed on the first place to make the writing easier
 	currentText = body.ToString();
@@ -26,17 +26,20 @@ void USimpleTextWidget::SetText(FText body)
 	StopWatch.Start();
 	StopWatch.AddElapsedTime(1);
 
-	//event of start writting text
-	OnTextStartsWritting();
+	//set highlighted
+	m_highlighted = highlighted;
 }
 
-void USimpleTextWidget::SetTextDirectly(FText body)
+void USimpleTextWidget::SetTextDirectly(FText body, bool highlighted)
 {
 	//start writing
 	SetText(body);
 
 	//complete the writing
 	FastForwardText();
+
+	//set highlighted
+	m_highlighted = highlighted;
 }
 
 bool USimpleTextWidget::IsWrittingText()
@@ -51,12 +54,6 @@ void USimpleTextWidget::FastForwardText()
 
 	//set the full text
 	m_TextBlock->SetText(FText().FromString(currentText));
-
-	//call fast forwad event
-	OnTextFastForward();
-
-	//call fast forward event
-	OnTextEndsWritting();
 }
 
 void USimpleTextWidget::SetTimePerCharacter(float value)
@@ -69,6 +66,33 @@ void USimpleTextWidget::SetCharctersPerUpdate(int value)
 	charactersPerUpdate = value;
 }
 
+void USimpleTextWidget::SetHighlighted(bool value)
+{
+	m_highlighted = value;
+}
+
+
+void USimpleTextWidget::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+	//get game manager
+	m_TowerWorldManager = GetWorld()->GetSubsystem<UTowerWorldManager>();
+	if (m_TowerWorldManager != nullptr)
+	{
+		//subscribe to world manager
+		m_TowerWorldManager->Subscribe(this);
+
+		//initialize colors
+		m_targetColor = m_TowerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
+		m_currentColor = m_targetColor;
+	}
+	else
+	{
+		//initialize colors
+		m_targetColor = m_dayColor;
+		m_currentColor = m_targetColor;
+	}
+}
 
 void USimpleTextWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
@@ -79,6 +103,15 @@ void USimpleTextWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTim
 
 	//write text
 	WriteText();
+
+	//update colors
+	FLinearColor finalColor = m_targetColor;
+	if (m_highlighted)
+	{
+		finalColor = m_targetColor == m_dayColor ? m_nightColor : m_dayColor;
+	}
+	m_currentColor = FMath::CInterpTo(m_currentColor, finalColor, InDeltaTime, m_ColorChangeSpeed);
+	m_TextBlock->SetColorAndOpacity(m_currentColor);
 }
 
 
@@ -121,10 +154,20 @@ void USimpleTextWidget::WriteText()
 				//complete the text
 				FastForwardText();
 
-				//call completed event
-				OnTextEndsWritting();
 				return;
 			}
 		}
+	}
+}
+
+void USimpleTextWidget::update(const UTowerEvent event)
+{
+	if (event == UTowerEvent::IS_NIGHT)
+	{
+		m_targetColor = m_nightColor;
+	}
+	else if (event == UTowerEvent::IS_DAY)
+	{
+		m_targetColor = m_dayColor;
 	}
 }

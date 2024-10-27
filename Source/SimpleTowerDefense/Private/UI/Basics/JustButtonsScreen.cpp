@@ -92,10 +92,7 @@ void UJustButtonsScreen::DeleteAllButtons()
 }
 
 
-void UJustButtonsScreen::InputMethodChanged(bool isGamepad)
-{
-	isUsingGamepad = isGamepad;
-}
+
 
 void UJustButtonsScreen::UpdateSelectedButton(int index)
 {

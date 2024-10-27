@@ -5,14 +5,17 @@
 #include "CoreMinimal.h"
 #include "CommonUserWidget.h"
 #include "Components/TextBlock.h"
+#include "Managers/TowerWorldManager.h"
 #include "Utils/StopWatch.h"
+#include "CommonActionWidget.h"
+
 #include "SimpleTextWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SIMPLETOWERDEFENSE_API USimpleTextWidget : public UCommonUserWidget
+class SIMPLETOWERDEFENSE_API USimpleTextWidget : public UCommonUserWidget, public Observer
 {
 	GENERATED_BODY()
 
@@ -29,12 +32,27 @@ class SIMPLETOWERDEFENSE_API USimpleTextWidget : public UCommonUserWidget
 	UPROPERTY(EditAnywhere, meta=(UIMin=0, UIMax=10))
 	int charactersPerUpdate = 2;
 
-
 	//values
 	int currentIndex = 0;
 	FString currentText = "";
 	FString textBuffer;
 	FStopWatch StopWatch;
+	bool m_highlighted = false;
+	
+
+	//colors
+	UPROPERTY(EditAnywhere)
+	FColor m_dayColor = FColor::White;
+	UPROPERTY(EditAnywhere)
+	FColor m_nightColor = FColor::Black;
+	FLinearColor m_currentColor;
+	FLinearColor m_targetColor;
+	UPROPERTY(EditAnywhere)
+	float m_ColorChangeSpeed = 5.f;
+
+	//tower world entity
+	UPROPERTY()
+	UTowerWorldManager* m_TowerWorldManager = nullptr;
 
 public:
 	/// show the text
@@ -44,11 +62,11 @@ public:
 	/// start writting a text
 	/// @param body text to write
 	/// @param style style to use for all the text
-	void SetText(FText body);
+	void SetText(FText body, bool highlighted = false);
 	/// Write a text directly
 	/// @param body text to write
 	/// @param style style to use for all the text
-	void SetTextDirectly(FText body);
+	void SetTextDirectly(FText body, bool highlighted = false);
 	/// checck if is writting a text
 	/// @return 
 	bool IsWrittingText();
@@ -58,17 +76,13 @@ public:
 	void SetTimePerCharacter(float value);
 	//set charcters per update
 	void SetCharctersPerUpdate(int value);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnTextStartsWritting();
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnTextEndsWritting();
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnTextFastForward();
+	void SetHighlighted(bool value);
 
 protected:
+	virtual void NativeOnInitialized() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 private:
 	void WriteText();
+	virtual void update(const UTowerEvent event) override;
 };

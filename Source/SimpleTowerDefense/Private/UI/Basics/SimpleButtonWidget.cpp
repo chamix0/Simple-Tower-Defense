@@ -7,7 +7,6 @@
 #include "Components/Image.h"
 #include "Components/SizeBox.h"
 #include "Kismet/GameplayStatics.h"
-#include "Settings/GameSettings.h"
 #include "UI/Basics/SimpleTextWidget.h"
 #include "Utils/MathUtils.h"
 
@@ -15,28 +14,16 @@ void USimpleButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 
-	//current position
-	float currentX = GetRenderTransform().Translation.X;
 
-	//update position
-	SetRenderTranslation(FVector2D(FMath::FInterpTo(currentX, m_visible ? m_offset : -1, InDeltaTime,5), 0));
-	
-	//update alpha
-	m_fading
-		? SetRenderOpacity(FMath::FInterpTo(GetRenderOpacity(), 0.f, InDeltaTime,5))
-		: SetRenderOpacity(FMath::Min(MathUtils::NormalizeBetweenValues(currentX, 0, m_offset), m_MaxAlpha));
-
-	//hide widget
-	if ((currentX < 0 && !m_visible) || GetRenderOpacity() <= 0.05f && m_fading)
+	//update colors
+	FLinearColor finalColor = m_targetColor;
+	if (m_highlighted)
 	{
-		if (m_fading)
-		{
-			SetVisibility(ESlateVisibility::Collapsed);
-		}
-		
-		//reset all the values
-		Reset();
+		finalColor = m_targetColor == m_dayColor ? m_nightColor : m_dayColor;
 	}
+	m_currentColor = FMath::CInterpTo(m_currentColor, finalColor, InDeltaTime, m_ColorChangeSpeed);
+	m_background->SetColorAndOpacity(m_currentColor);
+	m_InputHint->IconRimBrush.TintColor = m_currentColor;
 }
 
 void USimpleButtonWidget::NativeOnInitialized()
@@ -44,35 +31,48 @@ void USimpleButtonWidget::NativeOnInitialized()
 	Super::NativeOnInitialized();
 	//set initial text
 	SetText(m_DefaultText);
+
+	//get game manager
+	m_TowerWorldManager = GetWorld()->GetSubsystem<UTowerWorldManager>();
+	if (m_TowerWorldManager != nullptr)
+	{
+		//subscribe to world manager
+		m_TowerWorldManager->Subscribe(this);
+
+		//initialize colors
+		m_targetColor = m_TowerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
+		m_currentColor = m_targetColor;
+	}
+	else
+	{
+		//initialize colors
+		m_targetColor = m_dayColor;
+		m_currentColor = m_targetColor;
+	}
+}
+
+void USimpleButtonWidget::update(const UTowerEvent event)
+{
+	if (event == UTowerEvent::IS_NIGHT)
+	{
+		m_targetColor = m_nightColor;
+	}
+	else if (event == UTowerEvent::IS_DAY)
+	{
+		m_targetColor = m_dayColor;
+	}
 }
 
 void USimpleButtonWidget::Show()
 {
 	SetVisibility(ESlateVisibility::Visible);
-	m_visible = true;
 }
 
 void USimpleButtonWidget::Hide()
 {
 	SetVisibility(ESlateVisibility::Hidden);
-	m_visible = false;
 }
 
-void USimpleButtonWidget::Collapse()
-{
-	SetVisibility(ESlateVisibility::Collapsed);
-	m_visible = false;
-}
-
-void USimpleButtonWidget::HideAnimation()
-{
-	m_visible = false;
-}
-
-void USimpleButtonWidget::FadeOut()
-{
-	m_fading = true;
-}
 
 void USimpleButtonWidget::SetText(FText body, bool completed)
 {
@@ -87,10 +87,6 @@ void USimpleButtonWidget::SetText(FText body, bool completed)
 	}
 }
 
-void USimpleButtonWidget::SetOffset(float offset)
-{
-	m_offset = offset;
-}
 
 void USimpleButtonWidget::ClearText()
 {
@@ -102,54 +98,13 @@ void USimpleButtonWidget::Reset()
 	SetRenderTranslation(FVector2D(0, 0));
 	SetRenderOpacity(0);
 	SetVisibility(ESlateVisibility::Collapsed);
-	m_visible = false;
-	m_fading = 0;
 }
 
 void USimpleButtonWidget::SetHighLight(bool highlighted)
 {
-	if (highlighted)
-	{
-		m_Text->SetTextDirectly(m_currentText);
-		SetButtonValuesforHighlight(ESlateVisibility::Visible, m_highlightTexture);
-	}
-	else
-	{
-		m_Text->SetTextDirectly(m_currentText);
-		SetButtonValuesforHighlight(ESlateVisibility::Hidden, m_normalTexture);
-	}
-}
-
-void USimpleButtonWidget::SetNormalTextStyle(FString style)
-{
-	m_normalStyle = style;
-}
-
-void USimpleButtonWidget::SetHighlightTextStyle(FString style)
-{
-	m_highlightedStyle = style;
-}
-
-void USimpleButtonWidget::SetNormalBackground(UTexture2D* texture)
-{
-	m_normalTexture = texture;
-}
-
-void USimpleButtonWidget::SetHighlightBackground(UTexture2D* texture)
-{
-	m_highlightTexture = texture;
-}
-
-void USimpleButtonWidget::SetMaxAlpha(float alpha)
-{
-	m_MaxAlpha = alpha;
-}
-
-bool USimpleButtonWidget::FinishedMoving()
-{
-	return /*abs(GetRenderTransform().Translation.X - m_offset) < 5.f*/GetRenderTransform().Translation.X > m_offset * 2
-		/
-		3.f || GetVisibility() == ESlateVisibility::Collapsed;
+	m_Text->SetTextDirectly(m_currentText, highlighted);
+	m_highlighted = highlighted;
+	m_inputSizeBox->SetRenderOpacity(ShowInputHintWhenHighlighted ? highlighted : false);
 }
 
 void USimpleButtonWidget::PerformSelectAction()
@@ -170,19 +125,4 @@ void USimpleButtonWidget::PerformSelectAction()
 void USimpleButtonWidget::FastForwardText()
 {
 	m_Text->FastForwardText();
-}
-
-void USimpleButtonWidget::SetButtonValuesforHighlight(ESlateVisibility HintVisibility, UTexture2D* texture)
-{
-	//hide input hint
-	if (m_showInputWhenHighlighted)
-	{
-		m_inputSizeBox->SetVisibility(HintVisibility);
-	}
-
-	//put normal texture
-	if (m_highlightTexture != nullptr)
-	{
-		m_background->SetBrushFromTexture(texture);
-	}
 }

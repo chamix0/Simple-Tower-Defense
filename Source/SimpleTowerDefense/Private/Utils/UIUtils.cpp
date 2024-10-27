@@ -10,7 +10,6 @@ void UiUtils::UpdateSelectedSimpleButton(int index, TArray<USimpleButtonWidget*>
 	{
 		return;
 	}
-	
 
 	//highlight buttons
 	for (int i = 0; i < buttons.Num(); ++i)
