@@ -15,7 +15,7 @@
 DECLARE_DYNAMIC_DELEGATE(FOnButtonSelected);
 
 UCLASS()
-class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UCommonUserWidget, public Observer
+class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UUserWidget, public Observer
 {
 	GENERATED_BODY()
 
@@ -43,10 +43,12 @@ class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UCommonUserWidget, pub
 
 	UPROPERTY(meta = (BindWidget))
 	UCommonActionWidget* m_InputHint = nullptr;
+
 	UPROPERTY(EditAnywhere)
 	bool ShowInputHintWhenHighlighted = false;
 	FText m_currentText; //current text of the button
 	bool m_highlighted = false;
+	bool m_mouseHighlight=false;
 	//colors
 	UPROPERTY(EditAnywhere)
 	FColor m_dayColor = FColor::White;
@@ -69,7 +71,9 @@ protected:
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	virtual void NativeOnInitialized() override;
 	virtual void update(const UTowerEvent event) override;
-
+	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
+virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 public:
 	/// show widget on viewport
 	UFUNCTION(BlueprintCallable)
@@ -92,6 +96,7 @@ public:
 	/// highlight or not the button
 	/// @param highlighted 
 	void SetHighLight(bool highlighted);
+	void SetMouseHighLight(bool MouseHighlight);
 
 	void PerformSelectAction();
 	//Events

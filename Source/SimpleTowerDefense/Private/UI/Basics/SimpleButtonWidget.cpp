@@ -3,6 +3,7 @@
 
 #include "UI/Basics/SimpleButtonWidget.h"
 
+#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Components/AudioComponent.h"
 #include "Components/Image.h"
 #include "Components/SizeBox.h"
@@ -13,11 +14,9 @@
 void USimpleButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
-
-
 	//update colors
 	FLinearColor finalColor = m_targetColor;
-	if (m_highlighted)
+	if (m_highlighted || m_mouseHighlight)
 	{
 		finalColor = m_targetColor == m_dayColor ? m_nightColor : m_dayColor;
 	}
@@ -29,6 +28,8 @@ void USimpleButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 void USimpleButtonWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
+
+
 	//set initial text
 	SetText(m_DefaultText);
 
@@ -39,8 +40,11 @@ void USimpleButtonWidget::NativeOnInitialized()
 		//subscribe to world manager
 		m_TowerWorldManager->Subscribe(this);
 
+
 		//initialize colors
+
 		m_targetColor = m_TowerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
+
 		m_currentColor = m_targetColor;
 	}
 	else
@@ -62,6 +66,29 @@ void USimpleButtonWidget::update(const UTowerEvent event)
 		m_targetColor = m_dayColor;
 	}
 }
+
+void USimpleButtonWidget::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
+	SetMouseHighLight(true);
+}
+
+void USimpleButtonWidget::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
+{
+	Super::NativeOnMouseLeave(InMouseEvent);
+	SetMouseHighLight(false);
+}
+
+FReply USimpleButtonWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	if (InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
+	{
+		PerformSelectAction();
+	}
+
+	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
+}
+
 
 void USimpleButtonWidget::Show()
 {
@@ -102,16 +129,22 @@ void USimpleButtonWidget::Reset()
 
 void USimpleButtonWidget::SetHighLight(bool highlighted)
 {
-	m_Text->SetTextDirectly(m_currentText, highlighted);
+	m_Text->SetTextDirectly(m_currentText, highlighted || m_mouseHighlight);
 	m_highlighted = highlighted;
-	m_inputSizeBox->SetRenderOpacity(ShowInputHintWhenHighlighted ? highlighted : false);
+	m_inputSizeBox->SetRenderOpacity(ShowInputHintWhenHighlighted ? highlighted || m_mouseHighlight : false);
+}
+
+void USimpleButtonWidget::SetMouseHighLight(bool MouseHighlight)
+{
+	m_mouseHighlight = MouseHighlight;
+	m_Text->SetTextDirectly(m_currentText, MouseHighlight || m_highlighted);
+	m_inputSizeBox->SetRenderOpacity(ShowInputHintWhenHighlighted ? MouseHighlight || m_highlighted : false);
 }
 
 void USimpleButtonWidget::PerformSelectAction()
 {
 	//call blueprint event
 	OnButtonSelectedEvent();
-
 	//play sound
 	if (buttonSelectedAudio != nullptr)
 	{
