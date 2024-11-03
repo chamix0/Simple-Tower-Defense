@@ -51,9 +51,9 @@ class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UUserWidget, public Ob
 	bool m_mouseHighlight=false;
 	//colors
 	UPROPERTY(EditAnywhere)
-	FColor m_dayColor = FColor::White;
+	FLinearColor m_dayColor = FColor::White;
 	UPROPERTY(EditAnywhere)
-	FColor m_nightColor = FColor::Black;
+	FLinearColor m_nightColor = FColor::Black;
 	FLinearColor m_currentColor;
 	FLinearColor m_targetColor;
 	UPROPERTY(EditAnywhere)

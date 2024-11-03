@@ -28,6 +28,9 @@ void USimpleTextWidget::SetText(FText body, bool highlighted)
 
 	//set highlighted
 	m_highlighted = highlighted;
+
+	//set target color
+	m_targetColor = highlighted ? m_dayColor : m_nightColor;
 }
 
 void USimpleTextWidget::SetTextDirectly(FText body, bool highlighted)
@@ -40,6 +43,9 @@ void USimpleTextWidget::SetTextDirectly(FText body, bool highlighted)
 
 	//set highlighted
 	m_highlighted = highlighted;
+
+	//set target color
+	m_targetColor = highlighted ? m_nightColor : m_dayColor;
 }
 
 bool USimpleTextWidget::IsWrittingText()
@@ -69,6 +75,16 @@ void USimpleTextWidget::SetCharctersPerUpdate(int value)
 void USimpleTextWidget::SetHighlighted(bool value)
 {
 	m_highlighted = value;
+}
+
+void USimpleTextWidget::SetDayColor(FLinearColor Color)
+{
+	m_dayColor = Color;
+}
+
+void USimpleTextWidget::SetNightColor(FLinearColor Color)
+{
+	m_nightColor = Color;
 }
 
 
@@ -105,12 +121,7 @@ void USimpleTextWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTim
 	WriteText();
 
 	//update colors
-	FLinearColor finalColor = m_targetColor;
-	if (m_highlighted)
-	{
-		finalColor = m_targetColor == m_dayColor ? m_nightColor : m_dayColor;
-	}
-	m_currentColor = FMath::CInterpTo(m_currentColor, finalColor, InDeltaTime, m_ColorChangeSpeed);
+	m_currentColor = FMath::CInterpTo(m_currentColor, m_targetColor, InDeltaTime, m_ColorChangeSpeed);
 	m_TextBlock->SetColorAndOpacity(m_currentColor);
 }
 

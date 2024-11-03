@@ -54,12 +54,12 @@ void UMainMenuScreen::HandleReturnAction()
 		return;
 	}
 
-	// Super::HandleReturnAction();
+	Super::HandleReturnAction();
 
-	// if (m_BaseWidget != nullptr)
-	// {
-		// m_BaseWidget->PushWidget(QuitToDesktopWidgetClass);
-	// }
+	if (m_BaseWidget != nullptr)
+	{
+		m_BaseWidget->PushWidget(QuitToDesktopWidgetClass);
+	}
 }
 
 void UMainMenuScreen::HandleSelectAction()
@@ -137,8 +137,8 @@ void UMainMenuScreen::PlayGameButtonAction()
 
 void UMainMenuScreen::QuitButtonAction()
 {
-	// if (m_BaseWidget != nullptr)
-	// {
-	// 	m_BaseWidget->PushWidget(QuitToDesktopWidgetClass);
-	// }
+	if (m_BaseWidget != nullptr)
+	{
+		m_BaseWidget->PushWidget(QuitToDesktopWidgetClass);
+	}
 }

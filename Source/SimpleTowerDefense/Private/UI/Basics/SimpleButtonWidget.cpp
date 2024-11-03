@@ -22,13 +22,16 @@ void USimpleButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 	}
 	m_currentColor = FMath::CInterpTo(m_currentColor, finalColor, InDeltaTime, m_ColorChangeSpeed);
 	m_background->SetColorAndOpacity(m_currentColor);
-	m_InputHint->IconRimBrush.TintColor = m_currentColor;
+	m_InputHint->IconRimBrush.TintColor = finalColor == FLinearColor(1,1,1,1) ? FLinearColor(0, 0, 0, 0) : m_currentColor;
 }
 
 void USimpleButtonWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
+
+	m_Text->SetDayColor(m_nightColor);
+	m_Text->SetNightColor(m_dayColor);
 
 	//set initial text
 	SetText(m_DefaultText);

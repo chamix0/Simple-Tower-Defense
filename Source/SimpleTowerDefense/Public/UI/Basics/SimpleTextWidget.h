@@ -42,9 +42,9 @@ class SIMPLETOWERDEFENSE_API USimpleTextWidget : public UCommonUserWidget, publi
 
 	//colors
 	UPROPERTY(EditAnywhere)
-	FColor m_dayColor = FColor::White;
+	FLinearColor m_dayColor = FColor::White;
 	UPROPERTY(EditAnywhere)
-	FColor m_nightColor = FColor::Black;
+	FLinearColor m_nightColor = FColor::Black;
 	FLinearColor m_currentColor;
 	FLinearColor m_targetColor;
 	UPROPERTY(EditAnywhere)
@@ -77,6 +77,8 @@ public:
 	//set charcters per update
 	void SetCharctersPerUpdate(int value);
 	void SetHighlighted(bool value);
+	void SetDayColor(FLinearColor Color);
+	void SetNightColor(FLinearColor Color);
 
 protected:
 	virtual void NativeOnInitialized() override;
