@@ -13,7 +13,8 @@ void Publisher::Unsubscribe(Observer* observer)
 
 void Publisher::Notify(UTowerEvent message)
 {
-	for (Observer* observer : observers)
+	TArray<Observer*> aux = observers;
+	for (Observer* observer : aux)
 	{
 		observer->update(message);
 	}

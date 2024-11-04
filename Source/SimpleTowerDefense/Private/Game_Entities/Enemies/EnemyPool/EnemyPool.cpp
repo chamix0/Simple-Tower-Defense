@@ -17,21 +17,28 @@ ASimpleEnemy* FEnemyPool::GetEnemy(UWorld* world, TSubclassOf<AActor> templateEn
 	{
 		//mark as its not a available
 		enemy->SetIsAvailable(false);
+		//add to active enemies
+		m_ActiveEnemies.AddUnique(enemy);
 		return enemy;
 	}
 
 	//no available enemy so create one 
 	FActorSpawnParameters SpawnInfo;
-	AActor* spawnedActor = world->SpawnActor<AActor>(templateEnemy, FVector(0, 0, -1000), FRotator(), SpawnInfo);
+	AActor* spawnedActor = world->SpawnActor<AActor>(templateEnemy, FVector(0, 0, -1000), FRotator(0,0,0), SpawnInfo);
 
 	//add to a folder to make it cleaner on editor
 #if WITH_EDITOR
 	spawnedActor->SetFolderPath("EnemyPool");
 #endif
 
+	//get the enemy reference
 	enemy = Cast<ASimpleEnemy>(spawnedActor);
+
 	//make the enemy not available
 	enemy->SetIsAvailable(false);
+
+	//add to active enemies
+	m_ActiveEnemies.AddUnique(enemy);
 
 	return enemy;
 }
@@ -58,5 +65,6 @@ ASimpleEnemy* FEnemyPool::FindEnemy()
 
 void FEnemyPool::InsertEnemyToPool(ASimpleEnemy* enemy)
 {
+	m_ActiveEnemies.Remove(enemy);
 	m_AvailibleEnemies.AddUnique(enemy);
 }

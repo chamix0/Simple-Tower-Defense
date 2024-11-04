@@ -8,6 +8,7 @@
 #include "Components/Image.h"
 #include "Components/SizeBox.h"
 #include "Kismet/GameplayStatics.h"
+#include "Settings/GameSettings.h"
 #include "UI/Basics/SimpleTextWidget.h"
 #include "Utils/MathUtils.h"
 
@@ -20,7 +21,7 @@ void USimpleButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 	{
 		finalColor = m_targetColor == m_dayColor ? m_nightColor : m_dayColor;
 	}
-	m_currentColor = FMath::CInterpTo(m_currentColor, finalColor, InDeltaTime, m_ColorChangeSpeed);
+	m_currentColor = FMath::CInterpTo(m_currentColor, finalColor, InDeltaTime, GetDefault<UGameSettings>()->ColorChangeSpeed);
 	m_background->SetColorAndOpacity(m_currentColor);
 	m_InputHint->IconRimBrush.TintColor = finalColor == FLinearColor(1,1,1,1) ? FLinearColor(0, 0, 0, 0) : m_currentColor;
 }

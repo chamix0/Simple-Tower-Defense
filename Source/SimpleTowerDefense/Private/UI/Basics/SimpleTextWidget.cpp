@@ -3,6 +3,8 @@
 
 #include "UI/Basics/SimpleTextWidget.h"
 
+#include "Settings/GameSettings.h"
+
 void USimpleTextWidget::Show()
 {
 	SetVisibility(ESlateVisibility::Visible);
@@ -121,7 +123,7 @@ void USimpleTextWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTim
 	WriteText();
 
 	//update colors
-	m_currentColor = FMath::CInterpTo(m_currentColor, m_targetColor, InDeltaTime, m_ColorChangeSpeed);
+	m_currentColor = FMath::CInterpTo(m_currentColor, m_targetColor, InDeltaTime, GetDefault<UGameSettings>()->ColorChangeSpeed);
 	m_TextBlock->SetColorAndOpacity(m_currentColor);
 }
 

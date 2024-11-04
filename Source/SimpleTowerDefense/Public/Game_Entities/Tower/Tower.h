@@ -7,7 +7,10 @@
 #include "Game_Entities/SimpleDayNightActor.h"
 #include "Managers/TowerWorldManager.h"
 #include "ObserverPattern/Publisher.h"
+#include "Utils/StopWatch.h"
 #include "Tower.generated.h"
+
+class ACrosshairActor;
 
 UCLASS()
 class SIMPLETOWERDEFENSE_API ATower : public ASimpleDayNightActor
@@ -16,7 +19,14 @@ class SIMPLETOWERDEFENSE_API ATower : public ASimpleDayNightActor
 
 private:
 	UPROPERTY(EditAnywhere)
+	TSubclassOf<ASimpleBullet> m_bulletTemplate;
+	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* m_TowerMesh = nullptr;
+	UPROPERTY(EditAnywhere)
+	ACrosshairActor* M_CrosshairActor = nullptr;
+	//shoot cooldown
+	FStopWatch m_shootTimer;
+
 
 public:
 	// Sets default values for this actor's properties
@@ -31,7 +41,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	// Name this function however you want
 	UFUNCTION()
 	void OnTowerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
@@ -39,4 +48,7 @@ private:
 	UFUNCTION()
 	void OnTowerEndOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor,
 	                       class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	virtual void update(const UTowerEvent event) override;
+	ASimpleEnemy* SelectEnemyTarget();
+	void ShootBullet(FVector target);
 };

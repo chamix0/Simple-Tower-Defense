@@ -21,6 +21,8 @@ struct FEnemyPool
 
 	UPROPERTY()
 	TArray<ASimpleEnemy*> m_AvailibleEnemies;
+	TArray<ASimpleEnemy*> m_ActiveEnemies;
+
 
 	ASimpleEnemy* GetEnemy(UWorld* world, TSubclassOf<AActor> templateEnemy);
 

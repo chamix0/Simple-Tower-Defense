@@ -24,12 +24,23 @@ ASimpleEnemy::ASimpleEnemy()
 	//create mesh
 	m_EnemyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Enemy mesh"));
 	m_EnemyMesh->SetupAttachment(m_EnemyPivot);
+
+	//create healthbar component
+	m_healthBarComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Health bar widget component"));
+	m_healthBarComponent->SetupAttachment(m_EnemyPivot);
 }
 
 // Called when the game starts or when spawned
 void ASimpleEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//set up collision
+	m_EnemyMesh->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnEnemyOverlap);
+	m_EnemyMesh->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnEnemyEndOverlap);
+
+	//get health bar widget
+	m_healthBarWidget = Cast<UHealthBar>(m_healthBarComponent->GetWidget());
 }
 
 void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
@@ -40,11 +51,20 @@ void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 	//initialize health
 	int MaxOverallHealth = GetDefault<UGameSettings>()->MaxEnemyHealth;
 	m_MaxHealth = FMath::RandRange(1, MaxOverallHealth);
+	m_health = m_MaxHealth;
+	m_healthBarWidget->SetValue(m_health, m_MaxHealth);
+	m_healthBarWidget->Show();
 
 	//initialize scale
 	float MaxScale = GetDefault<UGameSettings>()->MaxEnemyScale;
 	float scale = m_MaxHealth * MaxScale / MaxOverallHealth;
 	m_EnemyPivot->SetRelativeScale3D(FVector(scale));
+	m_healthBarWidget->SetRenderScale(FVector2D(scale));
+
+	//initialize speed
+	float MaxOverallSpeed = GetDefault<UGameSettings>()->MaxEnemySpeed;
+	float MinOverallSpeed = GetDefault<UGameSettings>()->MinEnemySpeed;
+	m_speed = FMath::RandRange(MinOverallSpeed, MaxOverallSpeed);
 
 	//update real color
 
@@ -61,6 +81,9 @@ void ASimpleEnemy::UnInitializeEnemy()
 {
 	//make it available again
 	SetIsAvailable(true);
+
+	//hide healthbar
+	m_healthBarWidget->Hide();
 
 	//return it top the pool
 	m_towerWorldManager->GetEnemyPool().InsertEnemyToPool(this);
@@ -105,4 +128,33 @@ void ASimpleEnemy::Move(float deltaTime)
 {
 	FVector newPosition = FMath::VInterpConstantTo(GetActorLocation(), FVector(0), deltaTime, m_speed);
 	SetActorLocation(newPosition);
+}
+
+void ASimpleEnemy::OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+                                  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                  const FHitResult& SweepResult)
+{
+	ASimpleBullet* bullet = Cast<ASimpleBullet>(OtherActor);
+	if (bullet != nullptr)
+	{
+		bullet->UnInitializeBullet();
+		RemoveHealth(1);
+	}
+}
+
+void ASimpleEnemy::OnEnemyEndOverlap(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                                     int32 OtherBodyIndex)
+{
+}
+
+void ASimpleEnemy::RemoveHealth(int amount)
+{
+	m_health -= amount;
+	m_healthBarWidget->SetValue(m_health, m_MaxHealth);
+
+	//kill the enemy when reached 0
+	if (m_health <= 0)
+	{
+		UnInitializeEnemy();
+	}
 }

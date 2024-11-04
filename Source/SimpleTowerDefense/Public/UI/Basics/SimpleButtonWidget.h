@@ -56,8 +56,7 @@ class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UUserWidget, public Ob
 	FLinearColor m_nightColor = FColor::Black;
 	FLinearColor m_currentColor;
 	FLinearColor m_targetColor;
-	UPROPERTY(EditAnywhere)
-	float m_ColorChangeSpeed = 5.f;
+
 
 	//tower world entity
 	UPROPERTY()

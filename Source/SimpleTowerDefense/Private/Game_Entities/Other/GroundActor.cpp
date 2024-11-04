@@ -13,12 +13,18 @@ AGroundActor::AGroundActor()
 	//create mesh
 	m_GroundMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floor mesh"));
 	m_GroundMesh->SetupAttachment(RootComponent);
+
+	//create range widget component
+	m_rangeWidgetcomponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("Range Widget Component"));
+	m_rangeWidgetcomponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
 void AGroundActor::BeginPlay()
 {
 	Super::BeginPlay();
+	m_rangeWidgetcomponent->SetDrawSize(FVector2D(m_towerWorldManager->GetTowerRange()));
+	m_rangeWidgetcomponent->GetWidget()->SetColorAndOpacity(m_currentOppositeColor);
 }
 
 
@@ -29,4 +35,8 @@ void AGroundActor::Tick(float DeltaTime)
 
 	//update real color
 	m_GroundMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
+
+	//update range widget size
+	m_rangeWidgetcomponent->SetDrawSize(FVector2D(m_towerWorldManager->GetTowerRange() * 2));
+	m_rangeWidgetcomponent->GetWidget()->SetColorAndOpacity(m_currentOppositeColor);
 }

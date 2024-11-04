@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/Actor.h"
 #include "Game_Entities/SimpleDayNightActor.h"
 #include "Managers/TowerWorldManager.h"
@@ -17,6 +18,8 @@ class SIMPLETOWERDEFENSE_API AGroundActor : public ASimpleDayNightActor
 private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* m_GroundMesh = nullptr;
+	UPROPERTY(EditDefaultsOnly)
+	UWidgetComponent* m_rangeWidgetcomponent = nullptr;
 
 public:
 	// Sets default values for this actor's properties

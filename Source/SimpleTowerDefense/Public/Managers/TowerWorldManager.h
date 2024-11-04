@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Game_Entities/Enemies/EnemyPool/EnemyPool.h"
+#include "Game_Entities/Tower/Bullets/BulletPool.h"
 #include "ObserverPattern/Publisher.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "TowerWorldManager.generated.h"
@@ -21,8 +22,20 @@ class SIMPLETOWERDEFENSE_API UTowerWorldManager : public UWorldSubsystem, public
 private:
 	bool m_isDay = true;
 	int m_numDays;
+
+
 	UPROPERTY()
 	FEnemyPool m_enemyPool;
+	FBulletPool m_bulletPool;
+
+
+	/* Tower attributes */
+	UPROPERTY()
+	float m_range = 200.f;
+	UPROPERTY()
+	float m_bulletsSpeed = 10.f;
+	UPROPERTY()
+	float m_ShootsPerSecond = 1.f;
 
 public:
 	bool GetIsDay() const;
@@ -30,5 +43,10 @@ public:
 	void StartDay();
 	int GetNumDays();
 	void AddDay();
+	void BroadCastNotification(UTowerEvent towerEvent);
 	FEnemyPool& GetEnemyPool();
+	FBulletPool& GetBulletPool();
+	float GetTowerRange() const;
+	float GetBulletsSpeed() const;
+	float GetShootsPerSecond() const;
 };

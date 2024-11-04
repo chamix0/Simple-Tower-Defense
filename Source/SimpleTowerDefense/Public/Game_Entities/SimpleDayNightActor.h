@@ -22,13 +22,14 @@ protected:
 
 	//colors
 	UPROPERTY(EditAnywhere)
-	FColor m_dayColor = FColor::White;
+	FLinearColor m_dayColor = FColor::White;
 	UPROPERTY(EditAnywhere)
-	FColor m_nightColor = FColor::Black;
+	FLinearColor m_nightColor = FColor::Black;
 	FLinearColor m_currentColor;
+	FLinearColor m_currentOppositeColor;
 	FLinearColor m_targetColor;
-	UPROPERTY(EditAnywhere)
-	float m_ColorChangeSpeed = 5.f;
+	FLinearColor m_targetOppositeColor;
+
 
 public:
 	// Sets default values for this actor's properties

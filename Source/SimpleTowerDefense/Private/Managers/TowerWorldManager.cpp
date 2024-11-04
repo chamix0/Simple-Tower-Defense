@@ -3,11 +3,17 @@
 
 #include "SimpleTowerDefense/Public/Managers/TowerWorldManager.h"
 
+#include "Settings/GameSettings.h"
 #include "Utils/MyDebugUtils.h"
 
 void UTowerWorldManager::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
+
+	//initialize tower attributes
+	m_range = GetDefault<UGameSettings>()->InitialTowerRange;
+	m_bulletsSpeed = GetDefault<UGameSettings>()->InitialBulletSpeed;
+	m_ShootsPerSecond = GetDefault<UGameSettings>()->InitialShootsPerSecond;
 }
 
 void UTowerWorldManager::Deinitialize()
@@ -50,7 +56,32 @@ void UTowerWorldManager::AddDay()
 	//maybe call a ui notification
 }
 
-FEnemyPool& UTowerWorldManager::GetEnemyPool() 
+void UTowerWorldManager::BroadCastNotification(UTowerEvent towerEvent)
+{
+	Notify(towerEvent);
+}
+
+FEnemyPool& UTowerWorldManager::GetEnemyPool()
 {
 	return m_enemyPool;
+}
+
+FBulletPool& UTowerWorldManager::GetBulletPool()
+{
+	return m_bulletPool;
+}
+
+float UTowerWorldManager::GetTowerRange() const
+{
+	return m_range;
+}
+
+float UTowerWorldManager::GetBulletsSpeed() const
+{
+	return m_bulletsSpeed;
+}
+
+float UTowerWorldManager::GetShootsPerSecond() const
+{
+	return m_ShootsPerSecond;
 }

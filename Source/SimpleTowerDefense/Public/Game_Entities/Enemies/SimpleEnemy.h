@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "NiagaraSystem.h"
+#include "Components/WidgetComponent.h"
 #include "Game_Entities/SimpleDayNightActor.h"
+#include "UI/Basics/HealthBar.h"
 #include "SimpleEnemy.generated.h"
 
 UCLASS()
@@ -15,6 +17,11 @@ class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 	UStaticMeshComponent* m_EnemyMesh = nullptr;
 	UPROPERTY(EditAnywhere)
 	USceneComponent* m_EnemyPivot = nullptr;
+	UPROPERTY(EditDefaultsOnly)
+	UWidgetComponent* m_healthBarComponent = nullptr;
+	UPROPERTY()
+	UHealthBar* m_healthBarWidget = nullptr;
+	
 	UPROPERTY(EditAnywhere)
 	float m_health;
 	UPROPERTY(EditAnywhere)
@@ -24,7 +31,7 @@ class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 	UPROPERTY()
 	bool m_availible = true;
 	UPROPERTY(EditAnywhere)
-	UNiagaraSystem* m_ExplosionParticles=nullptr;
+	UNiagaraSystem* m_ExplosionParticles = nullptr;
 
 public:
 	// Sets default values for this actor's properties
@@ -45,4 +52,12 @@ public:
 
 private:
 	void Move(float deltaTime);
+	UFUNCTION()
+	void OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+	                    const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnEnemyEndOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor,
+	                       class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	void RemoveHealth(int amount);
 };
