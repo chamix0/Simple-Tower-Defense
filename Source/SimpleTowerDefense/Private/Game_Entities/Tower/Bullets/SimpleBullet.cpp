@@ -87,6 +87,16 @@ void ASimpleBullet::SetIsAvailable(bool value)
 	m_availible = value;
 }
 
+int ASimpleBullet::GetDamage() const
+{
+	return m_damage;
+}
+
+void ASimpleBullet::SetDamage(int value)
+{
+	m_damage = value;
+}
+
 void ASimpleBullet::Move(float deltaTime)
 {
 	const FVector newPosition = GetActorLocation() + m_direction * m_speed * deltaTime;

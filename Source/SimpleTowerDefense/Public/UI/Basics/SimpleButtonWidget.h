@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "CommonUserWidget.h"
+#include "DayNightWidget.h"
 #include "SimpleTextWidget.h"
 #include "Components/Image.h"
 #include "Components/SizeBox.h"
@@ -15,7 +16,7 @@
 DECLARE_DYNAMIC_DELEGATE(FOnButtonSelected);
 
 UCLASS()
-class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UUserWidget, public Observer
+class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UDayNightWidget
 {
 	GENERATED_BODY()
 
@@ -48,19 +49,7 @@ class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UUserWidget, public Ob
 	bool ShowInputHintWhenHighlighted = false;
 	FText m_currentText; //current text of the button
 	bool m_highlighted = false;
-	bool m_mouseHighlight=false;
-	//colors
-	UPROPERTY(EditAnywhere)
-	FLinearColor m_dayColor = FColor::White;
-	UPROPERTY(EditAnywhere)
-	FLinearColor m_nightColor = FColor::Black;
-	FLinearColor m_currentColor;
-	FLinearColor m_targetColor;
-
-
-	//tower world entity
-	UPROPERTY()
-	UTowerWorldManager* m_TowerWorldManager = nullptr;
+	bool m_mouseHighlight = false;
 
 public:
 	//action delegate
@@ -69,18 +58,11 @@ public:
 protected:
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	virtual void NativeOnInitialized() override;
-	virtual void update(const UTowerEvent event) override;
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
-virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
-public:
-	/// show widget on viewport
-	UFUNCTION(BlueprintCallable)
-	void Show();
-	///hide widget on viewport
-	UFUNCTION(BlueprintCallable)
-	void Hide();
+	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 
+public:
 	/// text to show in button
 	/// @param body
 	void SetText(FText body, bool completed = false);

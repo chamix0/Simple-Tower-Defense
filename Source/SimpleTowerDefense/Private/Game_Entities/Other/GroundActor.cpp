@@ -37,6 +37,6 @@ void AGroundActor::Tick(float DeltaTime)
 	m_GroundMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
 
 	//update range widget size
-	m_rangeWidgetcomponent->SetDrawSize(FVector2D(m_towerWorldManager->GetTowerRange() * 2));
+	m_rangeWidgetcomponent->SetDrawSize(FVector2D(m_towerWorldManager->GetTowerRange() * 1.9f));
 	m_rangeWidgetcomponent->GetWidget()->SetColorAndOpacity(m_currentOppositeColor);
 }

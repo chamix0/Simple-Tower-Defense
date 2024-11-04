@@ -5,15 +5,7 @@
 
 #include "Settings/GameSettings.h"
 
-void USimpleTextWidget::Show()
-{
-	SetVisibility(ESlateVisibility::Visible);
-}
 
-void USimpleTextWidget::Hide()
-{
-	SetVisibility(ESlateVisibility::Collapsed);
-}
 
 void USimpleTextWidget::SetText(FText body, bool highlighted)
 {
@@ -30,9 +22,6 @@ void USimpleTextWidget::SetText(FText body, bool highlighted)
 
 	//set highlighted
 	m_highlighted = highlighted;
-
-	//set target color
-	m_targetColor = highlighted ? m_dayColor : m_nightColor;
 }
 
 void USimpleTextWidget::SetTextDirectly(FText body, bool highlighted)
@@ -45,9 +34,6 @@ void USimpleTextWidget::SetTextDirectly(FText body, bool highlighted)
 
 	//set highlighted
 	m_highlighted = highlighted;
-
-	//set target color
-	m_targetColor = highlighted ? m_nightColor : m_dayColor;
 }
 
 bool USimpleTextWidget::IsWrittingText()
@@ -79,37 +65,10 @@ void USimpleTextWidget::SetHighlighted(bool value)
 	m_highlighted = value;
 }
 
-void USimpleTextWidget::SetDayColor(FLinearColor Color)
-{
-	m_dayColor = Color;
-}
-
-void USimpleTextWidget::SetNightColor(FLinearColor Color)
-{
-	m_nightColor = Color;
-}
-
 
 void USimpleTextWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
-	//get game manager
-	m_TowerWorldManager = GetWorld()->GetSubsystem<UTowerWorldManager>();
-	if (m_TowerWorldManager != nullptr)
-	{
-		//subscribe to world manager
-		m_TowerWorldManager->Subscribe(this);
-
-		//initialize colors
-		m_targetColor = m_TowerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
-		m_currentColor = m_targetColor;
-	}
-	else
-	{
-		//initialize colors
-		m_targetColor = m_dayColor;
-		m_currentColor = m_targetColor;
-	}
 }
 
 void USimpleTextWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -123,8 +82,7 @@ void USimpleTextWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTim
 	WriteText();
 
 	//update colors
-	m_currentColor = FMath::CInterpTo(m_currentColor, m_targetColor, InDeltaTime, GetDefault<UGameSettings>()->ColorChangeSpeed);
-	m_TextBlock->SetColorAndOpacity(m_currentColor);
+	m_TextBlock->SetColorAndOpacity(m_highlighted ? m_currentOppositeColor : m_currentColor);
 }
 
 
@@ -170,17 +128,5 @@ void USimpleTextWidget::WriteText()
 				return;
 			}
 		}
-	}
-}
-
-void USimpleTextWidget::update(const UTowerEvent event)
-{
-	if (event == UTowerEvent::IS_NIGHT)
-	{
-		m_targetColor = m_nightColor;
-	}
-	else if (event == UTowerEvent::IS_DAY)
-	{
-		m_targetColor = m_dayColor;
 	}
 }

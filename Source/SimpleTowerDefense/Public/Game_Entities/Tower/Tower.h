@@ -10,6 +10,8 @@
 #include "Utils/StopWatch.h"
 #include "Tower.generated.h"
 
+class UHudWidget;
+class UGameBaseWidget;
 class ACrosshairActor;
 
 UCLASS()
@@ -18,15 +20,34 @@ class SIMPLETOWERDEFENSE_API ATower : public ASimpleDayNightActor
 	GENERATED_BODY()
 
 private:
+	//class of the UI base to be created
+	UPROPERTY(EditAnywhere, Category="UI", meta=(DisplayName = "Widget Base class"))
+	TSubclassOf<UGameBaseWidget> BaseWidgetClass;
+	UPROPERTY()
+	UGameBaseWidget* GameBaseWidget = nullptr;
+	UPROPERTY()
+	UHudWidget* HudWidget = nullptr;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ASimpleBullet> m_bulletTemplate;
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* m_TowerMesh = nullptr;
 	UPROPERTY(EditAnywhere)
 	ACrosshairActor* M_CrosshairActor = nullptr;
+
 	//shoot cooldown
 	FStopWatch m_shootTimer;
 
+	//health
+	UPROPERTY(EditAnywhere)
+	float m_health = 1;
+
+	//damage
+	FStopWatch damageTimer;
+	UPROPERTY(EditAnywhere)
+	FLinearColor DamageColor = FColor::Red;
+	UPROPERTY(EditAnywhere)
+	int damageEffectMilliseconds = 100;
 
 public:
 	// Sets default values for this actor's properties
@@ -39,6 +60,7 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	UHudWidget* GetHud() const;
 
 private:
 	UFUNCTION()
@@ -51,4 +73,7 @@ private:
 	virtual void update(const UTowerEvent event) override;
 	ASimpleEnemy* SelectEnemyTarget();
 	void ShootBullet(FVector target);
+	void TakeDamage(float amount);
+	void SetHealth(float value);
+
 };

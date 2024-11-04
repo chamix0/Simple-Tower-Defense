@@ -8,6 +8,7 @@
 #include "Managers/TowerWorldManager.h"
 #include "Utils/StopWatch.h"
 #include "CommonActionWidget.h"
+#include "DayNightWidget.h"
 
 #include "SimpleTextWidget.generated.h"
 
@@ -15,7 +16,7 @@
  * 
  */
 UCLASS()
-class SIMPLETOWERDEFENSE_API USimpleTextWidget : public UCommonUserWidget, public Observer
+class SIMPLETOWERDEFENSE_API USimpleTextWidget : public UDayNightWidget
 {
 	GENERATED_BODY()
 
@@ -38,26 +39,8 @@ class SIMPLETOWERDEFENSE_API USimpleTextWidget : public UCommonUserWidget, publi
 	FString textBuffer;
 	FStopWatch StopWatch;
 	bool m_highlighted = false;
-	
-
-	//colors
-	UPROPERTY(EditAnywhere)
-	FLinearColor m_dayColor = FColor::White;
-	UPROPERTY(EditAnywhere)
-	FLinearColor m_nightColor = FColor::Black;
-	FLinearColor m_currentColor;
-	FLinearColor m_targetColor;
-
-
-	//tower world entity
-	UPROPERTY()
-	UTowerWorldManager* m_TowerWorldManager = nullptr;
 
 public:
-	/// show the text
-	void Show();
-	/// Hide the text
-	void Hide();
 	/// start writting a text
 	/// @param body text to write
 	/// @param style style to use for all the text
@@ -76,8 +59,6 @@ public:
 	//set charcters per update
 	void SetCharctersPerUpdate(int value);
 	void SetHighlighted(bool value);
-	void SetDayColor(FLinearColor Color);
-	void SetNightColor(FLinearColor Color);
 
 protected:
 	virtual void NativeOnInitialized() override;
@@ -85,5 +66,4 @@ protected:
 
 private:
 	void WriteText();
-	virtual void update(const UTowerEvent event) override;
 };

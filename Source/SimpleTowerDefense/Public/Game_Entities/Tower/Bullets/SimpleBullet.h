@@ -16,7 +16,8 @@ class SIMPLETOWERDEFENSE_API ASimpleBullet : public ASimpleDayNightActor
 	float m_speed = 1;
 	UPROPERTY()
 	bool m_availible = true;
-
+	UPROPERTY()
+	int m_damage = 1;
 	//values
 	FVector m_direction = FVector();
 
@@ -36,7 +37,9 @@ public:
 
 	bool GetIsAvailable() const;
 	void SetIsAvailable(bool value);
-	
+	int GetDamage() const;
+	void SetDamage(int value);
+
 private:
 	void Move(float deltaTime);
 };

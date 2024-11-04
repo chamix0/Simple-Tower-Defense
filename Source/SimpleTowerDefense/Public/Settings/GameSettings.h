@@ -20,9 +20,11 @@ public:
 		meta = (DisplayName = "Time of a day in seconds"))
 	float DayLength = 10.f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "General",
-	meta = (DisplayName = "ColorChangeSpeed"))
+		meta = (DisplayName = "Color Change Speed"))
 	float ColorChangeSpeed = 5.f;
-
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "General",
+		meta = (DisplayName = "Color Change Speed UI"))
+	float ColorChangeSpeedUI = 5.f;
 	/*Enemies*/
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Max enemy health"))
 	int MaxEnemyHealth = 20.f;
@@ -34,6 +36,9 @@ public:
 	float MaxEnemyScale = 0.5f;
 
 	/*tower*/
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "Initial tower max health"))
+	int InitialMaxHealthRange = 50;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower", meta = (DisplayName = "Initial tower range"))
 	float InitialTowerRange = 200.f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",

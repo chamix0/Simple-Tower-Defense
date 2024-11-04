@@ -16,14 +16,11 @@ void USimpleButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	//update colors
-	FLinearColor finalColor = m_targetColor;
-	if (m_highlighted || m_mouseHighlight)
-	{
-		finalColor = m_targetColor == m_dayColor ? m_nightColor : m_dayColor;
-	}
-	m_currentColor = FMath::CInterpTo(m_currentColor, finalColor, InDeltaTime, GetDefault<UGameSettings>()->ColorChangeSpeed);
-	m_background->SetColorAndOpacity(m_currentColor);
-	m_InputHint->IconRimBrush.TintColor = finalColor == FLinearColor(1,1,1,1) ? FLinearColor(0, 0, 0, 0) : m_currentColor;
+	FLinearColor finalColor = m_highlighted || m_mouseHighlight ? m_targetOppositeColor : m_targetColor;
+	m_background->SetColorAndOpacity(m_highlighted || m_mouseHighlight ? m_currentOppositeColor : m_currentColor);
+	m_InputHint->IconRimBrush.TintColor = finalColor == FLinearColor(1, 1, 1, 1)
+		                                      ? FLinearColor(0, 0, 0, 0)
+		                                      : m_currentOppositeColor;
 }
 
 void USimpleButtonWidget::NativeOnInitialized()
@@ -36,40 +33,8 @@ void USimpleButtonWidget::NativeOnInitialized()
 
 	//set initial text
 	SetText(m_DefaultText);
-
-	//get game manager
-	m_TowerWorldManager = GetWorld()->GetSubsystem<UTowerWorldManager>();
-	if (m_TowerWorldManager != nullptr)
-	{
-		//subscribe to world manager
-		m_TowerWorldManager->Subscribe(this);
-
-
-		//initialize colors
-
-		m_targetColor = m_TowerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
-
-		m_currentColor = m_targetColor;
-	}
-	else
-	{
-		//initialize colors
-		m_targetColor = m_dayColor;
-		m_currentColor = m_targetColor;
-	}
 }
 
-void USimpleButtonWidget::update(const UTowerEvent event)
-{
-	if (event == UTowerEvent::IS_NIGHT)
-	{
-		m_targetColor = m_nightColor;
-	}
-	else if (event == UTowerEvent::IS_DAY)
-	{
-		m_targetColor = m_dayColor;
-	}
-}
 
 void USimpleButtonWidget::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
@@ -91,17 +56,6 @@ FReply USimpleButtonWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry,
 	}
 
 	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
-}
-
-
-void USimpleButtonWidget::Show()
-{
-	SetVisibility(ESlateVisibility::Visible);
-}
-
-void USimpleButtonWidget::Hide()
-{
-	SetVisibility(ESlateVisibility::Hidden);
 }
 
 

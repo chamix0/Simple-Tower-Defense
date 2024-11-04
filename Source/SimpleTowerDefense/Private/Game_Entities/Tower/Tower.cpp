@@ -5,6 +5,8 @@
 
 #include "Game_Entities/Enemies/SimpleEnemy.h"
 #include "Game_Entities/Tower/Crosshair/CrosshairActor.h"
+#include "UI/GameBaseWidget.h"
+#include "UI/Hud/HudWidget.h"
 #include "Utils/MyDebugUtils.h"
 
 
@@ -24,9 +26,27 @@ ATower::ATower()
 void ATower::BeginPlay()
 {
 	Super::BeginPlay();
+
+
+	//register tower
+	m_towerWorldManager->SetTower(this);
+
+	// Create UI Base and add it To Screen
+	GameBaseWidget = CreateWidget<UGameBaseWidget>(GetGameInstance(), BaseWidgetClass, FName("Game UI Base"));
+	if (GameBaseWidget != nullptr)
+	{
+		//add ui base to screen
+		GameBaseWidget->AddToViewport();
+		//get HUD from widget
+		HudWidget = GameBaseWidget->GetHudWidget();
+	}
+
 	//set up collision
 	m_TowerMesh->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnTowerOverlap);
 	m_TowerMesh->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnTowerEndOverlap);
+
+	//initialize health
+	SetHealth(m_towerWorldManager->GetMaxTowerHealth());
 
 	//start shooting stopwatch
 	m_shootTimer.Start();
@@ -38,14 +58,27 @@ void ATower::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	//feed the timer
 	m_shootTimer.ReceiveTick(DeltaTime);
+	damageTimer.ReceiveTick(DeltaTime);
+	
+	if (damageTimer.isRunning())
+	{
+		//update real color
+		m_TowerMesh->SetCustomPrimitiveDataVector4(0, DamageColor);
+		if (damageTimer.GetElapsedMiliSeconds() > damageEffectMilliseconds)
+		{
+			damageTimer.Reset();
+		}
+	}
+	else
+	{
+		//update real color
+		m_TowerMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
+	}
+}
 
-	//update real color
-	m_TowerMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
-
-#if WITH_EDITOR
-	//draw debug range
-	DrawDebugSphere(GetWorld(), FVector(0, 0, 0), m_towerWorldManager->GetTowerRange(), 32, FColor::Blue);
-#endif
+UHudWidget* ATower::GetHud() const
+{
+	return HudWidget;
 }
 
 void ATower::OnTowerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -55,8 +88,11 @@ void ATower::OnTowerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 	ASimpleEnemy* Enemy = Cast<ASimpleEnemy>(OtherActor);
 	if (Enemy != nullptr)
 	{
-		Enemy->UnInitializeEnemy();
 		//make damage to self
+		TakeDamage(Enemy->GetHealth());
+
+		//un initialize enemy
+		Enemy->UnInitializeEnemy();
 	}
 }
 
@@ -122,4 +158,20 @@ void ATower::ShootBullet(FVector target)
 		return;
 	}
 	MyDebugUtils::Print("NO BULLET TEMPLATE GIVEN TO ENEMY SPAWNER!!!", FColor::Red);
+}
+
+void ATower::TakeDamage(float amount)
+{
+	SetHealth(FMath::Max(m_health - amount, 0));
+	damageTimer.ReStart();
+	if (m_health <= 0)
+	{
+		//do something
+	}
+}
+
+void ATower::SetHealth(float value)
+{
+	m_health = FMath::Min(value, m_towerWorldManager->GetMaxTowerHealth());
+	HudWidget->UpdateHealth(m_health, m_towerWorldManager->GetMaxTowerHealth());
 }

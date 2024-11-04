@@ -3,7 +3,10 @@
 
 #include "SimpleTowerDefense/Public/Managers/TowerWorldManager.h"
 
+#include "Game_Entities/Tower/Tower.h"
+#include "Kismet/GameplayStatics.h"
 #include "Settings/GameSettings.h"
+#include "UI/Hud/HudWidget.h"
 #include "Utils/MyDebugUtils.h"
 
 void UTowerWorldManager::Initialize(FSubsystemCollectionBase& Collection)
@@ -14,6 +17,7 @@ void UTowerWorldManager::Initialize(FSubsystemCollectionBase& Collection)
 	m_range = GetDefault<UGameSettings>()->InitialTowerRange;
 	m_bulletsSpeed = GetDefault<UGameSettings>()->InitialBulletSpeed;
 	m_ShootsPerSecond = GetDefault<UGameSettings>()->InitialShootsPerSecond;
+	m_maxTowerHealth = GetDefault<UGameSettings>()->InitialMaxHealthRange;
 }
 
 void UTowerWorldManager::Deinitialize()
@@ -53,6 +57,7 @@ int UTowerWorldManager::GetNumDays()
 void UTowerWorldManager::AddDay()
 {
 	m_numDays++;
+	m_tower->GetHud()->SetDays(m_numDays);
 	//maybe call a ui notification
 }
 
@@ -84,4 +89,41 @@ float UTowerWorldManager::GetBulletsSpeed() const
 float UTowerWorldManager::GetShootsPerSecond() const
 {
 	return m_ShootsPerSecond;
+}
+
+int UTowerWorldManager::GetMaxTowerHealth() const
+{
+	return m_maxTowerHealth;
+}
+
+void UTowerWorldManager::SetTower(ATower* tower)
+{
+	m_tower = tower;
+}
+
+int UTowerWorldManager::GetPoints() const
+{
+	return m_points;
+}
+
+void UTowerWorldManager::AddPoints(int ammount)
+{
+	m_points += ammount;
+	m_tower->GetHud()->SetPoints(m_points);
+}
+
+ATower* UTowerWorldManager::GetTower() const
+{
+	return m_tower;
+}
+
+bool UTowerWorldManager::GetPaused() const
+{
+	return m_paused;
+}
+
+void UTowerWorldManager::SetPaused(bool value)
+{
+	m_paused = value;
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetPause(m_paused);
 }

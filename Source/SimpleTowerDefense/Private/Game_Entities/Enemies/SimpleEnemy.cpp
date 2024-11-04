@@ -45,6 +45,8 @@ void ASimpleEnemy::BeginPlay()
 
 void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 {
+	//stop damage timer
+	damageTimer.Reset();
 	//update position
 	SetActorLocation(spawnPosition);
 
@@ -79,6 +81,9 @@ void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 
 void ASimpleEnemy::UnInitializeEnemy()
 {
+	//stop damage timer
+	damageTimer.Reset();
+
 	//make it available again
 	SetIsAvailable(true);
 
@@ -104,10 +109,26 @@ void ASimpleEnemy::UnInitializeEnemy()
 void ASimpleEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	//feed the timer
+	damageTimer.ReceiveTick(DeltaTime);
+
 	if (!m_availible)
 	{
-		//update real color
-		m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
+		if (damageTimer.isRunning())
+		{
+			//update real color
+			m_EnemyMesh->SetCustomPrimitiveDataVector4(0, DamageColor);
+			if (damageTimer.GetElapsedMiliSeconds() > damageEffectMilliseconds)
+			{
+				damageTimer.Reset();
+			}
+		}
+		else
+		{
+			//update real color
+			m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
+		}
+
 
 		//move towards the tower (0,0)
 		Move(DeltaTime);
@@ -124,6 +145,11 @@ void ASimpleEnemy::SetIsAvailable(bool value)
 	m_availible = value;
 }
 
+int ASimpleEnemy::GetHealth() const
+{
+	return m_health;
+}
+
 void ASimpleEnemy::Move(float deltaTime)
 {
 	FVector newPosition = FMath::VInterpConstantTo(GetActorLocation(), FVector(0), deltaTime, m_speed);
@@ -138,7 +164,7 @@ void ASimpleEnemy::OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	if (bullet != nullptr)
 	{
 		bullet->UnInitializeBullet();
-		RemoveHealth(1);
+		RemoveHealth(bullet->GetDamage());
 	}
 }
 
@@ -152,9 +178,13 @@ void ASimpleEnemy::RemoveHealth(int amount)
 	m_health -= amount;
 	m_healthBarWidget->SetValue(m_health, m_MaxHealth);
 
+	damageTimer.ReStart();
+
+
 	//kill the enemy when reached 0
 	if (m_health <= 0)
 	{
 		UnInitializeEnemy();
+		m_towerWorldManager->AddPoints(FMath::Max(1, m_MaxHealth / 2));
 	}
 }

@@ -7,6 +7,7 @@
 #include "Components/WidgetComponent.h"
 #include "Game_Entities/SimpleDayNightActor.h"
 #include "UI/Basics/HealthBar.h"
+#include "Utils/StopWatch.h"
 #include "SimpleEnemy.generated.h"
 
 UCLASS()
@@ -21,17 +22,24 @@ class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 	UWidgetComponent* m_healthBarComponent = nullptr;
 	UPROPERTY()
 	UHealthBar* m_healthBarWidget = nullptr;
-	
+
 	UPROPERTY(EditAnywhere)
-	float m_health;
+	int m_health;
 	UPROPERTY(EditAnywhere)
 	int m_MaxHealth = 10;
 	UPROPERTY(EditAnywhere)
 	float m_speed = 1;
 	UPROPERTY()
 	bool m_availible = true;
+
+
 	UPROPERTY(EditAnywhere)
 	UNiagaraSystem* m_ExplosionParticles = nullptr;
+	FStopWatch damageTimer;
+	UPROPERTY(EditAnywhere)
+	FLinearColor DamageColor = FColor::Red;
+	UPROPERTY(EditAnywhere)
+	int damageEffectMilliseconds = 100;
 
 public:
 	// Sets default values for this actor's properties
@@ -49,6 +57,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	bool GetIsAvailable() const;
 	void SetIsAvailable(bool value);
+	int GetHealth() const;
 
 private:
 	void Move(float deltaTime);

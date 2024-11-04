@@ -9,6 +9,7 @@
 #include "Subsystems/WorldSubsystem.h"
 #include "TowerWorldManager.generated.h"
 
+class ATower;
 /**
  * 
  */
@@ -20,16 +21,22 @@ class SIMPLETOWERDEFENSE_API UTowerWorldManager : public UWorldSubsystem, public
 	virtual void Deinitialize() override;
 
 private:
+	bool m_paused = false;
 	bool m_isDay = true;
-	int m_numDays;
+	int m_numDays = 0;
+	int m_points = 0;
 
 
 	UPROPERTY()
 	FEnemyPool m_enemyPool;
 	FBulletPool m_bulletPool;
 
+	UPROPERTY()
+	ATower* m_tower = nullptr;
 
 	/* Tower attributes */
+	UPROPERTY()
+	int m_maxTowerHealth = 100;
 	UPROPERTY()
 	float m_range = 200.f;
 	UPROPERTY()
@@ -49,4 +56,12 @@ public:
 	float GetTowerRange() const;
 	float GetBulletsSpeed() const;
 	float GetShootsPerSecond() const;
+	int GetMaxTowerHealth() const;
+	void SetTower(ATower* tower);
+	int GetPoints() const;
+	void AddPoints(int ammount);
+	ATower* GetTower() const;
+	bool GetPaused()const;
+	void SetPaused(bool value);
+
 };
