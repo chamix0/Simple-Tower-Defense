@@ -10,3 +10,13 @@ enum class UTowerEvent : uint8
 	CROSSHAIR_REQUESTS_TARGET,
 	COUNT
 };
+
+UENUM(BlueprintType)
+enum class UShootingPolicy : uint8
+{
+	CLOSEST,
+	FURTHEST,
+	STRONGUEST,
+	WEAKEST,
+	SHOOTINGPOLICY_COUNT
+};

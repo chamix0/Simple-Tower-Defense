@@ -70,9 +70,19 @@ void UDayNightWidget::Hide()
 void UDayNightWidget::SetDayColor(FLinearColor Color)
 {
 	m_dayColor = Color;
+	//initialize colors
+	m_targetColor = m_TowerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
+	m_targetOppositeColor = m_TowerWorldManager->GetIsDay() ? m_nightColor : m_dayColor;
+	m_currentColor = m_targetColor;
+	m_currentOppositeColor = m_targetOppositeColor;
 }
 
 void UDayNightWidget::SetNightColor(FLinearColor Color)
 {
 	m_nightColor = Color;
+	//initialize colors
+	m_targetColor = m_TowerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
+	m_targetOppositeColor = m_TowerWorldManager->GetIsDay() ? m_nightColor : m_dayColor;
+	m_currentColor = m_targetColor;
+	m_currentOppositeColor = m_targetOppositeColor;
 }

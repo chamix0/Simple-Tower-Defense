@@ -19,7 +19,7 @@ UCLASS()
 class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UDayNightWidget
 {
 	GENERATED_BODY()
-
+protected:
 	//sound to play
 	UPROPERTY()
 	UAudioComponent* audioComponent = nullptr;
@@ -57,6 +57,7 @@ public:
 
 protected:
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
 	virtual void NativeOnInitialized() override;
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
@@ -76,8 +77,8 @@ public:
 
 	/// highlight or not the button
 	/// @param highlighted 
-	void SetHighLight(bool highlighted);
-	void SetMouseHighLight(bool MouseHighlight);
+	virtual void SetHighLight(bool highlighted);
+	virtual void SetMouseHighLight(bool MouseHighlight);
 
 	void PerformSelectAction();
 	//Events

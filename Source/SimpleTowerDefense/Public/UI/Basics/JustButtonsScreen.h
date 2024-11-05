@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "CommonActivatableWidget.h"
+#include "Managers/TowerWorldManager.h"
 #include "UI/BaseWidget.h"
 #include "JustButtonsScreen.generated.h"
 
@@ -17,6 +18,8 @@ class SIMPLETOWERDEFENSE_API UJustButtonsScreen : public UCommonActivatableWidge
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY()
+	UTowerWorldManager* m_towerWorldManger = nullptr;
 	//hud
 	UPROPERTY()
 	UBaseWidget* m_BaseWidget = nullptr;
@@ -27,8 +30,6 @@ protected:
 
 	//current button index
 	int buttonIndex = 0;
-
-
 
 public:
 	/// Called when the widget is activated
@@ -60,6 +61,6 @@ protected:
 	virtual void HandleSelectAction();
 	UFUNCTION(BlueprintCallable)
 	virtual void HandleReturnAction();
-	
+
 	void UpdateSelectedButton(int index);
 };

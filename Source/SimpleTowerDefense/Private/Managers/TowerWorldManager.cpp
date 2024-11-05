@@ -96,6 +96,11 @@ int UTowerWorldManager::GetMaxTowerHealth() const
 	return m_maxTowerHealth;
 }
 
+void UTowerWorldManager::IncreaseMaxTowerHealth(int amount)
+{
+	m_maxTowerHealth += amount;
+}
+
 void UTowerWorldManager::SetTower(ATower* tower)
 {
 	m_tower = tower;
@@ -106,10 +111,21 @@ int UTowerWorldManager::GetPoints() const
 	return m_points;
 }
 
-void UTowerWorldManager::AddPoints(int ammount)
+void UTowerWorldManager::AddPoints(int amount)
 {
-	m_points += ammount;
+	m_points += amount;
 	m_tower->GetHud()->SetPoints(m_points);
+}
+
+bool UTowerWorldManager::RemovePoints(int amount)
+{
+	bool canSubtract = m_points - amount >= 0;
+	if (canSubtract)
+	{
+		m_points -= amount;
+	}
+	m_tower->GetHud()->SetPoints(m_points);
+	return canSubtract;
 }
 
 ATower* UTowerWorldManager::GetTower() const

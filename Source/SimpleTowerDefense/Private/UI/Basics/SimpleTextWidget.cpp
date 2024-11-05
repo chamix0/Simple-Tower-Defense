@@ -6,7 +6,6 @@
 #include "Settings/GameSettings.h"
 
 
-
 void USimpleTextWidget::SetText(FText body, bool highlighted)
 {
 	//set the current text to write but being parsed on the first place to make the writing easier
@@ -69,6 +68,13 @@ void USimpleTextWidget::SetHighlighted(bool value)
 void USimpleTextWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
+
+	
+	
+	if (!InitialText.IsEmpty())
+	{
+		SetText(InitialText);
+	}
 }
 
 void USimpleTextWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)

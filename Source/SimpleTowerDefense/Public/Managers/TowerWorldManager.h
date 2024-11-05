@@ -57,9 +57,12 @@ public:
 	float GetBulletsSpeed() const;
 	float GetShootsPerSecond() const;
 	int GetMaxTowerHealth() const;
+	void IncreaseMaxTowerHealth(int amount) ;
+
 	void SetTower(ATower* tower);
 	int GetPoints() const;
-	void AddPoints(int ammount);
+	void AddPoints(int amount);
+	bool RemovePoints(int amount);
 	ATower* GetTower() const;
 	bool GetPaused()const;
 	void SetPaused(bool value);

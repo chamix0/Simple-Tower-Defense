@@ -12,7 +12,7 @@
 void UJustButtonsScreen::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
-
+	m_towerWorldManger = GetWorld()->GetSubsystem<UTowerWorldManager>();
 	//get hud
 	TArray<UUserWidget*> widgetsfound;
 	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), widgetsfound, UBaseWidget::StaticClass());
@@ -24,6 +24,8 @@ void UJustButtonsScreen::NativeOnInitialized()
 	//reset buttons
 	buttonIndex = -1;
 	UpdateSelectedButton(buttonIndex);
+
+	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
 }
 
 void UJustButtonsScreen::NativeOnActivated()
@@ -90,8 +92,6 @@ void UJustButtonsScreen::DeleteAllButtons()
 		DeleteButton(0);
 	}
 }
-
-
 
 
 void UJustButtonsScreen::UpdateSelectedButton(int index)

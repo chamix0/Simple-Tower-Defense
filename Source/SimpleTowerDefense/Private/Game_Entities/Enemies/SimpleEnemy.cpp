@@ -150,6 +150,11 @@ int ASimpleEnemy::GetHealth() const
 	return m_health;
 }
 
+int ASimpleEnemy::GetMaxHealth() const
+{
+	return m_MaxHealth;
+}
+
 void ASimpleEnemy::Move(float deltaTime)
 {
 	FVector newPosition = FMath::VInterpConstantTo(GetActorLocation(), FVector(0), deltaTime, m_speed);

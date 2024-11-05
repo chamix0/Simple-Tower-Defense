@@ -23,7 +23,8 @@ class SIMPLETOWERDEFENSE_API USimpleTextWidget : public UDayNightWidget
 	//text block to write on
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* m_TextBlock = nullptr;
-
+	UPROPERTY(EditAnywhere,meta=(MultiLine))
+	FText InitialText;
 	//parameters
 	//time until next update
 	UPROPERTY(EditAnywhere)

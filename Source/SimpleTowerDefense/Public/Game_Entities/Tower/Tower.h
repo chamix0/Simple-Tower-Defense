@@ -34,7 +34,10 @@ private:
 	UStaticMeshComponent* m_TowerMesh = nullptr;
 	UPROPERTY(EditAnywhere)
 	ACrosshairActor* M_CrosshairActor = nullptr;
-
+	//shooting policy
+	UPROPERTY()
+	UShootingPolicy m_currentShootingPolicy = UShootingPolicy::CLOSEST;
+	
 	//shoot cooldown
 	FStopWatch m_shootTimer;
 
@@ -61,7 +64,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	UHudWidget* GetHud() const;
-
+	UGameBaseWidget* GetGameBaseWidget() const;
+	void SetShootingPolicy(UShootingPolicy policy);
+	UShootingPolicy GetCurrentShootingPolicy() const;
 private:
 	UFUNCTION()
 	void OnTowerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -71,9 +76,15 @@ private:
 	void OnTowerEndOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor,
 	                       class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	virtual void update(const UTowerEvent event) override;
+	/*shooting policy*/
 	ASimpleEnemy* SelectEnemyTarget();
+	ASimpleEnemy* SelectClosestEnemyTarget();
+	ASimpleEnemy* SelectFarthesEnemyTarget();
+	ASimpleEnemy* SelectStronguestEnemyTarget();
+	ASimpleEnemy* SelectweakestEnemyTarget();
+
+
 	void ShootBullet(FVector target);
 	void TakeDamage(float amount);
 	void SetHealth(float value);
-
 };

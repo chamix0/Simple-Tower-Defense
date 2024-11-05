@@ -58,6 +58,7 @@ public:
 	bool GetIsAvailable() const;
 	void SetIsAvailable(bool value);
 	int GetHealth() const;
+	int GetMaxHealth() const;
 
 private:
 	void Move(float deltaTime);
