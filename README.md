@@ -1,32 +1,43 @@
-Simple Tower defense.
 
-This is a small game to show my UI skills. Basically is a very basic tower defense where the goal is to survive for as many days as you can. For this project I used Common UI as base for the user interface to manage inputs and to make easier working with different menus.
 
-![STD_1](https://github.com/user-attachments/assets/50fdaf70-d359-4dac-84ba-62e1fa0dc332)
+# Simple Tower Defense
 
-Key features:
+This is a small game designed to showcase my UI skills. **Simple Tower Defense** is a basic tower defense game where the goal is to survive as many days as possible. The project uses **Common UI** to manage input handling across different menus and make the user interface responsive to various devices.
 
-- Day and night cycle: All the elements in the game have associated two colors, one for the day and other night. The way I made this possible is by having a single manger that controlls the time and by using the Observer patter It is communicated to all the other objects.
-- Common ui: the menus are all common actibable widgets which allows me to add the to a common activable stack so I can add layers of activable widgets with out having to worry about which one has the focus. Common ui, also allows me to represent in a much better way the inputs in the the UI with the common action widgets which control which input method is being used and consecuently shows the correct icon.
-- Full keyboard , mouse and gamepad support.
+![Game Screenshot](https://github.com/user-attachments/assets/50fdaf70-d359-4dac-84ba-62e1fa0dc332)
 
-Menus
-- Main menu: it is formed by the buttons that take you either to the quit to menu screen or to the game level and by a splash screen. this screen is the first thing you see before accesing to the buttons.
+## Key Features
 
-![STD_2](https://github.com/user-attachments/assets/01599fd0-0323-45b5-8fbb-2a00ea0e71ea)
+- **Day and Night Cycle**: All game elements have both day and night colors. A single manager controls the time, and by using the Observer pattern, all relevant objects are updated accordingly.
+  
+- **Common UI**: The menus are made with common activatable widgets, allowing them to be easily added to an activatable stack. This enables layered widget functionality without worrying about focus management. Common UI also manages input displays, automatically showing the correct icon based on the input method.
 
-- End Game menu: the end game menu basically is a way to end a game and start another or just stop playing, it also tells you your score.
+- **Full Keyboard, Mouse, and Gamepad Support**
 
-![STD_3](https://github.com/user-attachments/assets/adfa38a0-3556-4bd6-95b8-352651cf5764)
+## Menus
 
-Hud:
+### Main Menu
 
-![STD_4](https://github.com/user-attachments/assets/5c5b037e-4ddc-4032-9b5b-a2401466b13b)
-- Pause Button: allows you to pause the game to take a moment to think. it can also be triggered using inputs. when the game is paused the exit hint apears in case the player wants to quit.
-- Shotting policy button: allows you to change the way the crosshair targets the enemies, the availible shooting policies are closest,farthest,weakest and strongest.
-- game speed button: allows the player to change the speed of the game.
-- Health bar: shows the current health in a visual way, in the stat widget you can see the actual values.
-- Lower and upper bars: all the widgets are anchored to this bars, so they can show and hide the content by moving it away.
-- Upgrades: the three bottom buttons indicate the upgrade branches, this are upgrades that make you survive longer. this upgrades uses points as currency which you get when you kill an enemy. on the other hand this upgrades are locked per days, meaning that some upgrades wont be availible until a certain day. finally this upgrades cost incrementally so each time will be a bit more spensive.
-- cross hair: the cross hair actually is not in the hud but it is a widget component in the tower. this crosshairs move to their target and adapt to its size. You can also have multiple crosshairs which will work simultanouslly.
-![STD_5](https://github.com/user-attachments/assets/b621bcd1-f9c7-4dfb-8371-2670a972253d)
+The main menu includes buttons for starting the game or quitting, along with a splash screen as the first screen you see.
+
+![Main Menu Screenshot](https://github.com/user-attachments/assets/01599fd0-0323-45b5-8fbb-2a00ea0e71ea)
+
+### End Game Menu
+
+The End Game menu provides options to start a new game or quit, and displays your final score.
+
+![End Game Menu Screenshot](https://github.com/user-attachments/assets/adfa38a0-3556-4bd6-95b8-352651cf5764)
+
+## Heads-Up Display (HUD)
+
+![HUD Screenshot](https://github.com/user-attachments/assets/5c5b037e-4ddc-4032-9b5b-a2401466b13b)
+
+- **Pause Button**: Pauses the game and displays an exit hint if the player wishes to quit.
+- **Shooting Policy Button**: Allows players to adjust the targeting behavior of the crosshair. Available modes include *Closest*, *Farthest*, *Weakest*, and *Strongest* targets.
+- **Game Speed Button**: Allows players to change the game speed.
+- **Health Bar**: Displays the current health visually, with exact values shown in a stats widget.
+- **Lower and Upper Bars**: Anchors for the HUD widgets, enabling them to show and hide content by shifting it in and out of view.
+- **Upgrades**: Three bottom buttons represent different upgrade branches to improve survivability. Upgrades cost points, which players earn by defeating enemies. Some upgrades are unlocked based on the day count, and prices increase with each purchase.
+- **Crosshair**: The crosshair is a widget component in the tower that moves to targets and adjusts to target size. Multiple crosshairs can operate simultaneously.
+
+![Crosshair Screenshot](https://github.com/user-attachments/assets/b621bcd1-f9c7-4dfb-8371-2670a972253d)
