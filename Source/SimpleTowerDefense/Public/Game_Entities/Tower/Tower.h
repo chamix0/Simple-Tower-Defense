@@ -83,8 +83,11 @@ private:
 	ASimpleEnemy* SelectStronguestEnemyTarget();
 	ASimpleEnemy* SelectweakestEnemyTarget();
 
-
+public:
 	void ShootBullet(FVector target);
 	void TakeDamage(float amount);
 	void SetHealth(float value);
+	void AddHealth(float value);
+
+	
 };

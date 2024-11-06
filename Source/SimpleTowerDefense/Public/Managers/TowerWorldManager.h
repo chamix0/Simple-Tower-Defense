@@ -35,8 +35,17 @@ private:
 	ATower* m_tower = nullptr;
 
 	/* Tower attributes */
+	//health attributes
 	UPROPERTY()
 	int m_maxTowerHealth = 100;
+	UPROPERTY()
+	int m_regenPerDay = 0;
+	UPROPERTY()
+	int m_lifeStealChance = 0;
+	UPROPERTY()
+	int m_lifeStealAmmount = 1;
+
+	//damage attributes
 	UPROPERTY()
 	float m_range = 200.f;
 	UPROPERTY()
@@ -57,14 +66,19 @@ public:
 	float GetBulletsSpeed() const;
 	float GetShootsPerSecond() const;
 	int GetMaxTowerHealth() const;
-	void IncreaseMaxTowerHealth(int amount) ;
-
+	void IncreaseMaxTowerHealth(int amount);
 	void SetTower(ATower* tower);
 	int GetPoints() const;
 	void AddPoints(int amount);
 	bool RemovePoints(int amount);
 	ATower* GetTower() const;
-	bool GetPaused()const;
+	bool GetPaused() const;
 	void SetPaused(bool value);
+	int GetRegenPerDay() const;
+	void AddRegenPerDay(int amount);
+	int GetLifeStealChance() const;
+	int GetLifeStealAmount() const;
+	void AddLifeStealChance(int value);
+	void AddLifeStealAmount(int value);
 
 };

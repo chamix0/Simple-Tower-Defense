@@ -134,6 +134,19 @@ void ATower::update(const UTowerEvent event)
 			m_shootTimer.ReStart();
 		}
 	}
+	else if (event == UTowerEvent::IS_DAY)
+	{
+		//regen life
+		AddHealth(m_towerWorldManager->GetRegenPerDay());
+		
+		//show notification
+		if (m_towerWorldManager->GetRegenPerDay()>0)
+		{
+			GetHud()->PushNotification(
+				"Regained " + FString::FromInt(m_towerWorldManager->GetRegenPerDay()) + " Health points", 2.f);
+		}
+		}
+		
 }
 
 ASimpleEnemy* ATower::SelectEnemyTarget()
@@ -268,7 +281,6 @@ void ATower::TakeDamage(float amount)
 	if (m_health <= 0)
 	{
 		//do something
-		
 	}
 }
 
@@ -276,4 +288,9 @@ void ATower::SetHealth(float value)
 {
 	m_health = FMath::Min(value, m_towerWorldManager->GetMaxTowerHealth());
 	HudWidget->UpdateHealth(m_health, m_towerWorldManager->GetMaxTowerHealth());
+}
+
+void ATower::AddHealth(float value)
+{
+	SetHealth(FMath::Min(m_health + value, m_towerWorldManager->GetMaxTowerHealth()));
 }

@@ -6,6 +6,7 @@
 #include "Game_Entities/Tower/Tower.h"
 #include "Settings/GameSettings.h"
 #include "UI/GameBaseWidget.h"
+#include "Utils/UiUtils.h"
 
 void UHudWidget::NativeOnInitialized()
 {
@@ -176,18 +177,62 @@ void UHudWidget::HandlePrevAction()
 	HandleSelectAction();
 }
 
+void UHudWidget::HandleRightAction()
+{
+	if (m_lowerBarVisible && m_towerWorldManager->GetTower()->GetGameBaseWidget()->
+	                                              IsUpperMostWidget(this))
+	{
+		if (buttonIndex == UiUtils::FindButtonIndex(m_healthBranchButton, m_buttons))
+		{
+			m_healthBranch->HandlePrevAction();
+		}
+	}
+}
+
+void UHudWidget::HandleLeftAction()
+{
+	if (m_lowerBarVisible && m_towerWorldManager->GetTower()->GetGameBaseWidget()->
+	                                              IsUpperMostWidget(this))
+	{
+		if (buttonIndex == UiUtils::FindButtonIndex(m_healthBranchButton, m_buttons))
+		{
+			m_healthBranch->HandleNextAction();
+		}
+	}
+}
+
+void UHudWidget::HandleConfirmAction()
+{
+	if (m_lowerBarVisible && m_towerWorldManager->GetTower()->GetGameBaseWidget()->
+	                                              IsUpperMostWidget(this))
+	{
+		if (buttonIndex == UiUtils::FindButtonIndex(m_healthBranchButton, m_buttons))
+		{
+			m_healthBranch->HandleSelectAction();
+		}
+	}
+}
+
 
 void UHudWidget::HealthBranchAction()
 {
 	m_healthBranch->Show();
+	ShowLowerBar();
 }
 
 void UHudWidget::DamageBranchAction()
 {
 	m_healthBranch->Hide();
+	ShowLowerBar();
 }
 
 void UHudWidget::PointsBranchAction()
 {
 	m_healthBranch->Hide();
+	ShowLowerBar();
+}
+
+void UHudWidget::PushNotification(FString textToDisplay, float time)
+{
+	m_notificationsWidget->PushText(textToDisplay, time);
 }

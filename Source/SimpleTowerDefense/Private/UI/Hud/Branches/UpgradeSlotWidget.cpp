@@ -3,6 +3,9 @@
 
 #include "UI/Hud/Branches/UpgradeSlotWidget.h"
 
+#include "Game_Entities/Tower/Tower.h"
+#include "UI/Hud/HudWidget.h"
+
 
 void UUpgradeSlotWidget::update(const UTowerEvent event)
 {
@@ -93,12 +96,14 @@ bool UUpgradeSlotWidget::TryUpgrade()
 	//locked
 	if (!m_unlocked)
 	{
+		m_TowerWorldManager->GetTower()->GetHud()->PushNotification("this Upgrade is still locked",2.f);
 		return false;
 	}
 
 	//sold out
 	if (m_numUpgrades >= MaxUpgrades)
 	{
+		m_TowerWorldManager->GetTower()->GetHud()->PushNotification("Upgrade limit reached...",2.f);
 		return false;
 	}
 

@@ -8,7 +8,9 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Game_Entities/Tower/Tower.h"
 #include "Settings/GameSettings.h"
+#include "UI/Hud/HudWidget.h"
 
 
 // Sets default values
@@ -191,5 +193,15 @@ void ASimpleEnemy::RemoveHealth(int amount)
 	{
 		UnInitializeEnemy();
 		m_towerWorldManager->AddPoints(FMath::Max(1, m_MaxHealth / 2));
+
+		//life steal
+		int randomNum = FMath::RandRange(0, 100);
+		if (randomNum <= m_towerWorldManager->GetLifeStealChance())
+		{
+			int quantity = FMath::Min(m_MaxHealth, m_towerWorldManager->GetLifeStealAmount());
+			m_towerWorldManager->GetTower()->GetHud()->PushNotification(
+				"Stole " + FString::FromInt(quantity) + " Health points from enemy's life", 0.5f);
+			m_towerWorldManager->GetTower()->AddHealth(quantity);
+		}
 	}
 }

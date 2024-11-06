@@ -10,42 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e6f734c9-125e-4fe6-bb4a-c0c65e477346" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/Branches/HealthUpgradesWidget.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/Branches/UpgradeSlotWidget.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Menus/QuitToMenu/QuitToMenuScreen.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Hud/Branches/HealthUpgradesWidget.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Hud/Branches/UpgradeSlotWidget.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Menus/QuitToMenu/QuitToMenuScreen.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/Notifications/HudNotificationsWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Hud/Notifications/HudNotificationsWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleTowerDefense/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleTowerDefense/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Player/BP_Tower.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Player/BP_Tower.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Inputs/CommonUI/ControllerData_Gamepad.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Inputs/CommonUI/ControllerData_Gamepad.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Inputs/CommonUI/ControllerData_Pc.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Inputs/CommonUI/ControllerData_Pc.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Inputs/CommonUI/InputActionTable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Inputs/CommonUI/InputActionTable.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/Input_Actions/Gameplay/IA_Test.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/Input_Actions/UI/IA_UI_Confirm.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Inputs/Input_Actions/UI/IA_UI_Confirm.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Inputs/Input_Maps/IMC_Game.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Inputs/Input_Maps/IMC_Game.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Inputs/Input_Maps/IMC_UI.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Inputs/Input_Maps/IMC_UI.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/MAP_Game.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/MAP_Game.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Hud/Buttons/WB_PauseButton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Hud/Buttons/WB_PauseButton.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Hud/Texts/WB_SimpleHudTextPause.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Hud/Texts/WB_SimpleHudTextPause.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Hud/Branches/WB_HealthUpgradesWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Hud/Branches/WB_HealthUpgradesWidget.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/UI/Hud/WB_HudWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Hud/WB_HudWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Hud/WB_SimpleBackground.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Texts/WB_SimpleText.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Texts/WB_SimpleText.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Enemies/SimpleEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Enemies/SimpleEnemy.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Tower/Tower.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Game_Entities/Tower/Tower.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TowerWorldManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/Managers/TowerWorldManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Basics/DayNightWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Basics/DayNightWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Basics/JustButtonsScreen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Basics/JustButtonsScreen.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Basics/SimpleTextWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Basics/SimpleTextWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/Branches/HealthUpgradesWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/Branches/HealthUpgradesWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/Branches/UpgradeSlotWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/Branches/UpgradeSlotWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/HudWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/HudWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Enemies/SimpleEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Enemies/SimpleEnemy.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Tower/Tower.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Tower/Tower.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Managers/TowerWorldManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Managers/TowerWorldManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Basics/JustButtonsScreen.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Basics/JustButtonsScreen.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Basics/SimpleButtonWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Basics/SimpleButtonWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Basics/SimpleTextWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Basics/SimpleTextWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Hud/Branches/HealthUpgradesWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Hud/Branches/HealthUpgradesWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Hud/HudWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/UI/Hud/HudWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Utils/MyEnums.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Utils/MyEnums.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +40,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -262,6 +248,11 @@
           <url>file://$PROJECT_DIR$/Source/SimpleTowerDefense/Public/Game_Entities/Other/GroundActor.h</url>
           <line>27</line>
           <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/SimpleTowerDefense/Private/UI/Hud/HudWidget.cpp</url>
+          <line>184</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

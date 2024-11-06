@@ -52,6 +52,7 @@ protected:
 	/// @param index 
 	void DeleteButton(int index);
 	void DeleteAllButtons();
+public:
 	//handle actions
 	UFUNCTION(BlueprintCallable)
 	virtual void HandlePrevAction();

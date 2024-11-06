@@ -8,6 +8,7 @@
 #include "Components/HorizontalBox.h"
 #include "Components/Image.h"
 #include "Components/ScaleBox.h"
+#include "Notifications/HudNotificationsWidget.h"
 #include "UI/Basics/DayNightWidget.h"
 #include "UI/Basics/HealthBar.h"
 #include "UI/Basics/SimpleBackground.h"
@@ -60,7 +61,10 @@ class SIMPLETOWERDEFENSE_API UHudWidget : public UJustButtonsScreen
 	USimpleTextWidget* m_daysCount = nullptr;
 	UPROPERTY(meta=(BindWidget))
 	USimpleTextWidget* m_pointsCount = nullptr;
-
+	//notifications
+	UPROPERTY(meta=(BindWidget))
+	UHudNotificationsWidget* m_notificationsWidget = nullptr;
+	
 	//hints
 	UPROPERTY(meta=(BindWidget))
 	UHorizontalBox* m_exitInputHint = nullptr;
@@ -110,6 +114,12 @@ public:
 	virtual void HandleReturnAction() override;
 	virtual void HandleNextAction() override;
 	virtual void HandlePrevAction() override;
+	UFUNCTION(BlueprintCallable)
+	void HandleRightAction();
+	UFUNCTION(BlueprintCallable)
+	void HandleLeftAction();
+	UFUNCTION(BlueprintCallable)
+	void HandleConfirmAction();
 	//branch action
 	UFUNCTION()
 	void HealthBranchAction();
@@ -117,4 +127,6 @@ public:
 	void DamageBranchAction();
 	UFUNCTION()
 	void PointsBranchAction();
+	UFUNCTION(BlueprintCallable)
+	void PushNotification(FString textToDisplay, float time);
 };

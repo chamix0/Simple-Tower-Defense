@@ -3,6 +3,8 @@
 
 #include "UI/Hud/Branches/HealthUpgradesWidget.h"
 
+#include "UI/Hud/HudWidget.h"
+
 void UHealthUpgradesWidget::Hide()
 {
 	SetVisibility(ESlateVisibility::Collapsed);
@@ -48,19 +50,37 @@ void UHealthUpgradesWidget::MaxHealthAction()
 	bool result = m_MaxHealthUpgrade->TryUpgrade();
 	if (result)
 	{
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Max health increased!!!", 2.f);
 		m_towerWorldManger->IncreaseMaxTowerHealth(1);
 	}
 }
 
 void UHealthUpgradesWidget::LifeRegenAction()
 {
-	
+	bool result = m_LifeRegenUpgrade->TryUpgrade();
+	if (result)
+	{
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Daily regeneration increased!!!", 2.f);
+		m_towerWorldManger->AddRegenPerDay(1);
+	}
 }
 
 void UHealthUpgradesWidget::LifeStealChanceAction()
 {
+	bool result = m_LifeStealChanceUpgrade->TryUpgrade();
+	if (result)
+	{
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Life steal chance increased!!!", 2.f);
+		m_towerWorldManger->AddLifeStealChance(2);
+	}
 }
 
 void UHealthUpgradesWidget::LifeStealAmountAction()
 {
+	bool result = m_LifeStealAmountUpgrade->TryUpgrade();
+	if (result)
+	{
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Life steal amount increased!!!", 2.f);
+		m_towerWorldManger->AddLifeStealChance(1);
+	}
 }

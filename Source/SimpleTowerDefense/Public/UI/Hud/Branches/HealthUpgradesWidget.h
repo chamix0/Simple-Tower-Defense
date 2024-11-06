@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UpgradeSlotWidget.h"
 #include "UI/Basics/JustButtonsScreen.h"
+#include "Game_Entities/Tower/Tower.h"
 #include "HealthUpgradesWidget.generated.h"
 
 /**

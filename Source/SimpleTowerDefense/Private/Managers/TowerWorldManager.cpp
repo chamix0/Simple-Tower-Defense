@@ -45,8 +45,9 @@ void UTowerWorldManager::StartDay()
 	AddDay();
 	//notify observers that is day
 	Notify(UTowerEvent::IS_DAY);
-	FString aux = "Starting day: " + FString::FromInt(m_numDays);
-	MyDebugUtils::Print(aux);
+
+	FString aux = "Starting day " + FString::FromInt(m_numDays);
+	m_tower->GetHud()->PushNotification(aux, 2.f);
 }
 
 int UTowerWorldManager::GetNumDays()
@@ -123,8 +124,12 @@ bool UTowerWorldManager::RemovePoints(int amount)
 	if (canSubtract)
 	{
 		m_points -= amount;
+		m_tower->GetHud()->SetPoints(m_points);
 	}
-	m_tower->GetHud()->SetPoints(m_points);
+	else
+	{
+		GetTower()->GetHud()->PushNotification("Not enough points...", 2.f);
+	}
 	return canSubtract;
 }
 
@@ -142,4 +147,34 @@ void UTowerWorldManager::SetPaused(bool value)
 {
 	m_paused = value;
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetPause(m_paused);
+}
+
+int UTowerWorldManager::GetRegenPerDay() const
+{
+	return m_regenPerDay;
+}
+
+void UTowerWorldManager::AddRegenPerDay(int amount)
+{
+	m_regenPerDay += amount;
+}
+
+int UTowerWorldManager::GetLifeStealChance() const
+{
+	return m_lifeStealChance;
+}
+
+int UTowerWorldManager::GetLifeStealAmount() const
+{
+	return m_lifeStealAmmount;
+}
+
+void UTowerWorldManager::AddLifeStealChance(int value)
+{
+	m_lifeStealChance = FMath::Min(m_lifeStealChance + value, 100);
+}
+
+void UTowerWorldManager::AddLifeStealAmount(int value)
+{
+	m_lifeStealAmmount += value;
 }
