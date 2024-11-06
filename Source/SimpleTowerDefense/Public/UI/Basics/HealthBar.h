@@ -16,7 +16,7 @@ UCLASS()
 class SIMPLETOWERDEFENSE_API UHealthBar : public UUserWidget, public Observer
 {
 	GENERATED_BODY()
-
+protected:
 	UPROPERTY(meta=(BindWidget))
 	UProgressBar* m_MainHealthBar = nullptr;
 
@@ -38,7 +38,7 @@ public:
 	void Hide();
 
 	void SetValue(float currentHealth, float MaxHealth);
-private:
+protected:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	virtual void update(const UTowerEvent event) override;

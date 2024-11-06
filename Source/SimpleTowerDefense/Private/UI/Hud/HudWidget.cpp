@@ -37,7 +37,7 @@ void UHudWidget::NativeOnInitialized()
 	//hide branches
 	m_healthBranch->Hide();
 	m_damageBranch->Hide();
-	m_pointsCount->Hide();
+	m_PointsBranch->Hide();
 	//hide exit hint
 	m_exitInputHint->SetRenderOpacity(0);
 }
@@ -53,6 +53,11 @@ void UHudWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	M_LowerBox->SetRenderTranslation(FVector2D(0, FMath::FInterpTo(M_LowerBox->GetRenderTransform().Translation.Y,
 	                                                               !m_lowerBarVisible * lowerBarTarget, InDeltaTime,
 	                                                               GetDefault<UGameSettings>()->ColorChangeSpeed)));
+	//stats
+	M_StatsBox->SetRenderTranslation(FVector2D(FMath::FInterpTo(M_StatsBox->GetRenderTransform().Translation.X,
+															   !m_statsVisible * StatsTarget, InDeltaTime,
+															   GetDefault<UGameSettings>()->ColorChangeSpeed),0));
+	
 	m_HideShowUpperInputHint->SetRenderTransformAngle(FMath::FInterpTo(
 		m_HideShowUpperInputHint->GetRenderTransformAngle(), m_upperBarVisible ? 180 : 0, InDeltaTime,
 		GetDefault<UGameSettings>()->ColorChangeSpeed));
@@ -78,7 +83,7 @@ void UHudWidget::SetDays(int num)
 
 void UHudWidget::SetPoints(int num)
 {
-	m_pointsCount->SetText(FText::FromString("Points: " + FString::FromInt(num)));
+	m_pointsCount->SetTextDirectly(FText::FromString("Points: " + FString::FromInt(num)));
 }
 
 void UHudWidget::PauseAction()
@@ -168,6 +173,15 @@ void UHudWidget::ShowHideLowerBar()
 	                         IsUpperMostWidget(this))
 	{
 		m_lowerBarVisible = !m_lowerBarVisible;
+	}
+}
+
+void UHudWidget::ShowHideStats()
+{
+	if (m_towerWorldManager->GetTower()->GetGameBaseWidget()->
+						 IsUpperMostWidget(this))
+	{
+		m_statsVisible = !m_statsVisible;
 	}
 }
 

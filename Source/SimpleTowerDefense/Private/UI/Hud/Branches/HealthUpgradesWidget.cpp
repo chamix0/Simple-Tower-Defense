@@ -52,7 +52,9 @@ void UHealthUpgradesWidget::MaxHealthAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Max health increased!!!", 2.f);
 		m_towerWorldManger->IncreaseMaxTowerHealth(1);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_MaxHealthUpgrade->UpdateButton();
 }
 
 void UHealthUpgradesWidget::LifeRegenAction()
@@ -62,7 +64,9 @@ void UHealthUpgradesWidget::LifeRegenAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Daily regeneration increased!!!", 2.f);
 		m_towerWorldManger->AddRegenPerDay(1);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_LifeRegenUpgrade->UpdateButton();
 }
 
 void UHealthUpgradesWidget::LifeStealChanceAction()
@@ -72,7 +76,9 @@ void UHealthUpgradesWidget::LifeStealChanceAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Life steal chance increased!!!", 2.f);
 		m_towerWorldManger->AddLifeStealChance(2);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_LifeStealChanceUpgrade->UpdateButton();
 }
 
 void UHealthUpgradesWidget::LifeStealAmountAction()
@@ -82,5 +88,7 @@ void UHealthUpgradesWidget::LifeStealAmountAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Life steal amount increased!!!", 2.f);
 		m_towerWorldManger->AddLifeStealChance(1);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_LifeStealAmountUpgrade->UpdateButton();
 }

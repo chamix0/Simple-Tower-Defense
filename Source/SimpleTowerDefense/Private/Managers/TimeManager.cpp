@@ -19,6 +19,7 @@ void ATimeManager::BeginPlay()
 	Super::BeginPlay();
 	//get tower world manager
 	m_towerWorldManager = GetWorld()->GetSubsystem<UTowerWorldManager>();
+	m_towerWorldManager->SetTimeManager(this);
 	m_dayStopwatch.Start();
 }
 
@@ -46,4 +47,9 @@ void ATimeManager::Tick(float DeltaTime)
 		//restart timer
 		m_dayStopwatch.ReStart();
 	}
+}
+
+float ATimeManager::GetCurrentTime() const
+{
+	return m_dayStopwatch.GetElapsedSeconds();
 }

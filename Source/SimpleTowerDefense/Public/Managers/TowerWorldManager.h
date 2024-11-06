@@ -9,6 +9,7 @@
 #include "Subsystems/WorldSubsystem.h"
 #include "TowerWorldManager.generated.h"
 
+class ATimeManager;
 class ATower;
 /**
  * 
@@ -33,6 +34,8 @@ private:
 
 	UPROPERTY()
 	ATower* m_tower = nullptr;
+	UPROPERTY()
+	ATimeManager* m_TimeManager = nullptr;
 
 	/* Tower attributes */
 	//health attributes
@@ -109,7 +112,7 @@ public:
 
 	//daily points
 	int GetDailyPoints() const;
-	void IncrementDailyPoints(int amount) ;
+	void IncrementDailyPoints(int amount);
 
 	int GetMaxTowerHealth() const;
 	void IncreaseMaxTowerHealth(int amount);
@@ -126,4 +129,8 @@ public:
 	int GetLifeStealAmount() const;
 	void AddLifeStealChance(int value);
 	void AddLifeStealAmount(int value);
+	//time manager
+	ATimeManager* GetTimeManager() const;
+	void SetTimeManager(ATimeManager* timeManager) ;
+
 };

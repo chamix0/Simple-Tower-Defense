@@ -53,13 +53,7 @@ void UMainMenuScreen::HandleReturnAction()
 		m_onPreTittleScreen = true;
 		return;
 	}
-
-	Super::HandleReturnAction();
-
-	if (m_BaseWidget != nullptr)
-	{
-		m_BaseWidget->PushWidget(QuitToDesktopWidgetClass);
-	}
+	
 }
 
 void UMainMenuScreen::HandleSelectAction()

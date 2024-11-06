@@ -2,7 +2,7 @@
 
 
 #include "SimpleTowerDefense/Public/Managers/TowerWorldManager.h"
-
+#include "TimerManager.h"
 #include "Game_Entities/Tower/Tower.h"
 #include "Kismet/GameplayStatics.h"
 #include "Settings/GameSettings.h"
@@ -253,4 +253,14 @@ void UTowerWorldManager::AddLifeStealChance(int value)
 void UTowerWorldManager::AddLifeStealAmount(int value)
 {
 	m_lifeStealAmmount += value;
+}
+
+ATimeManager* UTowerWorldManager::GetTimeManager() const
+{
+	return m_TimeManager;
+}
+
+void UTowerWorldManager::SetTimeManager(ATimeManager* timeManager)
+{
+	m_TimeManager = timeManager;
 }

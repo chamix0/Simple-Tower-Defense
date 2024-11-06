@@ -54,7 +54,9 @@ void UPointsUpgradesWidget::DailyPointsAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Daily points increased!!!", 2.f);
 		m_towerWorldManger->IncrementDailyPoints(GetDefault<UGameSettings>()->DailyPointsIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_DailyPointsUpgrade->UpdateButton();
 }
 
 void UPointsUpgradesWidget::KillPointMultiplierAction()
@@ -64,7 +66,9 @@ void UPointsUpgradesWidget::KillPointMultiplierAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("kill point multiplier increased!!!", 2.f);
 		m_towerWorldManger->IncrementKillPointMultiplier(GetDefault<UGameSettings>()->KillPointsMultiplierIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_KillPointsMultiplierUpgrade->UpdateButton();
 }
 
 void UPointsUpgradesWidget::MaxGameSpeedAction()
@@ -74,5 +78,7 @@ void UPointsUpgradesWidget::MaxGameSpeedAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Max game speed increased!!!", 2.f);
 		m_towerWorldManger->IncrementTimeScale(GetDefault<UGameSettings>()->GameSpeedIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_MaxGameSpeedUpgrade->UpdateButton();
 }

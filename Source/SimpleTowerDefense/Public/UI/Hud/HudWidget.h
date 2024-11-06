@@ -11,6 +11,7 @@
 #include "Components/Image.h"
 #include "Components/ScaleBox.h"
 #include "Notifications/HudNotificationsWidget.h"
+#include "StatsWidget/StatsWidget.h"
 #include "UI/Basics/DayNightWidget.h"
 #include "UI/Basics/HealthBar.h"
 #include "UI/Basics/SimpleBackground.h"
@@ -33,7 +34,12 @@ class SIMPLETOWERDEFENSE_API UHudWidget : public UJustButtonsScreen
 	//managers
 	UPROPERTY()
 	UTowerWorldManager* m_towerWorldManager = nullptr;
+	//stats
+	UPROPERTY(meta=(BindWidget))
+	USizeBox* M_StatsBox = nullptr;
 
+	//time widget
+	
 	//buttons
 	UPROPERTY(meta=(BindWidget))
 	USimpleButtonWidget* m_pauseButton = nullptr;
@@ -91,6 +97,9 @@ class SIMPLETOWERDEFENSE_API UHudWidget : public UJustButtonsScreen
 	UPROPERTY(EditAnywhere)
 	float lowerBarTarget = 0;
 	bool m_lowerBarVisible = false;
+	UPROPERTY(EditAnywhere)
+	float StatsTarget = 0;
+	bool m_statsVisible = false;
 
 public:
 	virtual void NativeOnInitialized() override;
@@ -113,6 +122,8 @@ public:
 	void ShowHideUpperBar();
 	UFUNCTION(BlueprintCallable)
 	void ShowHideLowerBar();
+	UFUNCTION(BlueprintCallable)
+	void ShowHideStats();
 	UFUNCTION(BlueprintCallable)
 	void ExitToMainMenuAction();
 

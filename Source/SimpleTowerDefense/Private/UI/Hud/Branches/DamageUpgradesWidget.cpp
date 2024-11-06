@@ -74,7 +74,9 @@ void UDamageUpgradesWidget::RangeAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Range increased!!!", 2.f);
 		m_towerWorldManger->IncreaseTowerRange(GetDefault<UGameSettings>()->TowerRangeUpgradeIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_RangeUpgrade->UpdateButton();
 }
 
 void UDamageUpgradesWidget::ShootsPerSecondAction()
@@ -84,7 +86,9 @@ void UDamageUpgradesWidget::ShootsPerSecondAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Shoots per second increased!!!", 2.f);
 		m_towerWorldManger->IncreaseShootsPerSecond(GetDefault<UGameSettings>()->ShootsPerSecondUpgradeIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_ShootsPerSecondUpgrade->UpdateButton();
 }
 
 void UDamageUpgradesWidget::DamageAction()
@@ -94,7 +98,9 @@ void UDamageUpgradesWidget::DamageAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Base damage increased!!!", 2.f);
 		m_towerWorldManger->IncreaseDamage(GetDefault<UGameSettings>()->DamageUpgradeIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_DamageUpgrade->UpdateButton();
 }
 
 void UDamageUpgradesWidget::ShootSpeedAction()
@@ -104,7 +110,9 @@ void UDamageUpgradesWidget::ShootSpeedAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Bullets Speed increased!!!", 2.f);
 		m_towerWorldManger->IncreaseBulletsSpeed(GetDefault<UGameSettings>()->BulletsSpeedIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_ShootSpeedUpgrade->UpdateButton();
 }
 
 void UDamageUpgradesWidget::CriticalChanceAction()
@@ -114,7 +122,9 @@ void UDamageUpgradesWidget::CriticalChanceAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Critical chance increased!!!", 2.f);
 		m_towerWorldManger->IncreaseCriticalChance(GetDefault<UGameSettings>()->CriticalChanceIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_CriticalChanceUpgrade->UpdateButton();
 }
 
 void UDamageUpgradesWidget::CriticalMultiplierAction()
@@ -124,7 +134,9 @@ void UDamageUpgradesWidget::CriticalMultiplierAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Critical multiplier increased!!!", 2.f);
 		m_towerWorldManger->IncreaseCriticalMultiplier(GetDefault<UGameSettings>()->CriticalMultiplierIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_CriticalMultiplierUpgrade->UpdateButton();
 }
 
 void UDamageUpgradesWidget::numTargetsAction()
@@ -134,5 +146,7 @@ void UDamageUpgradesWidget::numTargetsAction()
 	{
 		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Num targets increased!!!", 2.f);
 		m_towerWorldManger->GetTower()->AddCrossHair();
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
+	m_numTargetsUpgrade->UpdateButton();
 }

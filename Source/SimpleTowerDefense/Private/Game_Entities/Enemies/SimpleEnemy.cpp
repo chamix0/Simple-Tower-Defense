@@ -47,14 +47,17 @@ void ASimpleEnemy::BeginPlay()
 
 void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 {
+	targetSpeed = GetDefault<UGameSettings>()->EnemyOutOfRangeSpeed;
 	//stop damage timer
 	damageTimer.Reset();
 	//update position
 	SetActorLocation(spawnPosition);
 
 	//initialize health
-	int MaxOverallHealth = GetDefault<UGameSettings>()->MaxEnemyHealth;
-	m_MaxHealth = FMath::RandRange(1, MaxOverallHealth);
+	float MaxOverallHealth = GetDefault<UGameSettings>()->MaxEnemyHealth + GetDefault<UGameSettings>()->MaxEnemyHealth *
+		m_towerWorldManager->GetNumDays() * GetDefault<
+			UGameSettings>()->DifficultyIncrement;
+	m_MaxHealth = FMath::RandRange(0.1f, MaxOverallHealth);
 	m_health = m_MaxHealth;
 	m_healthBarWidget->SetValue(m_health, m_MaxHealth);
 	m_healthBarWidget->Show();
@@ -66,14 +69,18 @@ void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 	m_healthBarWidget->SetRenderScale(FVector2D(scale));
 
 	//initialize speed
-	float MaxOverallSpeed = GetDefault<UGameSettings>()->MaxEnemySpeed;
-	float MinOverallSpeed = GetDefault<UGameSettings>()->MinEnemySpeed;
+	float MaxOverallSpeed = GetDefault<UGameSettings>()->MaxEnemySpeed + GetDefault<UGameSettings>()->MaxEnemySpeed *
+		m_towerWorldManager->GetNumDays() * GetDefault<
+			UGameSettings>()->DifficultyIncrement;
+	float MinOverallSpeed = GetDefault<UGameSettings>()->MinEnemySpeed + GetDefault<UGameSettings>()->MinEnemySpeed *
+		m_towerWorldManager->GetNumDays() * GetDefault<
+			UGameSettings>()->DifficultyIncrement;
 	m_speed = FMath::RandRange(MinOverallSpeed, MaxOverallSpeed);
 
-	//update real color
+		//update real color
 
-	//initialize color
-	m_targetColor = m_towerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
+		//initialize color
+		m_targetColor = m_towerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
 	m_currentColor = m_targetColor;
 	m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
 
@@ -147,19 +154,23 @@ void ASimpleEnemy::SetIsAvailable(bool value)
 	m_availible = value;
 }
 
-int ASimpleEnemy::GetHealth() const
+float ASimpleEnemy::GetHealth() const
 {
 	return m_health;
 }
 
-int ASimpleEnemy::GetMaxHealth() const
+float ASimpleEnemy::GetMaxHealth() const
 {
 	return m_MaxHealth;
 }
 
 void ASimpleEnemy::Move(float deltaTime)
 {
-	FVector newPosition = FMath::VInterpConstantTo(GetActorLocation(), FVector(0), deltaTime, m_speed);
+	targetSpeed = FMath::FInterpTo(targetSpeed, m_towerWorldManager->GetTower()->GetInRange(GetActorLocation())
+		                                            ? m_speed
+		                                            : GetDefault<UGameSettings>()->EnemyOutOfRangeSpeed, deltaTime,
+	                               GetDefault<UGameSettings>()->ColorChangeSpeed);
+	FVector newPosition = FMath::VInterpConstantTo(GetActorLocation(), FVector(0), deltaTime, targetSpeed);
 	SetActorLocation(newPosition);
 }
 

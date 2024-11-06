@@ -37,6 +37,18 @@ public:
 	int MinEnemySpeed = 20.f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Max enemy Scale"))
 	float MaxEnemyScale = 0.5f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies",
+		meta = (DisplayName = "Simultaneous Spawn Increment"))
+	float SimultaneousSpawnIncrement = 0.3f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies",
+		meta = (DisplayName = "Spawns Per Second Increment"))
+	float SpawnsPerSecondIncrement = 0.1f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies",
+		meta = (DisplayName = "Difficulty Increment"))
+	float DifficultyIncrement = 0.25f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies",
+		meta = (DisplayName = "Enemy Out Of Range Speed"))
+	float EnemyOutOfRangeSpeed = 100.f;
 
 	/*tower*/
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
@@ -73,13 +85,13 @@ public:
 	int CriticalChanceIncrement = 1;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
 		meta = (DisplayName = "critical multiplier Upgrade Increment"))
-	int CriticalMultiplierIncrement = 0.1f;
+	float CriticalMultiplierIncrement = 0.1f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
 		meta = (DisplayName = "daily points increment"))
 	int DailyPointsIncrement = 5;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-	meta = (DisplayName = "kill points multiplier increment"))
-	int KillPointsMultiplierIncrement = 0.1;
-	
+		meta = (DisplayName = "kill points multiplier increment"))
+	float KillPointsMultiplierIncrement = 0.1;
+
 	UGameSettings();
 };

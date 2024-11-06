@@ -151,6 +151,8 @@ void ATower::update(const UTowerEvent event)
 			GetHud()->PushNotification(
 				"Regained " + FString::FromInt(m_towerWorldManager->GetRegenPerDay()) + " Health points", 2.f);
 		}
+		//add points
+		m_towerWorldManager->AddPoints(m_towerWorldManager->GetDailyPoints());
 	}
 }
 
@@ -323,6 +325,8 @@ void ATower::TakeDamage(float amount)
 	if (m_health <= 0)
 	{
 		//do something
+
+		GameBaseWidget->PushWidget(EndScreenWidgetClass);
 	}
 }
 
@@ -357,4 +361,14 @@ void ATower::AddCrossHair()
 		return;
 	}
 	MyDebugUtils::Print("NO ENEMY TEMPLATE GIVEN TO ENEMY SPAWNER!!!", FColor::Red);
+}
+
+float ATower::GetHealth() const
+{
+	return m_health;
+}
+
+int ATower::GetNumTargets() const
+{
+	return M_CrosshairActors.Num();
 }

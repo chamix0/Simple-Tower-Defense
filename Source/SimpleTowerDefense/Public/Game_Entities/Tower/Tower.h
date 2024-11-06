@@ -8,6 +8,7 @@
 #include "Managers/TowerWorldManager.h"
 #include "ObserverPattern/Publisher.h"
 #include "UI/Hud/Crosshair/CrosshairWidget.h"
+#include "UI/Menus/EndScreen/EndScreen.h"
 #include "Utils/StopWatch.h"
 #include "Tower.generated.h"
 
@@ -21,6 +22,9 @@ class SIMPLETOWERDEFENSE_API ATower : public ASimpleDayNightActor
 	GENERATED_BODY()
 
 private:
+	//class of the UI base to be created
+	UPROPERTY(EditAnywhere, Category="UI", meta=(DisplayName = "End screen widget class"))
+	TSubclassOf<UEndScreen> EndScreenWidgetClass;
 	//class of the UI base to be created
 	UPROPERTY(EditAnywhere, Category="UI", meta=(DisplayName = "Widget Base class"))
 	TSubclassOf<UGameBaseWidget> BaseWidgetClass;
@@ -100,4 +104,6 @@ public:
 	void SetHealth(float value);
 	void AddHealth(float value);
 	void AddCrossHair();
+	float GetHealth()const;
+	int GetNumTargets() const;
 };

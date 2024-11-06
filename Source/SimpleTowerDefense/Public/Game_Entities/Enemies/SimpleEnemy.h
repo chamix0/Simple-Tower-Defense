@@ -32,7 +32,7 @@ class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 	UPROPERTY()
 	bool m_availible = true;
 	bool m_isCriticalDamage = false;
-
+	float targetSpeed;
 
 	UPROPERTY(EditAnywhere)
 	UNiagaraSystem* m_ExplosionParticles = nullptr;
@@ -60,8 +60,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	bool GetIsAvailable() const;
 	void SetIsAvailable(bool value);
-	int GetHealth() const;
-	int GetMaxHealth() const;
+	float GetHealth() const;
+	float GetMaxHealth() const;
 
 private:
 	void Move(float deltaTime);

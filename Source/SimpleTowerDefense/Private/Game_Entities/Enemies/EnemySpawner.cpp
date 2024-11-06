@@ -4,6 +4,7 @@
 #include "Game_Entities/Enemies/EnemySpawner.h"
 
 #include "Managers/TowerWorldManager.h"
+#include "Settings/GameSettings.h"
 #include "Utils/MyDebugUtils.h"
 
 
@@ -44,7 +45,7 @@ void AEnemySpawner::Tick(float DeltaTime)
 	m_timer.ReceiveTick(DeltaTime);
 
 	//spawn
-	if (m_timer.GetElapsedSeconds() > m_spawnCooldown)
+	if (m_timer.GetElapsedSeconds() > (1.f / m_spawnsPerSecond))
 	{
 		//restart timer
 		m_timer.ReStart();
@@ -54,5 +55,18 @@ void AEnemySpawner::Tick(float DeltaTime)
 		{
 			SpawnEnemy();
 		}
+	}
+}
+
+void AEnemySpawner::update(const UTowerEvent event)
+{
+	Super::update(event);
+	if (event == UTowerEvent::IS_DAY)
+	{
+		//simultaneous spawns
+		m_simultaneousSpawns += m_towerWorldManager->GetNumDays() * GetDefault<UGameSettings>()->
+			SimultaneousSpawnIncrement;
+		//spawn cooldown
+		m_spawnsPerSecond += m_towerWorldManager->GetNumDays() * GetDefault<UGameSettings>()->SpawnsPerSecondIncrement;
 	}
 }

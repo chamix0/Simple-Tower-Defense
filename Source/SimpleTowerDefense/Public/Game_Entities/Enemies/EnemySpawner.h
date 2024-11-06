@@ -20,10 +20,10 @@ class SIMPLETOWERDEFENSE_API AEnemySpawner : public ASimpleDayNightActor
 	TSubclassOf<ASimpleEnemy> m_enemyTemplate;
 	UPROPERTY(EditAnywhere)
 	float m_spawnRadius = 100;
-	UPROPERTY(EditAnywhere)
-	float m_spawnCooldown = 1;
-	UPROPERTY(EditAnywhere)
-	float m_simultaneousSpawns = 1;
+	UPROPERTY()
+	float m_spawnsPerSecond = 0.25;
+	UPROPERTY()
+	int m_simultaneousSpawns = 1;
 
 public:
 	// Sets default values for this actor's properties
@@ -38,4 +38,5 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void update(const UTowerEvent event) override;
 };
