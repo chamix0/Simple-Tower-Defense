@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "CommonActivatableWidget.h"
+#include "Branches/DamageUpgradesWidget.h"
 #include "Branches/HealthUpgradesWidget.h"
+#include "Branches/PointsUpgradesWidget.h"
 #include "Components/HorizontalBox.h"
 #include "Components/Image.h"
 #include "Components/ScaleBox.h"
@@ -36,6 +38,8 @@ class SIMPLETOWERDEFENSE_API UHudWidget : public UJustButtonsScreen
 	UPROPERTY(meta=(BindWidget))
 	USimpleButtonWidget* m_pauseButton = nullptr;
 	UPROPERTY(meta=(BindWidget))
+	USimpleButtonWidget* m_GameSpeedButton = nullptr;
+	UPROPERTY(meta=(BindWidget))
 	USimpleButtonWidget* m_ShootingPolicyButton = nullptr;
 
 	//branch buttons
@@ -49,10 +53,10 @@ class SIMPLETOWERDEFENSE_API UHudWidget : public UJustButtonsScreen
 	//branch widgets
 	UPROPERTY(meta=(BindWidget))
 	UHealthUpgradesWidget* m_healthBranch = nullptr;
-	// UPROPERTY(meta=(BindWidget))
-	// UHealthUpgradesWidget* m_healthBranch = nullptr;
-	// UPROPERTY(meta=(BindWidget))
-	// UHealthUpgradesWidget* m_healthBranch = nullptr;
+	UPROPERTY(meta=(BindWidget))
+	UDamageUpgradesWidget* m_damageBranch = nullptr;
+	UPROPERTY(meta=(BindWidget))
+	UPointsUpgradesWidget* m_PointsBranch = nullptr;
 
 	//indicators
 	UPROPERTY(meta=(BindWidget))
@@ -64,7 +68,7 @@ class SIMPLETOWERDEFENSE_API UHudWidget : public UJustButtonsScreen
 	//notifications
 	UPROPERTY(meta=(BindWidget))
 	UHudNotificationsWidget* m_notificationsWidget = nullptr;
-	
+
 	//hints
 	UPROPERTY(meta=(BindWidget))
 	UHorizontalBox* m_exitInputHint = nullptr;
@@ -96,6 +100,8 @@ public:
 	void SetPoints(int num);
 	UFUNCTION(BlueprintCallable)
 	void PauseAction();
+	UFUNCTION(BlueprintCallable)
+	void GameSpeedAction();
 	UFUNCTION(BlueprintCallable)
 	void ShootingPolicyAction();
 	/*show and hide bars*/

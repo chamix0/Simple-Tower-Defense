@@ -17,7 +17,7 @@ class SIMPLETOWERDEFENSE_API ASimpleBullet : public ASimpleDayNightActor
 	UPROPERTY()
 	bool m_availible = true;
 	UPROPERTY()
-	int m_damage = 1;
+	int m_damage = 0;
 	//values
 	FVector m_direction = FVector();
 

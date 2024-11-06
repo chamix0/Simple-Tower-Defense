@@ -24,13 +24,14 @@ class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 	UHealthBar* m_healthBarWidget = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	int m_health;
+	float m_health;
 	UPROPERTY(EditAnywhere)
-	int m_MaxHealth = 10;
+	float m_MaxHealth = 10;
 	UPROPERTY(EditAnywhere)
 	float m_speed = 1;
 	UPROPERTY()
 	bool m_availible = true;
+	bool m_isCriticalDamage = false;
 
 
 	UPROPERTY(EditAnywhere)
@@ -38,6 +39,8 @@ class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 	FStopWatch damageTimer;
 	UPROPERTY(EditAnywhere)
 	FLinearColor DamageColor = FColor::Red;
+	UPROPERTY(EditAnywhere)
+	FLinearColor CriticalColor = FColor::Yellow;
 	UPROPERTY(EditAnywhere)
 	int damageEffectMilliseconds = 100;
 

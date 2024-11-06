@@ -52,8 +52,9 @@ void ATower::BeginPlay()
 	//initialize health
 	SetHealth(m_towerWorldManager->GetMaxTowerHealth());
 
-	//start shooting stopwatch
-	m_shootTimer.Start();
+
+	//create first crosshair
+	AddCrossHair();
 }
 
 // Called every frame
@@ -61,7 +62,6 @@ void ATower::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//feed the timer
-	m_shootTimer.ReceiveTick(DeltaTime);
 	damageTimer.ReceiveTick(DeltaTime);
 
 	if (damageTimer.isRunning())
@@ -117,36 +117,41 @@ void ATower::update(const UTowerEvent event)
 
 	if (event == UTowerEvent::CROSSHAIR_REQUESTS_TARGET)
 	{
-		M_CrosshairActor->SetTargetToFollow(SelectEnemyTarget());
+		for (ACrosshairActor*& Crosshair : M_CrosshairActors)
+		{
+			if (Crosshair->GetTarget() == nullptr)
+			{
+				Crosshair->SetTargetToFollow(SelectEnemyTarget());
+			}
+		}
 	}
 	else if (event == UTowerEvent::CROSSHAIR_REACHED_TARGET)
 	{
-		float cooldown = 1 / m_towerWorldManager->GetShootsPerSecond();
-		if (m_shootTimer.GetElapsedSeconds() >= cooldown)
-		{
-			//shoot
-			ShootBullet(M_CrosshairActor->GetActorLocation());
-
-			//get a new target
-			M_CrosshairActor->SetTargetToFollow(SelectEnemyTarget());
-
-			//restart timer
-			m_shootTimer.ReStart();
-		}
+		// float cooldown = 1 / m_towerWorldManager->GetShootsPerSecond();
+		// if (m_shootTimer.GetElapsedSeconds() >= cooldown)
+		// {
+		// 	//shoot
+		// 	ShootBullet(M_CrosshairActor->GetActorLocation());
+		//
+		// 	//get a new target
+		// 	M_CrosshairActor->SetTargetToFollow(SelectEnemyTarget());
+		//
+		// 	//restart timer
+		// 	m_shootTimer.ReStart();
+		// }
 	}
 	else if (event == UTowerEvent::IS_DAY)
 	{
 		//regen life
 		AddHealth(m_towerWorldManager->GetRegenPerDay());
-		
+
 		//show notification
-		if (m_towerWorldManager->GetRegenPerDay()>0)
+		if (m_towerWorldManager->GetRegenPerDay() > 0)
 		{
 			GetHud()->PushNotification(
 				"Regained " + FString::FromInt(m_towerWorldManager->GetRegenPerDay()) + " Health points", 2.f);
 		}
-		}
-		
+	}
 }
 
 ASimpleEnemy* ATower::SelectEnemyTarget()
@@ -171,13 +176,15 @@ ASimpleEnemy* ATower::SelectClosestEnemyTarget()
 	//active enemies
 	TArray<ASimpleEnemy*> enemies = m_towerWorldManager->GetEnemyPool().m_ActiveEnemies;
 
+
 	//find closest enemy
 	float minDistance = std::numeric_limits<float>::max();
 	ASimpleEnemy* selectedEnemy = nullptr;
 	for (ASimpleEnemy*& Enemy : enemies)
 	{
 		float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
-		if (distance < minDistance && !Enemy->GetIsAvailable() && distance <= m_towerWorldManager->GetTowerRange())
+		if (distance < minDistance && !Enemy->GetIsAvailable() && GetInRange(Enemy->GetActorLocation()) && !
+			IsTargetPicked(Enemy))
 		{
 			minDistance = distance;
 			selectedEnemy = Enemy;
@@ -193,12 +200,13 @@ ASimpleEnemy* ATower::SelectFarthesEnemyTarget()
 	TArray<ASimpleEnemy*> enemies = m_towerWorldManager->GetEnemyPool().m_ActiveEnemies;
 
 	//find closest enemy
-	float maxDistance = std::numeric_limits<float>::min();
+	float maxDistance = 0;
 	ASimpleEnemy* selectedEnemy = nullptr;
 	for (ASimpleEnemy*& Enemy : enemies)
 	{
 		float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
-		if (distance > maxDistance && !Enemy->GetIsAvailable() && distance <= m_towerWorldManager->GetTowerRange())
+		if (distance > maxDistance && !Enemy->GetIsAvailable() && GetInRange(Enemy->GetActorLocation()) && !
+			IsTargetPicked(Enemy))
 		{
 			maxDistance = distance;
 			selectedEnemy = Enemy;
@@ -207,6 +215,7 @@ ASimpleEnemy* ATower::SelectFarthesEnemyTarget()
 
 	return selectedEnemy;
 }
+
 
 ASimpleEnemy* ATower::SelectStronguestEnemyTarget()
 {
@@ -219,8 +228,10 @@ ASimpleEnemy* ATower::SelectStronguestEnemyTarget()
 	for (ASimpleEnemy*& Enemy : enemies)
 	{
 		float health = Enemy->GetMaxHealth();
-		float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
-		if (health > maxHealth && !Enemy->GetIsAvailable() && distance <= m_towerWorldManager->GetTowerRange())
+		// float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
+		if (health > maxHealth && !Enemy->GetIsAvailable() && GetInRange(
+				Enemy->GetActorLocation()) && !
+			IsTargetPicked(Enemy))
 		{
 			maxHealth = health;
 			selectedEnemy = Enemy;
@@ -241,8 +252,9 @@ ASimpleEnemy* ATower::SelectweakestEnemyTarget()
 	for (ASimpleEnemy*& Enemy : enemies)
 	{
 		float health = Enemy->GetMaxHealth();
-		float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
-		if (health < minHealth && !Enemy->GetIsAvailable() && distance <= m_towerWorldManager->GetTowerRange())
+		// float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
+		if (health < minHealth && !Enemy->GetIsAvailable() && GetInRange(Enemy->GetActorLocation()) && !
+			IsTargetPicked(Enemy))
 		{
 			minHealth = health;
 			selectedEnemy = Enemy;
@@ -250,6 +262,36 @@ ASimpleEnemy* ATower::SelectweakestEnemyTarget()
 	}
 
 	return selectedEnemy;
+}
+
+bool ATower::IsTargetPicked(ASimpleEnemy* target)
+{
+	for (ACrosshairActor*& Crosshair : M_CrosshairActors)
+	{
+		if (Crosshair->GetTarget() == target)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ATower::GetInRange(FVector target)
+{
+	float rx = -m_towerWorldManager->GetTowerRange(); // x position
+	float ry = -m_towerWorldManager->GetTowerRange(); // y position
+	float rw = m_towerWorldManager->GetTowerRange() * 2; // width
+	float rh = m_towerWorldManager->GetTowerRange() * 2; // height
+
+	if (target.X >= rx && // right of the left edge AND
+		target.X <= rx + rw && // left of the right edge AND
+		target.Y >= ry && // below the top AND
+		target.Y <= ry + rh)
+	{
+		// above the bottom
+		return true;
+	}
+	return false;
 }
 
 void ATower::SetShootingPolicy(UShootingPolicy policy)
@@ -293,4 +335,26 @@ void ATower::SetHealth(float value)
 void ATower::AddHealth(float value)
 {
 	SetHealth(FMath::Min(m_health + value, m_towerWorldManager->GetMaxTowerHealth()));
+}
+
+void ATower::AddCrossHair()
+{
+	if (m_crosshairTemplate != nullptr)
+	{
+		//no available enemy so create one 
+		FActorSpawnParameters SpawnInfo;
+		AActor* spawnedActor = GetWorld()->SpawnActor<AActor>(m_crosshairTemplate, FVector(0, 0, 0), FRotator(0, 0, 0),
+		                                                      SpawnInfo);
+
+		//add to a folder to make it cleaner on editor
+#if WITH_EDITOR
+		spawnedActor->SetFolderPath("Crosshairs");
+#endif
+
+		//get the enemy reference
+		ACrosshairActor* Crosshair = Cast<ACrosshairActor>(spawnedActor);
+		M_CrosshairActors.Add(Crosshair);
+		return;
+	}
+	MyDebugUtils::Print("NO ENEMY TEMPLATE GIVEN TO ENEMY SPAWNER!!!", FColor::Red);
 }

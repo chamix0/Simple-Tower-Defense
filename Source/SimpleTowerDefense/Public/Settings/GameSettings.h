@@ -25,6 +25,9 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "General",
 		meta = (DisplayName = "Color Change Speed UI"))
 	float ColorChangeSpeedUI = 5.f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "game speed increment"))
+	float GameSpeedIncrement = 0.1f;
 	/*Enemies*/
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Max enemy health"))
 	int MaxEnemyHealth = 20.f;
@@ -47,5 +50,36 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
 		meta = (DisplayName = "Initial Shoots per second"))
 	float InitialShootsPerSecond = 1.f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "Initial Damage"))
+	float InitialDamage = 1;
+
+
+	//upgrades
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "Tower Range Upgrade Increment"))
+	float TowerRangeUpgradeIncrement = 25.f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "Shoots per second Upgrade Increment"))
+	float ShootsPerSecondUpgradeIncrement = 0.1f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "damage Upgrade Increment"))
+	float DamageUpgradeIncrement = 0.5f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "Bullet speed Upgrade Increment"))
+	float BulletsSpeedIncrement = 10.f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "Critical chance Upgrade Increment"))
+	int CriticalChanceIncrement = 1;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "critical multiplier Upgrade Increment"))
+	int CriticalMultiplierIncrement = 0.1f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+		meta = (DisplayName = "daily points increment"))
+	int DailyPointsIncrement = 5;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	meta = (DisplayName = "kill points multiplier increment"))
+	int KillPointsMultiplierIncrement = 0.1;
+	
 	UGameSettings();
 };

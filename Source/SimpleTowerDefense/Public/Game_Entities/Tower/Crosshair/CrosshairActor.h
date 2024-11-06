@@ -31,7 +31,7 @@ private:
 
 	//no target stopwatch
 	FStopWatch M_NoTargetStopWatch;
-	
+	FStopWatch m_shootStopwatch;
 	//parameters
 	UPROPERTY(EditAnywhere)
 	float m_speed = 1.f;
@@ -39,6 +39,7 @@ private:
 	float m_MinDistanceToTarget = 1.f;
 	UPROPERTY(EditAnywhere)
 	float m_lookAhead=10.f;
+	
 public:
 	// Sets default values for this actor's properties
 	ACrosshairActor();
@@ -46,11 +47,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	void SetTargetToFollow(ASimpleEnemy* target);
 	AActor* GetTarget()const;
+	FStopWatch GetShootStopWatch()const;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
 	FVector CalculateTargetPoint();
+
 
 };

@@ -4,6 +4,7 @@
 #include "Game_Entities/Tower/Crosshair/CrosshairActor.h"
 
 #include "Components/WidgetComponent.h"
+#include "Game_Entities/Tower/Tower.h"
 #include "Managers/TowerWorldManager.h"
 #include "Settings/GameSettings.h"
 #include "UI/Hud/Crosshair/CrosshairWidget.h"
@@ -30,12 +31,16 @@ void ACrosshairActor::BeginPlay()
 
 	//start with the crosshair hidden
 	m_CrosshairWidget->SetRenderOpacity(0);
+
+	//start shoot timer
+	m_shootStopwatch.Start();
 }
 
 FVector ACrosshairActor::CalculateTargetPoint()
 {
 	return m_targetToFollow->GetActorLocation() - m_targetToFollow->GetActorLocation().GetSafeNormal2D() * m_lookAhead;
 }
+
 
 // Called every frame
 void ACrosshairActor::Tick(float DeltaTime)
@@ -44,7 +49,7 @@ void ACrosshairActor::Tick(float DeltaTime)
 
 	//feed the timer
 	M_NoTargetStopWatch.ReceiveTick(DeltaTime);
-
+	m_shootStopwatch.ReceiveTick(DeltaTime);
 
 	//update color
 	m_CrosshairWidget->SetColor(m_currentColor);
@@ -62,7 +67,7 @@ void ACrosshairActor::Tick(float DeltaTime)
 		}
 
 		//send target request notification
-		if (M_NoTargetStopWatch.GetElapsedMiliSeconds() > 500)
+		if (M_NoTargetStopWatch.GetElapsedMiliSeconds() > 100)
 		{
 			M_NoTargetStopWatch.Reset();
 			m_towerWorldManager->BroadCastNotification(UTowerEvent::CROSSHAIR_REQUESTS_TARGET);
@@ -71,8 +76,8 @@ void ACrosshairActor::Tick(float DeltaTime)
 	}
 
 	//check if the target is valid 
-	if (m_targetToFollow->GetIsAvailable() || FVector::Distance(FVector(0, 0, 0), m_targetToFollow->GetActorLocation())
-		> m_towerWorldManager->GetTowerRange())
+	if (m_targetToFollow->GetIsAvailable() || !m_towerWorldManager->GetTower()->GetInRange(
+		m_targetToFollow->GetActorLocation()))
 	{
 		m_targetToFollow = nullptr;
 		return;
@@ -82,7 +87,8 @@ void ACrosshairActor::Tick(float DeltaTime)
 	m_CrosshairWidget->SetRenderOpacity(FMath::FInterpConstantTo(m_CrosshairWidget->GetRenderOpacity(),
 	                                                             1, DeltaTime,
 	                                                             GetDefault<UGameSettings>()->ColorChangeSpeed));
-	m_CrosshairWidget->SetRenderScale(FVector2D(FMath::FInterpTo(m_CrosshairWidget->RenderTransform.Scale.X, 1.f,
+	m_CrosshairWidget->SetRenderScale(FVector2D(FMath::FInterpTo(m_CrosshairWidget->RenderTransform.Scale.X,
+	                                                             m_targetToFollow->GetActorScale().X * 4.8f,
 	                                                             DeltaTime,
 	                                                             GetDefault<UGameSettings>()->ColorChangeSpeed)));
 	//move to target with anticipation
@@ -92,7 +98,19 @@ void ACrosshairActor::Tick(float DeltaTime)
 	if (FVector::Distance(GetActorLocation(), CalculateTargetPoint()) <= m_MinDistanceToTarget)
 	{
 		m_towerWorldManager->BroadCastNotification(UTowerEvent::CROSSHAIR_REACHED_TARGET);
-		m_targetToFollow = nullptr;
+
+		float cooldown = 1 / m_towerWorldManager->GetShootsPerSecond();
+		if (m_shootStopwatch.GetElapsedSeconds() >= cooldown)
+		{
+			//shoot
+			m_towerWorldManager->GetTower()->ShootBullet(GetActorLocation());
+
+			//restart timer
+			m_shootStopwatch.ReStart();
+			//get new target
+			m_targetToFollow = nullptr;
+			m_targetToFollow = m_towerWorldManager->GetTower()->SelectEnemyTarget();
+		}
 	}
 }
 
@@ -104,4 +122,9 @@ void ACrosshairActor::SetTargetToFollow(ASimpleEnemy* target)
 AActor* ACrosshairActor::GetTarget() const
 {
 	return m_targetToFollow;
+}
+
+FStopWatch ACrosshairActor::GetShootStopWatch() const
+{
+	return m_shootStopwatch;
 }

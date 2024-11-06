@@ -18,6 +18,7 @@ void UTowerWorldManager::Initialize(FSubsystemCollectionBase& Collection)
 	m_bulletsSpeed = GetDefault<UGameSettings>()->InitialBulletSpeed;
 	m_ShootsPerSecond = GetDefault<UGameSettings>()->InitialShootsPerSecond;
 	m_maxTowerHealth = GetDefault<UGameSettings>()->InitialMaxHealthRange;
+	m_Damage = GetDefault<UGameSettings>()->InitialDamage;
 }
 
 void UTowerWorldManager::Deinitialize()
@@ -82,14 +83,89 @@ float UTowerWorldManager::GetTowerRange() const
 	return m_range;
 }
 
+void UTowerWorldManager::IncreaseTowerRange(float amount)
+{
+	m_range += amount;
+}
+
+float UTowerWorldManager::GetDamage() const
+{
+	return m_Damage;
+}
+
+void UTowerWorldManager::IncreaseDamage(float amount)
+{
+	m_Damage += amount;
+}
+
 float UTowerWorldManager::GetBulletsSpeed() const
 {
 	return m_bulletsSpeed;
 }
 
+void UTowerWorldManager::IncreaseBulletsSpeed(float value)
+{
+	m_bulletsSpeed += value;
+}
+
 float UTowerWorldManager::GetShootsPerSecond() const
 {
 	return m_ShootsPerSecond;
+}
+
+void UTowerWorldManager::IncreaseShootsPerSecond(float value)
+{
+	m_ShootsPerSecond += value;
+}
+
+int UTowerWorldManager::GetCriticalChance() const
+{
+	return m_criticalChance;
+}
+
+void UTowerWorldManager::IncreaseCriticalChance(int value)
+{
+	m_criticalChance = FMath::Min(100, m_criticalChance + value);
+}
+
+float UTowerWorldManager::GetCriticalMultiplier() const
+{
+	return m_criticalMultiplier;
+}
+
+void UTowerWorldManager::IncreaseCriticalMultiplier(float value)
+{
+	m_criticalMultiplier += value;
+}
+
+float UTowerWorldManager::GetMaxTimeScale() const
+{
+	return m_MaxTimeScale;
+}
+
+void UTowerWorldManager::IncrementTimeScale(float amount)
+{
+	m_MaxTimeScale += amount;
+}
+
+float UTowerWorldManager::GetKillPointMultiplier() const
+{
+	return m_killPointMultiplier;
+}
+
+void UTowerWorldManager::IncrementKillPointMultiplier(float amount)
+{
+	m_killPointMultiplier += amount;
+}
+
+int UTowerWorldManager::GetDailyPoints() const
+{
+	return m_DailyPoints;
+}
+
+void UTowerWorldManager::IncrementDailyPoints(int amount)
+{
+	m_DailyPoints += amount;
 }
 
 int UTowerWorldManager::GetMaxTowerHealth() const

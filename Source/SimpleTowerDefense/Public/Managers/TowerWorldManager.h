@@ -52,6 +52,20 @@ private:
 	float m_bulletsSpeed = 10.f;
 	UPROPERTY()
 	float m_ShootsPerSecond = 1.f;
+	UPROPERTY()
+	float m_Damage = 1.f;
+	UPROPERTY()
+	int m_criticalChance = 0;
+	UPROPERTY()
+	float m_criticalMultiplier = 1;
+
+	//points attiributes
+	UPROPERTY()
+	float m_MaxTimeScale = 1.1f;
+	UPROPERTY()
+	float m_killPointMultiplier = 1.f;
+	UPROPERTY()
+	int m_DailyPoints = 0;
 
 public:
 	bool GetIsDay() const;
@@ -62,9 +76,41 @@ public:
 	void BroadCastNotification(UTowerEvent towerEvent);
 	FEnemyPool& GetEnemyPool();
 	FBulletPool& GetBulletPool();
+
+	//range
 	float GetTowerRange() const;
+	void IncreaseTowerRange(float amount);
+
+	//damage
+	float GetDamage() const;
+	void IncreaseDamage(float amount);
+
+	//bullets speed
 	float GetBulletsSpeed() const;
+	void IncreaseBulletsSpeed(float value);
+
+	//shoots per second
 	float GetShootsPerSecond() const;
+	void IncreaseShootsPerSecond(float value);
+
+	//critical damage
+	int GetCriticalChance() const;
+	void IncreaseCriticalChance(int value);
+	float GetCriticalMultiplier() const;
+	void IncreaseCriticalMultiplier(float value);
+
+	//time scale
+	float GetMaxTimeScale() const;
+	void IncrementTimeScale(float amount);
+
+	//kill point multiplier
+	float GetKillPointMultiplier() const;
+	void IncrementKillPointMultiplier(float amount);
+
+	//daily points
+	int GetDailyPoints() const;
+	void IncrementDailyPoints(int amount) ;
+
 	int GetMaxTowerHealth() const;
 	void IncreaseMaxTowerHealth(int amount);
 	void SetTower(ATower* tower);
@@ -80,5 +126,4 @@ public:
 	int GetLifeStealAmount() const;
 	void AddLifeStealChance(int value);
 	void AddLifeStealAmount(int value);
-
 };

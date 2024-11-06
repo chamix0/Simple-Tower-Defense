@@ -4,6 +4,7 @@
 #include "UI/Hud/HudWidget.h"
 
 #include "Game_Entities/Tower/Tower.h"
+#include "Kismet/GameplayStatics.h"
 #include "Settings/GameSettings.h"
 #include "UI/GameBaseWidget.h"
 #include "Utils/UiUtils.h"
@@ -16,6 +17,7 @@ void UHudWidget::NativeOnInitialized()
 	m_pointsCount->SetText(FText::FromString("Points: 0"));
 	m_pauseButton->SetText(FText::FromString("UNPAUSED"), true);
 	m_ShootingPolicyButton->SetText(FText::FromString("Shooting\npolicy\nclosest"));
+	m_GameSpeedButton->SetText(FText::FromString("GAME SPEED\n1"), true);
 
 	//assign buttons 
 	AddButton(m_healthBranchButton);
@@ -29,8 +31,13 @@ void UHudWidget::NativeOnInitialized()
 
 	//bind action to button
 	m_pauseButton->OnButtonSelected.BindDynamic(this, &ThisClass::PauseAction);
+	m_GameSpeedButton->OnButtonSelected.BindDynamic(this, &ThisClass::GameSpeedAction);
 	m_ShootingPolicyButton->OnButtonSelected.BindDynamic(this, &ThisClass::ShootingPolicyAction);
 
+	//hide branches
+	m_healthBranch->Hide();
+	m_damageBranch->Hide();
+	m_pointsCount->Hide();
 	//hide exit hint
 	m_exitInputHint->SetRenderOpacity(0);
 }
@@ -86,6 +93,18 @@ void UHudWidget::PauseAction()
 			                       : FText::FromString("UNPAUSED"), true);
 		//show exit to main menu hint
 	}
+}
+
+void UHudWidget::GameSpeedAction()
+{
+	//update game speed
+	float timeScale = UGameplayStatics::GetGlobalTimeDilation(GetWorld());
+	timeScale = timeScale + GetDefault<UGameSettings>()->GameSpeedIncrement > m_towerWorldManager->GetMaxTimeScale()
+		            ? 0.5f
+		            : timeScale + GetDefault<UGameSettings>()->GameSpeedIncrement;
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), timeScale);
+	//update text
+	m_GameSpeedButton->SetText(FText::FromString("GAME SPEED\n" + FString::SanitizeFloat(timeScale, 2)));
 }
 
 void UHudWidget::ShootingPolicyAction()
@@ -186,6 +205,14 @@ void UHudWidget::HandleRightAction()
 		{
 			m_healthBranch->HandlePrevAction();
 		}
+		else if (buttonIndex == UiUtils::FindButtonIndex(m_DamageBranchButton, m_buttons))
+		{
+			m_damageBranch->HandlePrevAction();
+		}
+		else if (buttonIndex == UiUtils::FindButtonIndex(m_PointsBranchButton, m_buttons))
+		{
+			m_PointsBranch->HandlePrevAction();
+		}
 	}
 }
 
@@ -197,6 +224,14 @@ void UHudWidget::HandleLeftAction()
 		if (buttonIndex == UiUtils::FindButtonIndex(m_healthBranchButton, m_buttons))
 		{
 			m_healthBranch->HandleNextAction();
+		}
+		else if (buttonIndex == UiUtils::FindButtonIndex(m_DamageBranchButton, m_buttons))
+		{
+			m_damageBranch->HandleNextAction();
+		}
+		else if (buttonIndex == UiUtils::FindButtonIndex(m_PointsBranchButton, m_buttons))
+		{
+			m_PointsBranch->HandleNextAction();
 		}
 	}
 }
@@ -210,6 +245,14 @@ void UHudWidget::HandleConfirmAction()
 		{
 			m_healthBranch->HandleSelectAction();
 		}
+		else if (buttonIndex == UiUtils::FindButtonIndex(m_DamageBranchButton, m_buttons))
+		{
+			m_damageBranch->HandleSelectAction();
+		}
+		else if (buttonIndex == UiUtils::FindButtonIndex(m_PointsBranchButton, m_buttons))
+		{
+			m_PointsBranch->HandleSelectAction();
+		}
 	}
 }
 
@@ -217,18 +260,25 @@ void UHudWidget::HandleConfirmAction()
 void UHudWidget::HealthBranchAction()
 {
 	m_healthBranch->Show();
+	m_damageBranch->Hide();
+	m_PointsBranch->Hide();
+
 	ShowLowerBar();
 }
 
 void UHudWidget::DamageBranchAction()
 {
 	m_healthBranch->Hide();
+	m_damageBranch->Show();
+	m_PointsBranch->Hide();
 	ShowLowerBar();
 }
 
 void UHudWidget::PointsBranchAction()
 {
 	m_healthBranch->Hide();
+	m_damageBranch->Hide();
+	m_PointsBranch->Show();
 	ShowLowerBar();
 }
 

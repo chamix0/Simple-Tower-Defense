@@ -7,6 +7,7 @@
 #include "Game_Entities/SimpleDayNightActor.h"
 #include "Managers/TowerWorldManager.h"
 #include "ObserverPattern/Publisher.h"
+#include "UI/Hud/Crosshair/CrosshairWidget.h"
 #include "Utils/StopWatch.h"
 #include "Tower.generated.h"
 
@@ -32,14 +33,21 @@ private:
 	TSubclassOf<ASimpleBullet> m_bulletTemplate;
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* m_TowerMesh = nullptr;
+
+	//crosshair
 	UPROPERTY(EditAnywhere)
-	ACrosshairActor* M_CrosshairActor = nullptr;
+	TSubclassOf<ACrosshairActor> m_crosshairTemplate;
+	UPROPERTY()
+	TArray<ACrosshairActor*> M_CrosshairActors;
+
 	//shooting policy
 	UPROPERTY()
 	UShootingPolicy m_currentShootingPolicy = UShootingPolicy::CLOSEST;
-	
+
 	//shoot cooldown
-	FStopWatch m_shootTimer;
+	// UPROPERTY()
+	// TMap<UCrosshairWidget*,FStopWatch> m_shootTimers;
+	// FStopWatch m_shootTimer;
 
 	//health
 	UPROPERTY(EditAnywhere)
@@ -67,6 +75,7 @@ public:
 	UGameBaseWidget* GetGameBaseWidget() const;
 	void SetShootingPolicy(UShootingPolicy policy);
 	UShootingPolicy GetCurrentShootingPolicy() const;
+
 private:
 	UFUNCTION()
 	void OnTowerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -77,17 +86,18 @@ private:
 	                       class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	virtual void update(const UTowerEvent event) override;
 	/*shooting policy*/
-	ASimpleEnemy* SelectEnemyTarget();
 	ASimpleEnemy* SelectClosestEnemyTarget();
 	ASimpleEnemy* SelectFarthesEnemyTarget();
 	ASimpleEnemy* SelectStronguestEnemyTarget();
 	ASimpleEnemy* SelectweakestEnemyTarget();
+	bool IsTargetPicked(ASimpleEnemy* target);
 
 public:
+	ASimpleEnemy* SelectEnemyTarget();
 	void ShootBullet(FVector target);
+	bool GetInRange(FVector target);
 	void TakeDamage(float amount);
 	void SetHealth(float value);
 	void AddHealth(float value);
-
-	
+	void AddCrossHair();
 };

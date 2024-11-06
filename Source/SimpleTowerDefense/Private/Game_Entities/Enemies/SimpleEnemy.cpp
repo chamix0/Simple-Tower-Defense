@@ -119,7 +119,7 @@ void ASimpleEnemy::Tick(float DeltaTime)
 		if (damageTimer.isRunning())
 		{
 			//update real color
-			m_EnemyMesh->SetCustomPrimitiveDataVector4(0, DamageColor);
+			m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_isCriticalDamage ? CriticalColor : DamageColor);
 			if (damageTimer.GetElapsedMiliSeconds() > damageEffectMilliseconds)
 			{
 				damageTimer.Reset();
@@ -171,7 +171,16 @@ void ASimpleEnemy::OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	if (bullet != nullptr)
 	{
 		bullet->UnInitializeBullet();
-		RemoveHealth(bullet->GetDamage());
+		float criticalDamage = 0;
+		int rand = FMath::RandRange(0, 100);
+		m_isCriticalDamage = false;
+		if (rand < m_towerWorldManager->GetCriticalChance())
+		{
+			m_towerWorldManager->GetTower()->GetHud()->PushNotification("Critical HIT", 0.5f);
+			criticalDamage += m_towerWorldManager->GetDamage() * m_towerWorldManager->GetCriticalMultiplier();
+			m_isCriticalDamage = true;
+		}
+		RemoveHealth(bullet->GetDamage() + m_towerWorldManager->GetDamage() + criticalDamage);
 	}
 }
 
@@ -182,17 +191,17 @@ void ASimpleEnemy::OnEnemyEndOverlap(UPrimitiveComponent* HitComp, AActor* Other
 
 void ASimpleEnemy::RemoveHealth(int amount)
 {
-	m_health -= amount;
+	m_health = FMath::Max(0, m_health - amount);
+
 	m_healthBarWidget->SetValue(m_health, m_MaxHealth);
 
 	damageTimer.ReStart();
-
 
 	//kill the enemy when reached 0
 	if (m_health <= 0)
 	{
 		UnInitializeEnemy();
-		m_towerWorldManager->AddPoints(FMath::Max(1, m_MaxHealth / 2));
+		m_towerWorldManager->AddPoints(FMath::Max(1, m_MaxHealth / 2) * m_towerWorldManager->GetKillPointMultiplier());
 
 		//life steal
 		int randomNum = FMath::RandRange(0, 100);
