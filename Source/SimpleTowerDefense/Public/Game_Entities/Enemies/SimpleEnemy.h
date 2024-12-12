@@ -14,6 +14,11 @@ UCLASS()
 class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 {
 	GENERATED_BODY()
+
+protected:
+	UPROPERTY()
+	bool m_availible = true;
+private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* m_EnemyMesh = nullptr;
 	UPROPERTY(EditAnywhere)
@@ -29,8 +34,7 @@ class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 	float m_MaxHealth = 10;
 	UPROPERTY(EditAnywhere)
 	float m_speed = 1;
-	UPROPERTY()
-	bool m_availible = true;
+
 	bool m_isCriticalDamage = false;
 	float targetSpeed;
 
@@ -62,9 +66,10 @@ public:
 	void SetIsAvailable(bool value);
 	float GetHealth() const;
 	float GetMaxHealth() const;
-
-private:
+protected:
 	void Move(float deltaTime);
+	
+private:
 	UFUNCTION()
 	void OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
@@ -73,4 +78,5 @@ private:
 	void OnEnemyEndOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor,
 	                       class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	void RemoveHealth(int amount);
+	void DamageColorUpdate();
 };

@@ -16,11 +16,13 @@ void USimpleButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	//update colors
-	FLinearColor finalColor = m_highlighted || m_mouseHighlight ? m_targetOppositeColor : m_targetColor;
 	m_background->SetColorAndOpacity(m_highlighted || m_mouseHighlight ? m_currentOppositeColor : m_currentColor);
+	FLinearColor finalColor = m_highlighted || m_mouseHighlight ? m_currentColor :m_currentOppositeColor;
+
+	// m_InputHint->IconRimBrush.TintColor = m_highlighted || m_mouseHighlight ? m_currentColor :m_currentOppositeColor ;
 	m_InputHint->IconRimBrush.TintColor = finalColor == FLinearColor(1, 1, 1, 1)
-		                                      ? FLinearColor(0, 0, 0, 0)
-		                                      : m_currentOppositeColor;
+										  ? FLinearColor(0, 0, 0, 0)
+										  : finalColor;
 }
 
 void USimpleButtonWidget::NativeOnInitialized()

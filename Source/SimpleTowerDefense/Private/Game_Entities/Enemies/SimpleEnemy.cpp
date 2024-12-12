@@ -42,6 +42,8 @@ void ASimpleEnemy::BeginPlay()
 	m_EnemyMesh->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnEnemyEndOverlap);
 
 	//get health bar widget
+
+
 	m_healthBarWidget = Cast<UHealthBar>(m_healthBarComponent->GetWidget());
 }
 
@@ -59,14 +61,20 @@ void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 			UGameSettings>()->DifficultyIncrement;
 	m_MaxHealth = FMath::RandRange(0.1f, MaxOverallHealth);
 	m_health = m_MaxHealth;
-	m_healthBarWidget->SetValue(m_health, m_MaxHealth);
-	m_healthBarWidget->Show();
+
 
 	//initialize scale
 	float MaxScale = GetDefault<UGameSettings>()->MaxEnemyScale;
 	float scale = m_MaxHealth * MaxScale / MaxOverallHealth;
 	m_EnemyPivot->SetRelativeScale3D(FVector(scale));
-	m_healthBarWidget->SetRenderScale(FVector2D(scale));
+
+
+	if (m_healthBarWidget != nullptr)
+	{
+		m_healthBarWidget->SetValue(m_health, m_MaxHealth);
+		m_healthBarWidget->Show();
+		m_healthBarWidget->SetRenderScale(FVector2D(scale));
+	}
 
 	//initialize speed
 	float MaxOverallSpeed = GetDefault<UGameSettings>()->MaxEnemySpeed + GetDefault<UGameSettings>()->MaxEnemySpeed *
@@ -77,10 +85,10 @@ void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 			UGameSettings>()->DifficultyIncrement;
 	m_speed = FMath::RandRange(MinOverallSpeed, MaxOverallSpeed);
 
-		//update real color
+	//update real color
 
-		//initialize color
-		m_targetColor = m_towerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
+	//initialize color
+	m_targetColor = m_towerWorldManager->GetIsDay() ? m_dayColor : m_nightColor;
 	m_currentColor = m_targetColor;
 	m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
 
@@ -97,7 +105,11 @@ void ASimpleEnemy::UnInitializeEnemy()
 	SetIsAvailable(true);
 
 	//hide healthbar
-	m_healthBarWidget->Hide();
+
+	if (m_healthBarWidget != nullptr)
+	{
+		m_healthBarWidget->Hide();
+	}
 
 	//return it top the pool
 	m_towerWorldManager->GetEnemyPool().InsertEnemyToPool(this);
@@ -105,7 +117,10 @@ void ASimpleEnemy::UnInitializeEnemy()
 	// Create the Niagara Component
 	UNiagaraComponent* NiagaraComponentSpawn = UNiagaraFunctionLibrary::SpawnSystemAtLocation(
 		GetWorld(), m_ExplosionParticles, GetActorLocation());
-	NiagaraComponentSpawn->SetVariableLinearColor("Color", m_currentColor);
+	if (NiagaraComponentSpawn != nullptr)
+	{
+		NiagaraComponentSpawn->SetVariableLinearColor("Color", m_currentColor);
+	}
 
 	//move under the ground
 	SetActorLocation(FVector(0, 0, -1000));
@@ -123,21 +138,7 @@ void ASimpleEnemy::Tick(float DeltaTime)
 
 	if (!m_availible)
 	{
-		if (damageTimer.isRunning())
-		{
-			//update real color
-			m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_isCriticalDamage ? CriticalColor : DamageColor);
-			if (damageTimer.GetElapsedMiliSeconds() > damageEffectMilliseconds)
-			{
-				damageTimer.Reset();
-			}
-		}
-		else
-		{
-			//update real color
-			m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
-		}
-
+		DamageColorUpdate();
 
 		//move towards the tower (0,0)
 		Move(DeltaTime);
@@ -166,10 +167,13 @@ float ASimpleEnemy::GetMaxHealth() const
 
 void ASimpleEnemy::Move(float deltaTime)
 {
-	targetSpeed = FMath::FInterpTo(targetSpeed, m_towerWorldManager->GetTower()->GetInRange(GetActorLocation())
-		                                            ? m_speed
-		                                            : GetDefault<UGameSettings>()->EnemyOutOfRangeSpeed, deltaTime,
-	                               GetDefault<UGameSettings>()->ColorChangeSpeed);
+	if (m_towerWorldManager->GetTower() != nullptr)
+	{
+		targetSpeed = FMath::FInterpTo(targetSpeed, m_towerWorldManager->GetTower()->GetInRange(GetActorLocation())
+			                                            ? m_speed
+			                                            : GetDefault<UGameSettings>()->EnemyOutOfRangeSpeed, deltaTime,
+		                               GetDefault<UGameSettings>()->ColorChangeSpeed);
+	}
 	FVector newPosition = FMath::VInterpConstantTo(GetActorLocation(), FVector(0), deltaTime, targetSpeed);
 	SetActorLocation(newPosition);
 }
@@ -204,8 +208,10 @@ void ASimpleEnemy::RemoveHealth(int amount)
 {
 	m_health = FMath::Max(0, m_health - amount);
 
-	m_healthBarWidget->SetValue(m_health, m_MaxHealth);
-
+	if (m_healthBarWidget != nullptr)
+	{
+		m_healthBarWidget->SetValue(m_health, m_MaxHealth);
+	}
 	damageTimer.ReStart();
 
 	//kill the enemy when reached 0
@@ -223,5 +229,23 @@ void ASimpleEnemy::RemoveHealth(int amount)
 				"Stole " + FString::FromInt(quantity) + " Health points from enemy's life", 0.5f);
 			m_towerWorldManager->GetTower()->AddHealth(quantity);
 		}
+	}
+}
+
+void ASimpleEnemy::DamageColorUpdate()
+{
+	if (damageTimer.isRunning())
+	{
+		//update real color
+		m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_isCriticalDamage ? CriticalColor : DamageColor);
+		if (damageTimer.GetElapsedMiliSeconds() > damageEffectMilliseconds)
+		{
+			damageTimer.Reset();
+		}
+	}
+	else
+	{
+		//update real color
+		m_EnemyMesh->SetCustomPrimitiveDataVector4(0, m_currentColor);
 	}
 }
