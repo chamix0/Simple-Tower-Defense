@@ -15,7 +15,8 @@ class SIMPLETOWERDEFENSE_API AEnemySpawner : public ASimpleDayNightActor
 
 
 	FStopWatch m_timer;
-
+	
+	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ASimpleEnemy> m_enemyTemplate;
 	UPROPERTY(EditAnywhere)
@@ -28,6 +29,9 @@ class SIMPLETOWERDEFENSE_API AEnemySpawner : public ASimpleDayNightActor
 public:
 	// Sets default values for this actor's properties
 	AEnemySpawner();
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+	virtual void update(const UTowerEvent event) override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -35,8 +39,6 @@ protected:
 
 	void SpawnEnemy();
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-	virtual void update(const UTowerEvent event) override;
+private:
+	float GetSpawnLimitator() const;
 };

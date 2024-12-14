@@ -3,6 +3,7 @@
 
 #include "Game_Entities/Enemies/EnemySpawner.h"
 
+#include "Managers/TimeManager.h"
 #include "Managers/TowerWorldManager.h"
 #include "Settings/GameSettings.h"
 #include "Utils/MyDebugUtils.h"
@@ -36,6 +37,18 @@ void AEnemySpawner::SpawnEnemy()
 	MyDebugUtils::Print("NO ENEMY TEMPLATE GIVEN TO ENEMY SPAWNER!!!", FColor::Red);
 }
 
+float AEnemySpawner::GetSpawnLimitator() const
+{
+	if (!m_towerWorldManager->GetTimeManager())
+	{
+		return 1;
+	}
+	float currentTime = m_towerWorldManager->GetTimeManager()->GetCurrentTime();
+	float dayLength = GetDefault<UGameSettings>()->DayLength;
+	//a cos curve that starts at 0 peacks at half of day and night and then goes down
+	return (1 - FMath::Cos(currentTime * (4 * PI / dayLength))) / 2;
+}
+
 // Called every frame
 void AEnemySpawner::Tick(float DeltaTime)
 {
@@ -44,8 +57,9 @@ void AEnemySpawner::Tick(float DeltaTime)
 	//feed the timer
 	m_timer.ReceiveTick(DeltaTime);
 
-	//spawn
-	if (m_timer.GetElapsedSeconds() > (1.f / m_spawnsPerSecond))
+	//spawn the most arround middle of the day and middle of the night
+	float aux = GetSpawnLimitator();
+	if (m_timer.GetElapsedSeconds() > 1 / FMath::Max(0.01f, m_spawnsPerSecond * aux))
 	{
 		//restart timer
 		m_timer.ReStart();
