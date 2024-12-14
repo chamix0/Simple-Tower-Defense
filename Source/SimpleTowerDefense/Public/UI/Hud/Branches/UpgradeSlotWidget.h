@@ -21,8 +21,9 @@ class SIMPLETOWERDEFENSE_API UUpgradeSlotWidget : public USimpleButtonWidget
 	int CostIncrement = 0;
 	UPROPERTY(EditAnywhere)
 	int unlockDay = 1;
+	/*-1 means no limit other, is the limit*/
 	UPROPERTY(EditAnywhere)
-	int MaxUpgrades = 1;
+	int MaxUpgrades = -1;
 	UPROPERTY(meta=(BindWidget))
 	USimpleTextWidget* m_priceText = nullptr;
 

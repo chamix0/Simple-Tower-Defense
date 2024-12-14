@@ -59,13 +59,13 @@ void UUpgradeSlotWidget::UpdateButton()
 	int prize = baseCost + CostIncrement * m_numUpgrades;
 	bool highlighted = m_highlighted || m_mouseHighlight;
 	/*progress text*/
-	//possible cases
+	// possible cases
 	bool soldOut = m_numUpgrades >= MaxUpgrades;
 	bool notEnoughPoints = m_TowerWorldManager->GetPoints() < prize;
 
 	if (m_unlocked)
 	{
-		if (soldOut)
+		if (MaxUpgrades > -1 && soldOut)
 		{
 			m_priceText->SetTextDirectly(FText::FromString("MAX UPGRADES"), highlighted);
 		}
@@ -85,8 +85,16 @@ void UUpgradeSlotWidget::UpdateButton()
 	}
 
 	/*PROGRESS TEXT*/
-	m_progressText->SetTextDirectly(
-		FText::FromString(FString::FromInt(m_numUpgrades) + "/" + FString::FromInt(MaxUpgrades)), highlighted);
+	if (MaxUpgrades == -1)
+	{
+		m_progressText->SetTextDirectly(
+			FText::FromString(FString::FromInt(m_numUpgrades) + "/" + FString::FromInt(MaxUpgrades)), highlighted);
+	}
+	else
+	{
+		m_progressText->SetTextDirectly(
+			FText::FromString("-  " + FString::FromInt(m_numUpgrades) + "  -"), highlighted);
+	}
 }
 
 bool UUpgradeSlotWidget::TryUpgrade()
@@ -96,14 +104,14 @@ bool UUpgradeSlotWidget::TryUpgrade()
 	//locked
 	if (!m_unlocked)
 	{
-		m_TowerWorldManager->GetTower()->GetHud()->PushNotification("this Upgrade is still locked",2.f);
+		m_TowerWorldManager->GetTower()->GetHud()->PushNotification("this Upgrade is still locked", 2.f);
 		return false;
 	}
 
 	//sold out
-	if (m_numUpgrades >= MaxUpgrades)
+	if (MaxUpgrades > -1 && m_numUpgrades >= MaxUpgrades)
 	{
-		m_TowerWorldManager->GetTower()->GetHud()->PushNotification("Upgrade limit reached...",2.f);
+		m_TowerWorldManager->GetTower()->GetHud()->PushNotification("Upgrade limit reached...", 2.f);
 		return false;
 	}
 

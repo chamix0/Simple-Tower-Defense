@@ -59,13 +59,14 @@ void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 	float MaxOverallHealth = GetDefault<UGameSettings>()->MaxEnemyHealth + GetDefault<UGameSettings>()->MaxEnemyHealth *
 		m_towerWorldManager->GetNumDays() * GetDefault<
 			UGameSettings>()->DifficultyIncrement;
-	m_MaxHealth = FMath::RandRange(0.1f, MaxOverallHealth);
+	m_MaxHealth = FMath::RandRange(static_cast<float>(GetDefault<UGameSettings>()->MinEnemyHealth), MaxOverallHealth);
 	m_health = m_MaxHealth;
 
 
 	//initialize scale
 	float MaxScale = GetDefault<UGameSettings>()->MaxEnemyScale;
-	float scale = m_MaxHealth * MaxScale / MaxOverallHealth;
+	float MinScale = GetDefault<UGameSettings>()->MinEnemyScale;
+	float scale = FMath::Max(MinScale, m_MaxHealth * MaxScale / MaxOverallHealth);
 	m_EnemyPivot->SetRelativeScale3D(FVector(scale));
 
 

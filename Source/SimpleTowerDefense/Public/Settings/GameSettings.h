@@ -31,12 +31,16 @@ public:
 	/*Enemies*/
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Max enemy health"))
 	int MaxEnemyHealth = 20.f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Min enemy health"))
+	int MinEnemyHealth = 1.f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Max enemy speed"))
 	int MaxEnemySpeed = 20.f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Min enemy speed"))
 	int MinEnemySpeed = 20.f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Max enemy Scale"))
 	float MaxEnemyScale = 0.5f;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies", meta = (DisplayName = "Min enemy Scale"))
+	float MinEnemyScale = 0.1f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Enemies",
 		meta = (DisplayName = "Simultaneous Spawn Increment"))
 	float SimultaneousSpawnIncrement = 0.3f;
