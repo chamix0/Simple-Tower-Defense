@@ -4,6 +4,7 @@
 #include "UI/Basics/JustButtonsScreen.h"
 
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "UI/BaseWidget.h"
 #include "UI/Basics/SimpleButtonWidget.h"
 #include "Utils/UiUtils.h"
@@ -26,6 +27,10 @@ void UJustButtonsScreen::NativeOnInitialized()
 	UpdateSelectedButton(buttonIndex);
 
 	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
+
+	//input changed
+	m_ActionWidget->OnInputMethodChanged.AddDynamic(this, &ThisClass::InputChanged);
+	m_mouseBlockingImage->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UJustButtonsScreen::NativeOnActivated()
@@ -90,6 +95,22 @@ void UJustButtonsScreen::DeleteAllButtons()
 	while (!m_buttons.IsEmpty())
 	{
 		DeleteButton(0);
+	}
+}
+
+void UJustButtonsScreen::InputChanged(bool isGamepad)
+{
+	//set button to -1
+	buttonIndex = -1;
+	UpdateSelectedButton(buttonIndex);
+	
+	if (isGamepad)
+	{
+		m_mouseBlockingImage->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		m_mouseBlockingImage->SetVisibility(ESlateVisibility::Collapsed);
 	}
 }
 

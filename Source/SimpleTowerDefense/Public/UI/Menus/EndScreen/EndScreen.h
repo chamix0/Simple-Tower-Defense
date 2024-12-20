@@ -22,10 +22,6 @@ class SIMPLETOWERDEFENSE_API UEndScreen : public UJustButtonsScreen
 	UPROPERTY(meta=(BindWidget))
 	USimpleButtonWidget* Button_QuitToMenu;
 	UPROPERTY(meta=(BindWidget))
-	UCommonActionWidget* auxInputAction;
-	UPROPERTY(meta=(BindWidget))
-	UImage* m_blockingScreen;
-	UPROPERTY(meta=(BindWidget))
 	USimpleTextWidget* m_DaysText = nullptr;
 
 protected:
@@ -40,6 +36,6 @@ private:
 	virtual void HandleReturnAction() override;
 	UFUNCTION()
 	void QuitToMenuButtonAction();
-	UFUNCTION()
-	void OnInputMethodChanged(bool usingGamepad);
+	// UFUNCTION()
+	// void OnInputMethodChanged(bool usingGamepad);
 };

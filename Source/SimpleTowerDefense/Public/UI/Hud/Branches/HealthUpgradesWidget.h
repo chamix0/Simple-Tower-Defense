@@ -42,4 +42,5 @@ public:
 	void LifeStealChanceAction();
 	UFUNCTION()
 	void LifeStealAmountAction();
+	void ForceUpdateColors();
 };

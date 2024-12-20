@@ -66,6 +66,9 @@ public:
 	void SetIsAvailable(bool value);
 	float GetHealth() const;
 	float GetMaxHealth() const;
+	void ShowHealthBar();
+	void HideHealthBar();
+
 protected:
 	void Move(float deltaTime);
 	

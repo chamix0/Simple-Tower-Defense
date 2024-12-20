@@ -69,6 +69,9 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
 		meta = (DisplayName = "Initial Damage"))
 	float InitialDamage = 1;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	meta = (DisplayName = "Initial Max Points points"))
+	int InitialMaxPoints = 500;
 
 
 	//upgrades
@@ -96,6 +99,9 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
 		meta = (DisplayName = "kill points multiplier increment"))
 	float KillPointsMultiplierIncrement = 0.1;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	meta = (DisplayName = "MaxPoints points increment"))
+	int MaxPointsIncrement = 500;
 
 	UGameSettings();
 };

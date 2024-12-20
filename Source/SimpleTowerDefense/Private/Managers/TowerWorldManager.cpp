@@ -19,6 +19,7 @@ void UTowerWorldManager::Initialize(FSubsystemCollectionBase& Collection)
 	m_ShootsPerSecond = GetDefault<UGameSettings>()->InitialShootsPerSecond;
 	m_maxTowerHealth = GetDefault<UGameSettings>()->InitialMaxHealthRange;
 	m_Damage = GetDefault<UGameSettings>()->InitialDamage;
+	m_maxPoints = GetDefault<UGameSettings>()->InitialMaxPoints;
 }
 
 void UTowerWorldManager::Deinitialize()
@@ -168,6 +169,11 @@ void UTowerWorldManager::IncrementDailyPoints(int amount)
 	m_DailyPoints += amount;
 }
 
+void UTowerWorldManager::IncrementMaxPoints(int amount)
+{
+	m_maxPoints += amount;
+}
+
 int UTowerWorldManager::GetMaxTowerHealth() const
 {
 	return m_maxTowerHealth;
@@ -190,7 +196,7 @@ int UTowerWorldManager::GetPoints() const
 
 void UTowerWorldManager::AddPoints(int amount)
 {
-	m_points += amount;
+	m_points = FMath::Min(m_maxPoints, m_points + amount);
 	m_tower->GetHud()->SetPoints(m_points);
 }
 

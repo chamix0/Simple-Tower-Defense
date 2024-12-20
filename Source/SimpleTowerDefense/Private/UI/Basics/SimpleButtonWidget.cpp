@@ -15,14 +15,7 @@
 void USimpleButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
-	//update colors
-	m_background->SetColorAndOpacity(m_highlighted || m_mouseHighlight ? m_currentOppositeColor : m_currentColor);
-	FLinearColor finalColor = m_highlighted || m_mouseHighlight ? m_currentColor :m_currentOppositeColor;
-
-	// m_InputHint->IconRimBrush.TintColor = m_highlighted || m_mouseHighlight ? m_currentColor :m_currentOppositeColor ;
-	m_InputHint->IconRimBrush.TintColor = finalColor == FLinearColor(1, 1, 1, 1)
-										  ? FLinearColor(0, 0, 0, 0)
-										  : finalColor;
+	UpdateColors();
 }
 
 void USimpleButtonWidget::NativeOnInitialized()
@@ -113,6 +106,32 @@ void USimpleButtonWidget::PerformSelectAction()
 
 	//execute action binded to button
 	bool executed = OnButtonSelected.ExecuteIfBound();
+}
+
+void USimpleButtonWidget::UpdateColors()
+{
+	//update colors
+	m_background->SetColorAndOpacity(m_highlighted || m_mouseHighlight ? m_currentOppositeColor : m_currentColor);
+	FLinearColor finalColor = m_highlighted || m_mouseHighlight ? m_currentColor : m_currentOppositeColor;
+
+	// m_InputHint->IconRimBrush.TintColor = m_highlighted || m_mouseHighlight ? m_currentColor :m_currentOppositeColor ;
+	m_InputHint->IconRimBrush.TintColor = finalColor == FLinearColor(1, 1, 1, 1)
+		                                      ? FLinearColor(0, 0, 0, 0)
+		                                      : finalColor;
+}
+
+void USimpleButtonWidget::ForceUpdateColors()
+{
+	//update colors
+	m_currentColor = m_targetColor;
+	m_currentOppositeColor = m_targetOppositeColor;
+	m_background->SetColorAndOpacity(m_highlighted || m_mouseHighlight ? m_targetOppositeColor : m_targetColor);
+	FLinearColor finalColor = m_highlighted || m_mouseHighlight ? m_targetColor : m_targetOppositeColor;
+
+	// m_InputHint->IconRimBrush.TintColor = m_highlighted || m_mouseHighlight ? m_currentColor :m_currentOppositeColor ;
+	m_InputHint->IconRimBrush.TintColor = finalColor == FLinearColor(1, 1, 1, 1)
+		                                      ? FLinearColor(0, 0, 0, 0)
+		                                      : finalColor;
 }
 
 void USimpleButtonWidget::FastForwardText()

@@ -22,10 +22,7 @@ class SIMPLETOWERDEFENSE_API UQuitToMenuScreen : public UJustButtonsScreen
 	USimpleButtonWidget* Button_Cancel;
 	UPROPERTY(meta=(BindWidget))
 	USimpleButtonWidget* Button_QuitToMenu;
-	UPROPERTY(meta=(BindWidget))
-	UCommonActionWidget* auxInputAction;
-	UPROPERTY(meta=(BindWidget))
-	UImage* m_blockingScreen;
+
 protected:
 	virtual void NativeOnInitialized() override;
 	virtual void NativeOnActivated() override;
@@ -39,6 +36,6 @@ private:
 	virtual void HandleReturnAction() override;
 	UFUNCTION()
 	void QuitToMenuButtonAction();
-	UFUNCTION()
-	void OnInputMethodChanged(bool usingGamepad);
+	// UFUNCTION()
+	// void OnInputMethodChanged(bool usingGamepad);
 };

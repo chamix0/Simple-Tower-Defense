@@ -19,7 +19,7 @@ void UEndScreen::NativeOnInitialized()
 	Button_PlayAgain->OnButtonSelected.BindDynamic(this, &ThisClass::PlayAgainButtonAction);
 	Button_QuitToMenu->OnButtonSelected.BindDynamic(this, &ThisClass::QuitToMenuButtonAction);
 
-	auxInputAction->OnInputMethodChanged.AddDynamic(this, &ThisClass::OnInputMethodChanged);
+	// auxInputAction->OnInputMethodChanged.AddDynamic(this, &ThisClass::OnInputMethodChanged);
 }
 
 void UEndScreen::NativeOnActivated()
@@ -51,14 +51,14 @@ void UEndScreen::QuitToMenuButtonAction()
 	GameUtils::LoadMainMenu(GetWorld());
 }
 
-void UEndScreen::OnInputMethodChanged(bool usingGamepad)
-{
-	if (usingGamepad)
-	{
-		m_blockingScreen->SetVisibility(ESlateVisibility::Visible);
-	}
-	else
-	{
-		m_blockingScreen->SetVisibility(ESlateVisibility::Collapsed);
-	}
-}
+// void UEndScreen::OnInputMethodChanged(bool usingGamepad)
+// {
+// 	if (usingGamepad)
+// 	{
+// 		m_blockingScreen->SetVisibility(ESlateVisibility::Visible);
+// 	}
+// 	else
+// 	{
+// 		m_blockingScreen->SetVisibility(ESlateVisibility::Collapsed);
+// 	}
+// }

@@ -8,11 +8,14 @@
 void UHealthUpgradesWidget::Hide()
 {
 	SetVisibility(ESlateVisibility::Collapsed);
+	
 }
 
 void UHealthUpgradesWidget::Show()
 {
 	SetVisibility(ESlateVisibility::Visible);
+	ForceUpdateColors();
+
 }
 
 void UHealthUpgradesWidget::NativeOnInitialized()
@@ -91,4 +94,12 @@ void UHealthUpgradesWidget::LifeStealAmountAction()
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_LifeStealAmountUpgrade->UpdateButton();
+}
+
+void UHealthUpgradesWidget::ForceUpdateColors()
+{
+	for (USimpleButtonWidget*& button : m_buttons)
+	{
+		button->ForceUpdateColors();
+	}
 }

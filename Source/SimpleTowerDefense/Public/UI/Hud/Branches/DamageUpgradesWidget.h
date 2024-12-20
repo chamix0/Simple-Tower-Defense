@@ -51,4 +51,5 @@ public:
 	void CriticalMultiplierAction();
 	UFUNCTION()
 	void numTargetsAction();
+	void ForceUpdateColors();
 };

@@ -84,6 +84,8 @@ public:
 	//Events
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnButtonSelectedEvent();
+	void UpdateColors();
+	void ForceUpdateColors();
 
 private:
 	/// fast forward text animation

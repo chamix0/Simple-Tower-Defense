@@ -15,6 +15,7 @@ void UDamageUpgradesWidget::Hide()
 void UDamageUpgradesWidget::Show()
 {
 	SetVisibility(ESlateVisibility::Visible);
+	ForceUpdateColors();
 }
 
 void UDamageUpgradesWidget::NativeOnInitialized()
@@ -149,4 +150,12 @@ void UDamageUpgradesWidget::numTargetsAction()
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_numTargetsUpgrade->UpdateButton();
+}
+
+void UDamageUpgradesWidget::ForceUpdateColors()
+{
+	for (USimpleButtonWidget*& button : m_buttons)
+	{
+		button->ForceUpdateColors();
+	}
 }

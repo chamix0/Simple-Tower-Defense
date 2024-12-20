@@ -19,7 +19,7 @@ void UQuitToMenuScreen::NativeOnInitialized()
 	Button_Cancel->OnButtonSelected.BindDynamic(this, &ThisClass::CancelButtonAction);
 	Button_QuitToMenu->OnButtonSelected.BindDynamic(this, &ThisClass::QuitToMenuButtonAction);
 
-	auxInputAction->OnInputMethodChanged.AddDynamic(this, &ThisClass::OnInputMethodChanged);
+	// auxInputAction->OnInputMethodChanged.AddDynamic(this, &ThisClass::OnInputMethodChanged);
 }
 
 void UQuitToMenuScreen::NativeOnActivated()
@@ -48,15 +48,15 @@ void UQuitToMenuScreen::QuitToMenuButtonAction()
 	GameUtils::LoadMainMenu(GetWorld());
 }
 
-void UQuitToMenuScreen::OnInputMethodChanged(bool usingGamepad)
-{
-	if (usingGamepad)
-	{
-		m_blockingScreen->SetVisibility(ESlateVisibility::Visible);
-	}else
-	{
-		m_blockingScreen->SetVisibility(ESlateVisibility::Collapsed);
-
-	}
-	
-}
+// void UQuitToMenuScreen::OnInputMethodChanged(bool usingGamepad)
+// {
+// 	if (usingGamepad)
+// 	{
+// 		m_blockingScreen->SetVisibility(ESlateVisibility::Visible);
+// 	}else
+// 	{
+// 		m_blockingScreen->SetVisibility(ESlateVisibility::Collapsed);
+//
+// 	}
+// 	
+// }

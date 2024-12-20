@@ -75,6 +75,7 @@ void ASimpleEnemy::InitializeEnemy(FVector spawnPosition)
 		m_healthBarWidget->SetValue(m_health, m_MaxHealth);
 		m_healthBarWidget->Show();
 		m_healthBarWidget->SetRenderScale(FVector2D(scale));
+		HideHealthBar();
 	}
 
 	//initialize speed
@@ -164,6 +165,17 @@ float ASimpleEnemy::GetHealth() const
 float ASimpleEnemy::GetMaxHealth() const
 {
 	return m_MaxHealth;
+}
+
+void ASimpleEnemy::ShowHealthBar()
+{
+	m_healthBarWidget->Show();
+}
+
+void ASimpleEnemy::HideHealthBar()
+{
+	m_healthBarWidget->Hide();
+
 }
 
 void ASimpleEnemy::Move(float deltaTime)

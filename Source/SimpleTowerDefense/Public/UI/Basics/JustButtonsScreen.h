@@ -3,9 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CommonActionWidget.h"
 #include "CommonActivatableWidget.h"
+#include "Components/Image.h"
 #include "Managers/TowerWorldManager.h"
 #include "UI/BaseWidget.h"
+#include "CommonInputSubsystem.h"
 #include "JustButtonsScreen.generated.h"
 
 class USimpleButtonWidget;
@@ -23,6 +26,12 @@ protected:
 	//hud
 	UPROPERTY()
 	UBaseWidget* m_BaseWidget = nullptr;
+
+	UPROPERTY(meta=(BindWidget))
+	UImage* m_mouseBlockingImage = nullptr;
+	UPROPERTY(meta=(BindWidget))
+	UCommonActionWidget* m_ActionWidget= nullptr;
+	
 
 	//buttons
 	UPROPERTY()
@@ -52,6 +61,9 @@ protected:
 	/// @param index 
 	void DeleteButton(int index);
 	void DeleteAllButtons();
+	UFUNCTION()
+	void InputChanged(bool isGamepad);
+
 public:
 	//handle actions
 	UFUNCTION(BlueprintCallable)
@@ -64,4 +76,6 @@ public:
 	virtual void HandleReturnAction();
 
 	void UpdateSelectedButton(int index);
+	
+	
 };

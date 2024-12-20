@@ -121,7 +121,7 @@ void ATower::update(const UTowerEvent event)
 		{
 			if (Crosshair->GetTarget() == nullptr)
 			{
-				Crosshair->SetTargetToFollow(SelectEnemyTarget());
+				Crosshair->SetTargetToFollow(SelectEnemyTarget(nullptr));
 			}
 		}
 	}
@@ -156,28 +156,27 @@ void ATower::update(const UTowerEvent event)
 	}
 }
 
-ASimpleEnemy* ATower::SelectEnemyTarget()
+ASimpleEnemy* ATower::SelectEnemyTarget(ACrosshairActor* currentCroshair)
 {
 	switch (m_currentShootingPolicy)
 	{
 	case UShootingPolicy::CLOSEST:
-		return SelectClosestEnemyTarget();
+		return SelectClosestEnemyTarget(currentCroshair);
 	case UShootingPolicy::FURTHEST:
-		return SelectFarthesEnemyTarget();
+		return SelectFarthesEnemyTarget(currentCroshair);
 	case UShootingPolicy::STRONGUEST:
-		return SelectStronguestEnemyTarget();
+		return SelectStronguestEnemyTarget(currentCroshair);
 	case UShootingPolicy::WEAKEST:
-		return SelectweakestEnemyTarget();
+		return SelectweakestEnemyTarget(currentCroshair);
 	default:
-		return SelectClosestEnemyTarget();
+		return SelectClosestEnemyTarget(currentCroshair);
 	}
 }
 
-ASimpleEnemy* ATower::SelectClosestEnemyTarget()
+ASimpleEnemy* ATower::SelectClosestEnemyTarget(ACrosshairActor* currentCroshair)
 {
 	//active enemies
 	TArray<ASimpleEnemy*> enemies = m_towerWorldManager->GetEnemyPool().m_ActiveEnemies;
-
 
 	//find closest enemy
 	float minDistance = std::numeric_limits<float>::max();
@@ -186,7 +185,7 @@ ASimpleEnemy* ATower::SelectClosestEnemyTarget()
 	{
 		float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
 		if (distance < minDistance && !Enemy->GetIsAvailable() && GetInRange(Enemy->GetActorLocation()) && !
-			IsTargetPicked(Enemy))
+			IsTargetPicked(Enemy,currentCroshair))
 		{
 			minDistance = distance;
 			selectedEnemy = Enemy;
@@ -196,7 +195,7 @@ ASimpleEnemy* ATower::SelectClosestEnemyTarget()
 	return selectedEnemy;
 }
 
-ASimpleEnemy* ATower::SelectFarthesEnemyTarget()
+ASimpleEnemy* ATower::SelectFarthesEnemyTarget(ACrosshairActor* currentCroshair)
 {
 	//active enemies
 	TArray<ASimpleEnemy*> enemies = m_towerWorldManager->GetEnemyPool().m_ActiveEnemies;
@@ -208,7 +207,7 @@ ASimpleEnemy* ATower::SelectFarthesEnemyTarget()
 	{
 		float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
 		if (distance > maxDistance && !Enemy->GetIsAvailable() && GetInRange(Enemy->GetActorLocation()) && !
-			IsTargetPicked(Enemy))
+			IsTargetPicked(Enemy,currentCroshair))
 		{
 			maxDistance = distance;
 			selectedEnemy = Enemy;
@@ -219,7 +218,7 @@ ASimpleEnemy* ATower::SelectFarthesEnemyTarget()
 }
 
 
-ASimpleEnemy* ATower::SelectStronguestEnemyTarget()
+ASimpleEnemy* ATower::SelectStronguestEnemyTarget(ACrosshairActor* currentCroshair)
 {
 	//active enemies
 	TArray<ASimpleEnemy*> enemies = m_towerWorldManager->GetEnemyPool().m_ActiveEnemies;
@@ -233,7 +232,7 @@ ASimpleEnemy* ATower::SelectStronguestEnemyTarget()
 		// float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
 		if (health > maxHealth && !Enemy->GetIsAvailable() && GetInRange(
 				Enemy->GetActorLocation()) && !
-			IsTargetPicked(Enemy))
+			IsTargetPicked(Enemy,currentCroshair))
 		{
 			maxHealth = health;
 			selectedEnemy = Enemy;
@@ -243,7 +242,7 @@ ASimpleEnemy* ATower::SelectStronguestEnemyTarget()
 	return selectedEnemy;
 }
 
-ASimpleEnemy* ATower::SelectweakestEnemyTarget()
+ASimpleEnemy* ATower::SelectweakestEnemyTarget(ACrosshairActor* currentCroshair)
 {
 	//active enemies
 	TArray<ASimpleEnemy*> enemies = m_towerWorldManager->GetEnemyPool().m_ActiveEnemies;
@@ -256,7 +255,7 @@ ASimpleEnemy* ATower::SelectweakestEnemyTarget()
 		float health = Enemy->GetMaxHealth();
 		// float distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
 		if (health < minHealth && !Enemy->GetIsAvailable() && GetInRange(Enemy->GetActorLocation()) && !
-			IsTargetPicked(Enemy))
+			IsTargetPicked(Enemy,currentCroshair))
 		{
 			minHealth = health;
 			selectedEnemy = Enemy;
@@ -266,10 +265,15 @@ ASimpleEnemy* ATower::SelectweakestEnemyTarget()
 	return selectedEnemy;
 }
 
-bool ATower::IsTargetPicked(ASimpleEnemy* target)
+bool ATower::IsTargetPicked(ASimpleEnemy* target, ACrosshairActor* currentCroshair)
 {
 	for (ACrosshairActor*& Crosshair : M_CrosshairActors)
 	{
+		if (Crosshair == currentCroshair)
+		{
+			continue;
+		}
+		
 		if (Crosshair->GetTarget() == target)
 		{
 			return true;

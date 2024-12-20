@@ -16,8 +16,11 @@ void UUpgradeSlotWidget::update(const UTowerEvent event)
 		m_unlocked = m_TowerWorldManager->GetNumDays() >= unlockDay;
 		UpdateButton();
 	}
-	//update just in case
-	UpdateButton();
+	else
+	{
+		//update just in case
+		UpdateButton();
+	}
 }
 
 void UUpgradeSlotWidget::NativeOnInitialized()
@@ -85,16 +88,11 @@ void UUpgradeSlotWidget::UpdateButton()
 	}
 
 	/*PROGRESS TEXT*/
-	if (MaxUpgrades == -1)
-	{
-		m_progressText->SetTextDirectly(
-			FText::FromString(FString::FromInt(m_numUpgrades) + "/" + FString::FromInt(MaxUpgrades)), highlighted);
-	}
-	else
-	{
-		m_progressText->SetTextDirectly(
-			FText::FromString("-  " + FString::FromInt(m_numUpgrades) + "  -"), highlighted);
-	}
+	FString cad = MaxUpgrades == -1
+		              ? "-  " + FString::FromInt(m_numUpgrades) + "  -"
+		              : FString::FromInt(m_numUpgrades) + "/" + FString::FromInt(MaxUpgrades);
+
+	m_progressText->SetTextDirectly(FText::FromString(cad), highlighted);
 }
 
 bool UUpgradeSlotWidget::TryUpgrade()
@@ -123,3 +121,5 @@ bool UUpgradeSlotWidget::TryUpgrade()
 
 	return result;
 }
+
+

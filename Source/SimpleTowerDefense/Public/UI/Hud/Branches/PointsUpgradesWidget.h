@@ -20,6 +20,8 @@ class SIMPLETOWERDEFENSE_API UPointsUpgradesWidget : public UJustButtonsScreen
 	UPROPERTY(meta=(BindWidget))
 	UUpgradeSlotWidget* m_KillPointsMultiplierUpgrade = nullptr;
 	UPROPERTY(meta=(BindWidget))
+	UUpgradeSlotWidget* m_MaxPointsUpgrade = nullptr;
+	UPROPERTY(meta=(BindWidget))
 	UUpgradeSlotWidget* m_MaxGameSpeedUpgrade = nullptr;
 
 public:
@@ -34,4 +36,7 @@ public:
 	void KillPointMultiplierAction();
 	UFUNCTION()
 	void MaxGameSpeedAction();
+	UFUNCTION()
+	void MaxPointsAction();
+	void ForceUpdateColors();
 };

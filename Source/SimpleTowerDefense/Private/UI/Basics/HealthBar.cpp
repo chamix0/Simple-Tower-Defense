@@ -8,6 +8,7 @@
 void UHealthBar::Show()
 {
 	SetVisibility(ESlateVisibility::Visible);
+	m_currentColor=m_targetColor;
 }
 
 void UHealthBar::Hide()
@@ -17,7 +18,7 @@ void UHealthBar::Hide()
 
 void UHealthBar::SetValue(float currentHealth, float MaxHealth)
 {
-	m_MainHealthBar->SetPercent(currentHealth / MaxHealth);
+	m_MainHealthBar->SetPercent(FMath::Max(0.01f, currentHealth / MaxHealth));
 }
 
 void UHealthBar::NativeOnInitialized()

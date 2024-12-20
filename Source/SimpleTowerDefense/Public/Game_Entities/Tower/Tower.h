@@ -89,15 +89,16 @@ private:
 	void OnTowerEndOverlap(class UPrimitiveComponent* HitComp, class AActor* OtherActor,
 	                       class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	virtual void update(const UTowerEvent event) override;
+	
 	/*shooting policy*/
-	ASimpleEnemy* SelectClosestEnemyTarget();
-	ASimpleEnemy* SelectFarthesEnemyTarget();
-	ASimpleEnemy* SelectStronguestEnemyTarget();
-	ASimpleEnemy* SelectweakestEnemyTarget();
-	bool IsTargetPicked(ASimpleEnemy* target);
+	ASimpleEnemy* SelectClosestEnemyTarget(ACrosshairActor* currentCroshair);
+	ASimpleEnemy* SelectFarthesEnemyTarget(ACrosshairActor* currentCroshair);
+	ASimpleEnemy* SelectStronguestEnemyTarget(ACrosshairActor* currentCroshair);
+	ASimpleEnemy* SelectweakestEnemyTarget(ACrosshairActor* currentCroshair);
+	bool IsTargetPicked(ASimpleEnemy* target,ACrosshairActor* currentCroshair);
 
 public:
-	ASimpleEnemy* SelectEnemyTarget();
+	ASimpleEnemy* SelectEnemyTarget(ACrosshairActor* currentCroshair);
 	void ShootBullet(FVector target);
 	bool GetInRange(FVector target);
 	void TakeDamage(float amount);

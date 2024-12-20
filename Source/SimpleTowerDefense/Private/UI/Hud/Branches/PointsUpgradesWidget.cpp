@@ -10,11 +10,13 @@
 void UPointsUpgradesWidget::Hide()
 {
 	SetVisibility(ESlateVisibility::Collapsed);
+	
 }
 
 void UPointsUpgradesWidget::Show()
 {
 	SetVisibility(ESlateVisibility::Visible);
+	ForceUpdateColors();
 }
 
 void UPointsUpgradesWidget::NativeOnInitialized()
@@ -24,6 +26,7 @@ void UPointsUpgradesWidget::NativeOnInitialized()
 	//add buttons
 	AddButton(m_DailyPointsUpgrade);
 	AddButton(m_KillPointsMultiplierUpgrade);
+	AddButton(m_MaxPointsUpgrade);
 	AddButton(m_MaxGameSpeedUpgrade);
 
 
@@ -31,15 +34,18 @@ void UPointsUpgradesWidget::NativeOnInitialized()
 
 	m_DailyPointsUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::DailyPointsAction);
 	m_KillPointsMultiplierUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::KillPointMultiplierAction);
+	m_MaxPointsUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::MaxPointsAction);
 	m_MaxGameSpeedUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::MaxGameSpeedAction);
-
-
+	
 	//initialize button
 	m_DailyPointsUpgrade->SetText(FText::FromString("Daily points"));
 	m_DailyPointsUpgrade->UpdateButton();
 
 	m_KillPointsMultiplierUpgrade->SetText(FText::FromString("Kill points multiplier"));
 	m_KillPointsMultiplierUpgrade->UpdateButton();
+
+	m_MaxPointsUpgrade->SetText(FText::FromString("Max points"));
+	m_MaxPointsUpgrade->UpdateButton();
 
 	m_MaxGameSpeedUpgrade->SetText(FText::FromString("Max Game speed"));
 	m_MaxGameSpeedUpgrade->UpdateButton();
@@ -81,4 +87,24 @@ void UPointsUpgradesWidget::MaxGameSpeedAction()
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_MaxGameSpeedUpgrade->UpdateButton();
+}
+
+void UPointsUpgradesWidget::MaxPointsAction()
+{
+	bool result = m_MaxPointsUpgrade->TryUpgrade();
+	if (result)
+	{
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Max Points increased!!!", 2.f);
+		m_towerWorldManger->IncrementMaxPoints(GetDefault<UGameSettings>()->MaxPointsIncrement);
+		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
+	}
+	m_MaxPointsUpgrade->UpdateButton();
+}
+
+void UPointsUpgradesWidget::ForceUpdateColors()
+{
+	for (USimpleButtonWidget*& button : m_buttons)
+	{
+		button->ForceUpdateColors();
+	}
 }

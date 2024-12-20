@@ -79,7 +79,7 @@ void ACrosshairActor::Tick(float DeltaTime)
 	if (m_targetToFollow->GetIsAvailable() || !m_towerWorldManager->GetTower()->GetInRange(
 		m_targetToFollow->GetActorLocation()))
 	{
-		m_targetToFollow = nullptr;
+		SetTargetToFollow(nullptr);
 		return;
 	}
 
@@ -108,8 +108,8 @@ void ACrosshairActor::Tick(float DeltaTime)
 			//restart timer
 			m_shootStopwatch.ReStart();
 			//get new target
-			m_targetToFollow = nullptr;
-			m_targetToFollow = m_towerWorldManager->GetTower()->SelectEnemyTarget();
+			// m_targetToFollow->HideHealthBar();
+			SetTargetToFollow(m_towerWorldManager->GetTower()->SelectEnemyTarget(this));
 		}
 	}
 }
@@ -117,6 +117,10 @@ void ACrosshairActor::Tick(float DeltaTime)
 void ACrosshairActor::SetTargetToFollow(ASimpleEnemy* target)
 {
 	m_targetToFollow = target;
+	if (m_targetToFollow != nullptr)
+	{
+		m_targetToFollow->ShowHealthBar();
+	}
 }
 
 AActor* ACrosshairActor::GetTarget() const

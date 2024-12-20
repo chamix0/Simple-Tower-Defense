@@ -55,9 +55,9 @@ void UHudWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	                                                               GetDefault<UGameSettings>()->ColorChangeSpeed)));
 	//stats
 	M_StatsBox->SetRenderTranslation(FVector2D(FMath::FInterpTo(M_StatsBox->GetRenderTransform().Translation.X,
-															   !m_statsVisible * StatsTarget, InDeltaTime,
-															   GetDefault<UGameSettings>()->ColorChangeSpeed),0));
-	
+	                                                            !m_statsVisible * StatsTarget, InDeltaTime,
+	                                                            GetDefault<UGameSettings>()->ColorChangeSpeed), 0));
+
 	m_HideShowUpperInputHint->SetRenderTransformAngle(FMath::FInterpTo(
 		m_HideShowUpperInputHint->GetRenderTransformAngle(), m_upperBarVisible ? 180 : 0, InDeltaTime,
 		GetDefault<UGameSettings>()->ColorChangeSpeed));
@@ -179,7 +179,7 @@ void UHudWidget::ShowHideLowerBar()
 void UHudWidget::ShowHideStats()
 {
 	if (m_towerWorldManager->GetTower()->GetGameBaseWidget()->
-						 IsUpperMostWidget(this))
+	                         IsUpperMostWidget(this))
 	{
 		m_statsVisible = !m_statsVisible;
 	}
@@ -277,6 +277,9 @@ void UHudWidget::HealthBranchAction()
 	m_damageBranch->Hide();
 	m_PointsBranch->Hide();
 
+	//update button
+	UpdateSelectedButton(UiUtils::FindButtonIndex(m_healthBranchButton, m_buttons));
+
 	ShowLowerBar();
 }
 
@@ -285,6 +288,9 @@ void UHudWidget::DamageBranchAction()
 	m_healthBranch->Hide();
 	m_damageBranch->Show();
 	m_PointsBranch->Hide();
+
+	//update button
+	UpdateSelectedButton(UiUtils::FindButtonIndex(m_DamageBranchButton, m_buttons));
 	ShowLowerBar();
 }
 
@@ -293,6 +299,9 @@ void UHudWidget::PointsBranchAction()
 	m_healthBranch->Hide();
 	m_damageBranch->Hide();
 	m_PointsBranch->Show();
+
+	//update button
+	UpdateSelectedButton(UiUtils::FindButtonIndex(m_PointsBranchButton, m_buttons));
 	ShowLowerBar();
 }
 

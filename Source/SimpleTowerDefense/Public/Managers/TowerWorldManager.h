@@ -26,6 +26,7 @@ private:
 	bool m_isDay = true;
 	int m_numDays = 0;
 	int m_points = 0;
+	
 
 
 	UPROPERTY()
@@ -69,6 +70,8 @@ private:
 	float m_killPointMultiplier = 1.f;
 	UPROPERTY()
 	int m_DailyPoints = 0;
+	UPROPERTY()
+	int m_maxPoints = 1000;
 
 public:
 	bool GetIsDay() const;
@@ -113,6 +116,10 @@ public:
 	//daily points
 	int GetDailyPoints() const;
 	void IncrementDailyPoints(int amount);
+
+	//max Points
+	void IncrementMaxPoints(int amount);
+
 
 	int GetMaxTowerHealth() const;
 	void IncreaseMaxTowerHealth(int amount);
