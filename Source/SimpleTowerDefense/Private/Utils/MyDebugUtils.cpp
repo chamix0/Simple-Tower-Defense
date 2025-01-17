@@ -9,3 +9,8 @@ void MyDebugUtils::Print(const FString& Message, const FColor& Color)
 	}
 #endif
 }
+
+void MyDebugUtils::DrawRadius(UWorld* world, FVector& center, float radius, const FColor& Color)
+{
+	DrawDebugCircle(world, center, radius, 32, Color);
+}

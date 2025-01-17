@@ -25,9 +25,11 @@ private:
 	//class of the UI base to be created
 	UPROPERTY(EditAnywhere, Category="UI", meta=(DisplayName = "End screen widget class"))
 	TSubclassOf<UEndScreen> EndScreenWidgetClass;
+	
 	//class of the UI base to be created
 	UPROPERTY(EditAnywhere, Category="UI", meta=(DisplayName = "Widget Base class"))
 	TSubclassOf<UGameBaseWidget> BaseWidgetClass;
+	
 	UPROPERTY()
 	UGameBaseWidget* GameBaseWidget = nullptr;
 	UPROPERTY()
