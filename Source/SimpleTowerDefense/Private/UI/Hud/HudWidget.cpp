@@ -59,15 +59,15 @@ void UHudWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	                                                            GetDefault<UGameSettings>()->ColorChangeSpeed), 0));
 
 	m_HideShowUpperInputHint->SetRenderTransformAngle(FMath::FInterpTo(
-		m_HideShowUpperInputHint->GetRenderTransformAngle(), m_upperBarVisible ? 180 : 0, InDeltaTime,
+		m_HideShowUpperInputHint->GetRenderTransformAngle(), (m_upperBarVisible ? 180 : 0), InDeltaTime,
 		GetDefault<UGameSettings>()->ColorChangeSpeed));
 	m_HideShowLowerInputHint->SetRenderTransformAngle(FMath::FInterpTo(
-		m_HideShowLowerInputHint->GetRenderTransformAngle(), m_lowerBarVisible ? 180 : 0, InDeltaTime,
+		m_HideShowLowerInputHint->GetRenderTransformAngle(), (m_lowerBarVisible ? 180 : 0), InDeltaTime,
 		GetDefault<UGameSettings>()->ColorChangeSpeed));
 
 	//exit hint
 	m_exitInputHint->SetRenderOpacity(FMath::FInterpTo(m_exitInputHint->GetRenderOpacity(),
-	                                                   m_towerWorldManager->GetPaused(), InDeltaTime,
+	                                                   (m_towerWorldManager->GetPaused()?1:0), InDeltaTime,
 	                                                   GetDefault<UGameSettings>()->ColorChangeSpeed));
 }
 

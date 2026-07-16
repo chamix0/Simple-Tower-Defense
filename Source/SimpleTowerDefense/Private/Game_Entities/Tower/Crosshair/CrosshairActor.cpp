@@ -57,7 +57,7 @@ void ACrosshairActor::Tick(float DeltaTime)
 
 	if (m_targetToFollow == nullptr)
 	{
-		m_CrosshairWidget->SetRenderScale(FVector2D(FMath::FInterpTo(m_CrosshairWidget->RenderTransform.Scale.X, 0.5f,
+		m_CrosshairWidget->SetRenderScale(FVector2D(FMath::FInterpTo(m_CrosshairWidget->GetRenderTransform().Scale.X, 0.5f,
 		                                                             DeltaTime,
 		                                                             GetDefault<UGameSettings>()->ColorChangeSpeed)));
 		//start the timer if it wasn't running
@@ -87,7 +87,7 @@ void ACrosshairActor::Tick(float DeltaTime)
 	m_CrosshairWidget->SetRenderOpacity(FMath::FInterpConstantTo(m_CrosshairWidget->GetRenderOpacity(),
 	                                                             1, DeltaTime,
 	                                                             GetDefault<UGameSettings>()->ColorChangeSpeed));
-	m_CrosshairWidget->SetRenderScale(FVector2D(FMath::FInterpTo(m_CrosshairWidget->RenderTransform.Scale.X,
+	m_CrosshairWidget->SetRenderScale(FVector2D(FMath::FInterpTo(m_CrosshairWidget->GetRenderTransform().Scale.X,
 	                                                             m_targetToFollow->GetActorScale().X * 4.8f,
 	                                                             DeltaTime,
 	                                                             GetDefault<UGameSettings>()->ColorChangeSpeed)));

@@ -30,7 +30,7 @@ void UMainMenuScreen::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 	//fade the start screen
 	m_PreScreenOverlay->SetRenderOpacity(FMath::FInterpTo(m_PreScreenOverlay->GetRenderOpacity(),
-	                                                      m_onPreTittleScreen ? 1 : 0, InDeltaTime, 10));
+	                                                      (m_onPreTittleScreen ? 1 : 0), InDeltaTime, 10));
 	m_PreScreenOverlay->SetVisibility(m_PreScreenOverlay->GetRenderOpacity()<0.25f?ESlateVisibility::HitTestInvisible:ESlateVisibility::Visible);
 
 }
