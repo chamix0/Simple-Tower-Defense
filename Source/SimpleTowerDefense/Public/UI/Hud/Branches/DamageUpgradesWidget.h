@@ -38,18 +38,21 @@ public:
 
 	/*actions*/
 	UFUNCTION()
-	void RangeAction();
+	void UpgradeButtonsAction(USimpleButtonWidget* UpgradeButton);
+	
 	UFUNCTION()
-	void ShootsPerSecondAction();
+	void RangeAction(USimpleButtonWidget* UpgradeButton);
 	UFUNCTION()
-	void DamageAction();
+	void ShootsPerSecondAction(USimpleButtonWidget* UpgradeButton);
+	// UFUNCTION()
+	// void DamageAction(USimpleButtonWidget* UpgradeButton);
 	UFUNCTION()
-	void ShootSpeedAction();
+	void ShootSpeedAction(USimpleButtonWidget* UpgradeButton);
 	UFUNCTION()
-	void CriticalChanceAction();
+	void CriticalChanceAction(USimpleButtonWidget* UpgradeButton);
 	UFUNCTION()
-	void CriticalMultiplierAction();
+	void CriticalMultiplierAction(USimpleButtonWidget* UpgradeButton);
 	UFUNCTION()
-	void numTargetsAction();
+	void numTargetsAction(USimpleButtonWidget* UpgradeButton);
 	void ForceUpdateColors();
 };

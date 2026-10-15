@@ -35,7 +35,7 @@ void UQuitToDesktopScreen::NativeTick(const FGeometry& MyGeometry, float InDelta
 }
 
 
-void UQuitToDesktopScreen::CancelButtonAction()
+void UQuitToDesktopScreen::CancelButtonAction(USimpleButtonWidget* button)
 {
 	HandleReturnAction();
 }
@@ -45,7 +45,7 @@ void UQuitToDesktopScreen::HandleReturnAction()
 	Super::HandleReturnAction();
 }
 
-void UQuitToDesktopScreen::QuitToDesktopButtonAction()
+void UQuitToDesktopScreen::QuitToDesktopButtonAction(USimpleButtonWidget* button)
 {
 	GameUtils::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController());
 }

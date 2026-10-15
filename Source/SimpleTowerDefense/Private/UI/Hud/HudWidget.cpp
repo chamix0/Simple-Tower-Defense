@@ -67,7 +67,7 @@ void UHudWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 	//exit hint
 	m_exitInputHint->SetRenderOpacity(FMath::FInterpTo(m_exitInputHint->GetRenderOpacity(),
-	                                                   (m_towerWorldManager->GetPaused()?1:0), InDeltaTime,
+	                                                   (m_towerWorldManager->GetPaused() ? 1 : 0), InDeltaTime,
 	                                                   GetDefault<UGameSettings>()->ColorChangeSpeed));
 }
 
@@ -86,7 +86,7 @@ void UHudWidget::SetPoints(int num)
 	m_pointsCount->SetTextDirectly(FText::FromString("Points: " + FString::FromInt(num)));
 }
 
-void UHudWidget::PauseAction()
+void UHudWidget::PauseAction(USimpleButtonWidget* button)
 {
 	if (m_towerWorldManager->GetTower()->GetGameBaseWidget()->
 	                         IsUpperMostWidget(this))
@@ -100,7 +100,7 @@ void UHudWidget::PauseAction()
 	}
 }
 
-void UHudWidget::GameSpeedAction()
+void UHudWidget::GameSpeedAction(USimpleButtonWidget* button)
 {
 	//update game speed
 	float timeScale = UGameplayStatics::GetGlobalTimeDilation(GetWorld());
@@ -112,7 +112,7 @@ void UHudWidget::GameSpeedAction()
 	m_GameSpeedButton->SetText(FText::FromString("GAME SPEED\n" + FString::SanitizeFloat(timeScale, 2)));
 }
 
-void UHudWidget::ShootingPolicyAction()
+void UHudWidget::ShootingPolicyAction(USimpleButtonWidget* button)
 {
 	int currentShootingPolicy = static_cast<int>(m_towerWorldManager->GetTower()->GetCurrentShootingPolicy());
 	m_towerWorldManager->GetTower()->SetShootingPolicy(
@@ -271,7 +271,7 @@ void UHudWidget::HandleConfirmAction()
 }
 
 
-void UHudWidget::HealthBranchAction()
+void UHudWidget::HealthBranchAction(USimpleButtonWidget* button)
 {
 	m_healthBranch->Show();
 	m_damageBranch->Hide();
@@ -283,7 +283,7 @@ void UHudWidget::HealthBranchAction()
 	ShowLowerBar();
 }
 
-void UHudWidget::DamageBranchAction()
+void UHudWidget::DamageBranchAction(USimpleButtonWidget* button)
 {
 	m_healthBranch->Hide();
 	m_damageBranch->Show();
@@ -294,7 +294,7 @@ void UHudWidget::DamageBranchAction()
 	ShowLowerBar();
 }
 
-void UHudWidget::PointsBranchAction()
+void UHudWidget::PointsBranchAction(USimpleButtonWidget* button)
 {
 	m_healthBranch->Hide();
 	m_damageBranch->Hide();
@@ -305,7 +305,9 @@ void UHudWidget::PointsBranchAction()
 	ShowLowerBar();
 }
 
-void UHudWidget::PushNotification(FString textToDisplay, float time)
+void UHudWidget::PushNotification(FText textToDisplay, float time)
 {
-	m_notificationsWidget->PushText(textToDisplay, time);
+	m_notificationsWidget->PushText(textToDisplay.ToString(), time);
 }
+
+

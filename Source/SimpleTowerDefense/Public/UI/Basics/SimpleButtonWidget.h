@@ -13,7 +13,7 @@
 /**
  * 
  */
-DECLARE_DYNAMIC_DELEGATE(FOnButtonSelected);
+DECLARE_DYNAMIC_DELEGATE_OneParam(FOnButtonSelected,USimpleButtonWidget*,ButtonWidget);
 
 UCLASS()
 class SIMPLETOWERDEFENSE_API USimpleButtonWidget : public UDayNightWidget

@@ -36,7 +36,7 @@ void UEndScreen::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 }
 
 
-void UEndScreen::PlayAgainButtonAction()
+void UEndScreen::PlayAgainButtonAction(USimpleButtonWidget* button)
 {
 	m_towerWorldManger->SetPaused(false);
 	GameUtils::LoadLevel(GetWorld());
@@ -46,7 +46,7 @@ void UEndScreen::HandleReturnAction()
 {
 }
 
-void UEndScreen::QuitToMenuButtonAction()
+void UEndScreen::QuitToMenuButtonAction(USimpleButtonWidget* button)
 {
 	GameUtils::LoadMainMenu(GetWorld());
 }

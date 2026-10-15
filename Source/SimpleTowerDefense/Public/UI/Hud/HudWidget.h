@@ -108,11 +108,11 @@ public:
 	void SetDays(int num);
 	void SetPoints(int num);
 	UFUNCTION(BlueprintCallable)
-	void PauseAction();
+	void PauseAction(USimpleButtonWidget* button);
 	UFUNCTION(BlueprintCallable)
-	void GameSpeedAction();
+	void GameSpeedAction(USimpleButtonWidget* button);
 	UFUNCTION(BlueprintCallable)
-	void ShootingPolicyAction();
+	void ShootingPolicyAction(USimpleButtonWidget* button);
 	/*show and hide bars*/
 	void ShowLowerBar();
 	void HideLowerBar();
@@ -139,11 +139,11 @@ public:
 	void HandleConfirmAction();
 	//branch action
 	UFUNCTION()
-	void HealthBranchAction();
+	void HealthBranchAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void DamageBranchAction();
+	void DamageBranchAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void PointsBranchAction();
+	void PointsBranchAction(USimpleButtonWidget* button);
 	UFUNCTION(BlueprintCallable)
-	void PushNotification(FString textToDisplay, float time);
+	void PushNotification(FText textToDisplay, float time);
 };

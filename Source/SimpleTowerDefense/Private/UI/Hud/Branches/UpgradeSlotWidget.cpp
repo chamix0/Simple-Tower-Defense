@@ -102,14 +102,14 @@ bool UUpgradeSlotWidget::TryUpgrade()
 	//locked
 	if (!m_unlocked)
 	{
-		m_TowerWorldManager->GetTower()->GetHud()->PushNotification("this Upgrade is still locked", 2.f);
+		m_TowerWorldManager->GetTower()->GetHud()->PushNotification(FText::FromString("this Upgrade is still locked"), 2.f);
 		return false;
 	}
 
 	//sold out
 	if (MaxUpgrades > -1 && m_numUpgrades >= MaxUpgrades)
 	{
-		m_TowerWorldManager->GetTower()->GetHud()->PushNotification("Upgrade limit reached...", 2.f);
+		m_TowerWorldManager->GetTower()->GetHud()->PushNotification(FText::FromString("Upgrade limit reached..."), 2.f);
 		return false;
 	}
 

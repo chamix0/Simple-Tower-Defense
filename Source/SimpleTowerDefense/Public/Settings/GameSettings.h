@@ -81,9 +81,9 @@ public:
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
 		meta = (DisplayName = "Shoots per second Upgrade Increment"))
 	float ShootsPerSecondUpgradeIncrement = 0.1f;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-		meta = (DisplayName = "damage Upgrade Increment"))
-	float DamageUpgradeIncrement = 0.5f;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// 	meta = (DisplayName = "damage Upgrade Increment"))
+	// float DamageUpgradeIncrement = 0.5f;
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
 		meta = (DisplayName = "Bullet speed Upgrade Increment"))
 	float BulletsSpeedIncrement = 10.f;

@@ -91,7 +91,7 @@ void UMainMenuScreen::HandlePrevAction()
 	Super::HandlePrevAction();
 }
 
-void UMainMenuScreen::PlayGameButtonAction()
+void UMainMenuScreen::PlayGameButtonAction(USimpleButtonWidget* button)
 {
 	//load level if it exists
 
@@ -129,7 +129,7 @@ void UMainMenuScreen::PlayGameButtonAction()
 // 	OnChangeScreen();
 // }
 
-void UMainMenuScreen::QuitButtonAction()
+void UMainMenuScreen::QuitButtonAction(USimpleButtonWidget* button)
 {
 	if (m_BaseWidget != nullptr)
 	{

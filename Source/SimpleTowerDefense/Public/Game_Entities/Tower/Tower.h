@@ -77,9 +77,17 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	UFUNCTION(BlueprintCallable)
 	UHudWidget* GetHud() const;
+	
+	UFUNCTION(BlueprintCallable)
 	UGameBaseWidget* GetGameBaseWidget() const;
+	
+	UFUNCTION(BlueprintCallable)
 	void SetShootingPolicy(UShootingPolicy policy);
+	
+	UFUNCTION(BlueprintCallable)
 	UShootingPolicy GetCurrentShootingPolicy() const;
 
 private:

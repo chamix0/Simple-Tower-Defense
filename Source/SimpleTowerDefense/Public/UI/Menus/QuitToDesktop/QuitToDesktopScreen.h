@@ -30,8 +30,8 @@ protected:
 private:
 	//button actions
 	UFUNCTION()
-	void CancelButtonAction();
+	void CancelButtonAction(USimpleButtonWidget* button);
 	virtual void HandleReturnAction() override;
 	UFUNCTION()
-	void QuitToDesktopButtonAction();
+	void QuitToDesktopButtonAction(USimpleButtonWidget* button);
 };

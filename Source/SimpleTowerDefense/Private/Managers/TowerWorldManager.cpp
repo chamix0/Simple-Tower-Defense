@@ -49,7 +49,7 @@ void UTowerWorldManager::StartDay()
 	Notify(UTowerEvent::IS_DAY);
 
 	FString aux = "Starting day " + FString::FromInt(m_numDays);
-	m_tower->GetHud()->PushNotification(aux, 2.f);
+	m_tower->GetHud()->PushNotification(FText::FromString(aux), 2.f);
 }
 
 int UTowerWorldManager::GetNumDays()
@@ -210,7 +210,7 @@ bool UTowerWorldManager::RemovePoints(int amount)
 	}
 	else
 	{
-		GetTower()->GetHud()->PushNotification("Not enough points...", 2.f);
+		GetTower()->GetHud()->PushNotification(FText::FromString("Not enough points..."), 2.f);
 	}
 	return canSubtract;
 }

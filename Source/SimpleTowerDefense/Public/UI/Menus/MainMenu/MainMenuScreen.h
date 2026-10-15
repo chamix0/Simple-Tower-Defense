@@ -51,7 +51,7 @@ private:
 
 	//button actions
 	UFUNCTION()
-	void PlayGameButtonAction();
+	void PlayGameButtonAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void QuitButtonAction();
+	void QuitButtonAction(USimpleButtonWidget* button);
 };

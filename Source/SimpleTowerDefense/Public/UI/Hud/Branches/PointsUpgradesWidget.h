@@ -31,12 +31,12 @@ public:
 
 	/*actions*/
 	UFUNCTION()
-	void DailyPointsAction();
+	void DailyPointsAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void KillPointMultiplierAction();
+	void KillPointMultiplierAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void MaxGameSpeedAction();
+	void MaxGameSpeedAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void MaxPointsAction();
+	void MaxPointsAction(USimpleButtonWidget* button);
 	void ForceUpdateColors();
 };

@@ -53,48 +53,48 @@ void UPointsUpgradesWidget::NativeOnInitialized()
 	ActivateWidget();
 }
 
-void UPointsUpgradesWidget::DailyPointsAction()
+void UPointsUpgradesWidget::DailyPointsAction(USimpleButtonWidget* button)
 {
 	bool result = m_DailyPointsUpgrade->TryUpgrade();
 	if (result)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Daily points increased!!!", 2.f);
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Daily points increased!!!"), 2.f);
 		m_towerWorldManger->IncrementDailyPoints(GetDefault<UGameSettings>()->DailyPointsIncrement);
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_DailyPointsUpgrade->UpdateButton();
 }
 
-void UPointsUpgradesWidget::KillPointMultiplierAction()
+void UPointsUpgradesWidget::KillPointMultiplierAction(USimpleButtonWidget* button)
 {
 	bool result = m_KillPointsMultiplierUpgrade->TryUpgrade();
 	if (result)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification("kill point multiplier increased!!!", 2.f);
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("kill point multiplier increased!!!"), 2.f);
 		m_towerWorldManger->IncrementKillPointMultiplier(GetDefault<UGameSettings>()->KillPointsMultiplierIncrement);
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_KillPointsMultiplierUpgrade->UpdateButton();
 }
 
-void UPointsUpgradesWidget::MaxGameSpeedAction()
+void UPointsUpgradesWidget::MaxGameSpeedAction(USimpleButtonWidget* button)
 {
 	bool result = m_MaxGameSpeedUpgrade->TryUpgrade();
 	if (result)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Max game speed increased!!!", 2.f);
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Max game speed increased!!!"), 2.f);
 		m_towerWorldManger->IncrementTimeScale(GetDefault<UGameSettings>()->GameSpeedIncrement);
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_MaxGameSpeedUpgrade->UpdateButton();
 }
 
-void UPointsUpgradesWidget::MaxPointsAction()
+void UPointsUpgradesWidget::MaxPointsAction(USimpleButtonWidget* button)
 {
 	bool result = m_MaxPointsUpgrade->TryUpgrade();
 	if (result)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Max Points increased!!!", 2.f);
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Max Points increased!!!"), 2.f);
 		m_towerWorldManger->IncrementMaxPoints(GetDefault<UGameSettings>()->MaxPointsIncrement);
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}

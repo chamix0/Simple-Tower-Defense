@@ -48,48 +48,48 @@ void UHealthUpgradesWidget::NativeOnInitialized()
 	ActivateWidget();
 }
 
-void UHealthUpgradesWidget::MaxHealthAction()
+void UHealthUpgradesWidget::MaxHealthAction(USimpleButtonWidget* button)
 {
 	bool result = m_MaxHealthUpgrade->TryUpgrade();
 	if (result)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Max health increased!!!", 2.f);
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Max health increased!!!"), 2.f);
 		m_towerWorldManger->IncreaseMaxTowerHealth(1);
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_MaxHealthUpgrade->UpdateButton();
 }
 
-void UHealthUpgradesWidget::LifeRegenAction()
+void UHealthUpgradesWidget::LifeRegenAction(USimpleButtonWidget* button)
 {
 	bool result = m_LifeRegenUpgrade->TryUpgrade();
 	if (result)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Daily regeneration increased!!!", 2.f);
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Daily regeneration increased!!!"), 2.f);
 		m_towerWorldManger->AddRegenPerDay(1);
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_LifeRegenUpgrade->UpdateButton();
 }
 
-void UHealthUpgradesWidget::LifeStealChanceAction()
+void UHealthUpgradesWidget::LifeStealChanceAction(USimpleButtonWidget* button)
 {
 	bool result = m_LifeStealChanceUpgrade->TryUpgrade();
 	if (result)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Life steal chance increased!!!", 2.f);
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Life steal chance increased!!!"), 2.f);
 		m_towerWorldManger->AddLifeStealChance(2);
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}
 	m_LifeStealChanceUpgrade->UpdateButton();
 }
 
-void UHealthUpgradesWidget::LifeStealAmountAction()
+void UHealthUpgradesWidget::LifeStealAmountAction(USimpleButtonWidget* button)
 {
 	bool result = m_LifeStealAmountUpgrade->TryUpgrade();
 	if (result)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification("Life steal amount increased!!!", 2.f);
+		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Life steal amount increased!!!"), 2.f);
 		m_towerWorldManger->AddLifeStealChance(1);
 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
 	}

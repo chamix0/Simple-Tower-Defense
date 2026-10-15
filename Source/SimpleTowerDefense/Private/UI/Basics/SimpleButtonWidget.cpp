@@ -105,7 +105,7 @@ void USimpleButtonWidget::PerformSelectAction()
 	}
 
 	//execute action binded to button
-	bool executed = OnButtonSelected.ExecuteIfBound();
+	bool executed = OnButtonSelected.ExecuteIfBound(this);
 }
 
 void USimpleButtonWidget::UpdateColors()

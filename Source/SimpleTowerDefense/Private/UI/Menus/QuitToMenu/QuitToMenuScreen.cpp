@@ -33,7 +33,7 @@ void UQuitToMenuScreen::NativeTick(const FGeometry& MyGeometry, float InDeltaTim
 }
 
 
-void UQuitToMenuScreen::CancelButtonAction()
+void UQuitToMenuScreen::CancelButtonAction(USimpleButtonWidget* button)
 {
 	HandleReturnAction();
 }
@@ -43,7 +43,7 @@ void UQuitToMenuScreen::HandleReturnAction()
 	Super::HandleReturnAction();
 }
 
-void UQuitToMenuScreen::QuitToMenuButtonAction()
+void UQuitToMenuScreen::QuitToMenuButtonAction(USimpleButtonWidget* button)
 {
 	GameUtils::LoadMainMenu(GetWorld());
 }

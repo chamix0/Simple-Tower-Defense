@@ -26,7 +26,6 @@ private:
 	bool m_isDay = true;
 	int m_numDays = 0;
 	int m_points = 0;
-	
 
 
 	UPROPERTY()
@@ -74,70 +73,111 @@ private:
 	int m_maxPoints = 1000;
 
 public:
+	UFUNCTION(BlueprintCallable)
 	bool GetIsDay() const;
+	UFUNCTION(BlueprintCallable)
 	void StartNight();
+	UFUNCTION(BlueprintCallable)
 	void StartDay();
+	UFUNCTION(BlueprintCallable)
 	int GetNumDays();
+	UFUNCTION(BlueprintCallable)
 	void AddDay();
+	UFUNCTION(BlueprintCallable)
 	void BroadCastNotification(UTowerEvent towerEvent);
+	UFUNCTION()
 	FEnemyPool& GetEnemyPool();
+	UFUNCTION()
 	FBulletPool& GetBulletPool();
 
 	//range
+	UFUNCTION(BlueprintCallable)
 	float GetTowerRange() const;
+	UFUNCTION(BlueprintCallable)
 	void IncreaseTowerRange(float amount);
 
 	//damage
+	UFUNCTION(BlueprintCallable)
 	float GetDamage() const;
+	UFUNCTION(BlueprintCallable)
 	void IncreaseDamage(float amount);
 
 	//bullets speed
+	UFUNCTION(BlueprintCallable)
 	float GetBulletsSpeed() const;
+	UFUNCTION(BlueprintCallable)
 	void IncreaseBulletsSpeed(float value);
 
 	//shoots per second
+	UFUNCTION(BlueprintCallable)
 	float GetShootsPerSecond() const;
+	UFUNCTION(BlueprintCallable)
 	void IncreaseShootsPerSecond(float value);
 
 	//critical damage
+	UFUNCTION(BlueprintCallable)
 	int GetCriticalChance() const;
+	UFUNCTION(BlueprintCallable)
 	void IncreaseCriticalChance(int value);
+	UFUNCTION(BlueprintCallable)
 	float GetCriticalMultiplier() const;
+	UFUNCTION(BlueprintCallable)
 	void IncreaseCriticalMultiplier(float value);
 
 	//time scale
+	UFUNCTION(BlueprintCallable)
 	float GetMaxTimeScale() const;
+	UFUNCTION(BlueprintCallable)
 	void IncrementTimeScale(float amount);
 
 	//kill point multiplier
+	UFUNCTION(BlueprintCallable)
 	float GetKillPointMultiplier() const;
+	UFUNCTION(BlueprintCallable)
 	void IncrementKillPointMultiplier(float amount);
 
 	//daily points
+	UFUNCTION(BlueprintCallable)
 	int GetDailyPoints() const;
+	UFUNCTION(BlueprintCallable)
 	void IncrementDailyPoints(int amount);
 
 	//max Points
+	UFUNCTION(BlueprintCallable)
 	void IncrementMaxPoints(int amount);
 
-
+	UFUNCTION(BlueprintCallable)
 	int GetMaxTowerHealth() const;
+	UFUNCTION(BlueprintCallable)
 	void IncreaseMaxTowerHealth(int amount);
+	UFUNCTION(BlueprintCallable)
 	void SetTower(ATower* tower);
+	UFUNCTION(BlueprintCallable)
 	int GetPoints() const;
+	UFUNCTION(BlueprintCallable)
 	void AddPoints(int amount);
+	UFUNCTION(BlueprintCallable)
 	bool RemovePoints(int amount);
+	UFUNCTION(BlueprintCallable)
 	ATower* GetTower() const;
+	UFUNCTION(BlueprintCallable)
 	bool GetPaused() const;
+	UFUNCTION(BlueprintCallable)
 	void SetPaused(bool value);
+	UFUNCTION(BlueprintCallable)
 	int GetRegenPerDay() const;
+	UFUNCTION(BlueprintCallable)
 	void AddRegenPerDay(int amount);
+	UFUNCTION(BlueprintCallable)
 	int GetLifeStealChance() const;
+	UFUNCTION(BlueprintCallable)
 	int GetLifeStealAmount() const;
+	UFUNCTION(BlueprintCallable)
 	void AddLifeStealChance(int value);
+	UFUNCTION(BlueprintCallable)
 	void AddLifeStealAmount(int value);
 	//time manager
+	UFUNCTION(BlueprintCallable)
 	ATimeManager* GetTimeManager() const;
-	void SetTimeManager(ATimeManager* timeManager) ;
-
+	void SetTimeManager(ATimeManager* timeManager);
 };

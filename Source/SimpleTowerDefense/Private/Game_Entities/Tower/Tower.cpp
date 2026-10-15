@@ -148,8 +148,8 @@ void ATower::update(const UTowerEvent event)
 		//show notification
 		if (m_towerWorldManager->GetRegenPerDay() > 0)
 		{
-			GetHud()->PushNotification(
-				"Regained " + FString::FromInt(m_towerWorldManager->GetRegenPerDay()) + " Health points", 2.f);
+			GetHud()->PushNotification(FText::FromString(
+				"Regained " + FString::FromInt(m_towerWorldManager->GetRegenPerDay()) + " Health points"), 2.f);
 		}
 		//add points
 		m_towerWorldManager->AddPoints(m_towerWorldManager->GetDailyPoints());

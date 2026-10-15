@@ -204,7 +204,7 @@ void ASimpleEnemy::OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 		m_isCriticalDamage = false;
 		if (rand < m_towerWorldManager->GetCriticalChance())
 		{
-			m_towerWorldManager->GetTower()->GetHud()->PushNotification("Critical HIT", 0.5f);
+			m_towerWorldManager->GetTower()->GetHud()->PushNotification( FText::FromString( "Critical HIT"), 0.5f);
 			criticalDamage += m_towerWorldManager->GetDamage() * m_towerWorldManager->GetCriticalMultiplier();
 			m_isCriticalDamage = true;
 		}
@@ -238,8 +238,8 @@ void ASimpleEnemy::RemoveHealth(int amount)
 		if (randomNum <= m_towerWorldManager->GetLifeStealChance())
 		{
 			int quantity = FMath::Min(m_MaxHealth, m_towerWorldManager->GetLifeStealAmount());
-			m_towerWorldManager->GetTower()->GetHud()->PushNotification(
-				"Stole " + FString::FromInt(quantity) + " Health points from enemy's life", 0.5f);
+			m_towerWorldManager->GetTower()->GetHud()->PushNotification(FText::FromString(
+				"Stole " + FString::FromInt(quantity) + " Health points from enemy's life"), 0.5f);
 			m_towerWorldManager->GetTower()->AddHealth(quantity);
 		}
 	}

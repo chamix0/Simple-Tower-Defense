@@ -35,12 +35,12 @@ public:
 
 	/*actions*/
 	UFUNCTION()
-	void MaxHealthAction();
+	void MaxHealthAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void LifeRegenAction();
+	void LifeRegenAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void LifeStealChanceAction();
+	void LifeStealChanceAction(USimpleButtonWidget* button);
 	UFUNCTION()
-	void LifeStealAmountAction();
+	void LifeStealAmountAction(USimpleButtonWidget* button);
 	void ForceUpdateColors();
 };

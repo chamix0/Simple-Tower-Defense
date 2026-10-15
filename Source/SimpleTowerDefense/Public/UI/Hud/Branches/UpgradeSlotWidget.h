@@ -6,6 +6,7 @@
 #include "UI/Basics/SimpleButtonWidget.h"
 #include "UpgradeSlotWidget.generated.h"
 
+class UUpgradeData;
 /**
  * 
  */
@@ -14,16 +15,23 @@ class SIMPLETOWERDEFENSE_API UUpgradeSlotWidget : public USimpleButtonWidget
 {
 	GENERATED_BODY()
 
+public:
 	//parameters
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UUpgradeData> UpgradeData;
+
+private:
 	UPROPERTY(EditAnywhere)
 	int baseCost = 0;
 	UPROPERTY(EditAnywhere)
 	int CostIncrement = 0;
 	UPROPERTY(EditAnywhere)
 	int unlockDay = 1;
+
 	/*-1 means no limit other, is the limit*/
 	UPROPERTY(EditAnywhere)
 	int MaxUpgrades = -1;
+
 	UPROPERTY(meta=(BindWidget))
 	USimpleTextWidget* m_priceText = nullptr;
 

@@ -32,10 +32,10 @@ protected:
 private:
 	//button actions
 	UFUNCTION()
-	void CancelButtonAction();
+	void CancelButtonAction(USimpleButtonWidget* button);
 	virtual void HandleReturnAction() override;
 	UFUNCTION()
-	void QuitToMenuButtonAction();
+	void QuitToMenuButtonAction(USimpleButtonWidget* button);
 	// UFUNCTION()
 	// void OnInputMethodChanged(bool usingGamepad);
 };
