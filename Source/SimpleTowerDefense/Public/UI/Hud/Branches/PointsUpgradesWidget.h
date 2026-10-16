@@ -31,12 +31,7 @@ public:
 
 	/*actions*/
 	UFUNCTION()
-	void DailyPointsAction(USimpleButtonWidget* button);
-	UFUNCTION()
-	void KillPointMultiplierAction(USimpleButtonWidget* button);
-	UFUNCTION()
-	void MaxGameSpeedAction(USimpleButtonWidget* button);
-	UFUNCTION()
-	void MaxPointsAction(USimpleButtonWidget* button);
+	void UpgradeButtonsAction(USimpleButtonWidget* UpgradeButton);
+	
 	void ForceUpdateColors();
 };

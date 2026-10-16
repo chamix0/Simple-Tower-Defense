@@ -40,19 +40,19 @@ public:
 	UFUNCTION()
 	void UpgradeButtonsAction(USimpleButtonWidget* UpgradeButton);
 	
-	UFUNCTION()
-	void RangeAction(USimpleButtonWidget* UpgradeButton);
-	UFUNCTION()
-	void ShootsPerSecondAction(USimpleButtonWidget* UpgradeButton);
+	// UFUNCTION()
+	// void RangeAction(USimpleButtonWidget* UpgradeButton);
+	// UFUNCTION()
+	// void ShootsPerSecondAction(USimpleButtonWidget* UpgradeButton);
 	// UFUNCTION()
 	// void DamageAction(USimpleButtonWidget* UpgradeButton);
-	UFUNCTION()
-	void ShootSpeedAction(USimpleButtonWidget* UpgradeButton);
-	UFUNCTION()
-	void CriticalChanceAction(USimpleButtonWidget* UpgradeButton);
-	UFUNCTION()
-	void CriticalMultiplierAction(USimpleButtonWidget* UpgradeButton);
-	UFUNCTION()
-	void numTargetsAction(USimpleButtonWidget* UpgradeButton);
+	// UFUNCTION()
+	// void ShootSpeedAction(USimpleButtonWidget* UpgradeButton);
+	// UFUNCTION()
+	// void CriticalChanceAction(USimpleButtonWidget* UpgradeButton);
+	// UFUNCTION()
+	// void CriticalMultiplierAction(USimpleButtonWidget* UpgradeButton);
+	// UFUNCTION()
+	// void numTargetsAction(USimpleButtonWidget* UpgradeButton);
 	void ForceUpdateColors();
 };

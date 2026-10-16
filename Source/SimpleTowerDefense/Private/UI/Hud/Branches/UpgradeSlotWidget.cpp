@@ -5,6 +5,7 @@
 
 #include "Game_Entities/Tower/Tower.h"
 #include "UI/Hud/HudWidget.h"
+#include "UI/Hud/Branches/UpgradeData.h"
 
 
 void UUpgradeSlotWidget::update(const UTowerEvent event)
@@ -13,7 +14,7 @@ void UUpgradeSlotWidget::update(const UTowerEvent event)
 
 	if (event == UTowerEvent::IS_DAY)
 	{
-		m_unlocked = m_TowerWorldManager->GetNumDays() >= unlockDay;
+		m_unlocked = m_TowerWorldManager->GetNumDays() >= UpgradeData.GetDefaultObject()->unlockDay;
 		UpdateButton();
 	}
 	else
@@ -31,6 +32,13 @@ void UUpgradeSlotWidget::NativeOnInitialized()
 	m_priceText->SetNightColor(m_dayColor);
 	m_progressText->SetDayColor(m_nightColor);
 	m_progressText->SetNightColor(m_dayColor);
+
+	//set name
+	UUpgradeData* upgradeDataObj = UpgradeData.GetDefaultObject();
+
+	//set text
+	SetText(upgradeDataObj->UpgradeName);
+	
 }
 
 void UUpgradeSlotWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -59,16 +67,20 @@ bool UUpgradeSlotWidget::GetIsUnlocked() const
 
 void UUpgradeSlotWidget::UpdateButton()
 {
-	int prize = baseCost + CostIncrement * m_numUpgrades;
+	UUpgradeData* upgradeDataObj = UpgradeData.GetDefaultObject();
+
+
+
+	int prize = upgradeDataObj->baseCost + upgradeDataObj->CostIncrement * m_numUpgrades;
 	bool highlighted = m_highlighted || m_mouseHighlight;
 	/*progress text*/
 	// possible cases
-	bool soldOut = m_numUpgrades >= MaxUpgrades;
+	bool soldOut = m_numUpgrades >= UpgradeData.GetDefaultObject()->MaxUpgrades;
 	bool notEnoughPoints = m_TowerWorldManager->GetPoints() < prize;
 
 	if (m_unlocked)
 	{
-		if (MaxUpgrades > -1 && soldOut)
+		if (upgradeDataObj->MaxUpgrades > -1 && soldOut)
 		{
 			m_priceText->SetTextDirectly(FText::FromString("MAX UPGRADES"), highlighted);
 		}
@@ -84,30 +96,34 @@ void UUpgradeSlotWidget::UpdateButton()
 	}
 	else
 	{
-		m_priceText->SetTextDirectly(FText::FromString("Unlocks on day " + FString::FromInt(unlockDay)), highlighted);
+		m_priceText->SetTextDirectly(FText::FromString("Unlocks on day " + FString::FromInt(upgradeDataObj->unlockDay)),
+		                             highlighted);
 	}
 
 	/*PROGRESS TEXT*/
-	FString cad = MaxUpgrades == -1
+	FString cad = upgradeDataObj->MaxUpgrades == -1
 		              ? "-  " + FString::FromInt(m_numUpgrades) + "  -"
-		              : FString::FromInt(m_numUpgrades) + "/" + FString::FromInt(MaxUpgrades);
+		              : FString::FromInt(m_numUpgrades) + "/" + FString::FromInt(upgradeDataObj->MaxUpgrades);
 
 	m_progressText->SetTextDirectly(FText::FromString(cad), highlighted);
 }
 
 bool UUpgradeSlotWidget::TryUpgrade()
 {
-	int prize = baseCost + CostIncrement * m_numUpgrades;
+	UUpgradeData* upgradeDataObj = UpgradeData.GetDefaultObject();
+
+	int prize = upgradeDataObj->baseCost + upgradeDataObj->CostIncrement * m_numUpgrades;
 
 	//locked
 	if (!m_unlocked)
 	{
-		m_TowerWorldManager->GetTower()->GetHud()->PushNotification(FText::FromString("this Upgrade is still locked"), 2.f);
+		m_TowerWorldManager->GetTower()->GetHud()->PushNotification(FText::FromString("this Upgrade is still locked"),
+		                                                            2.f);
 		return false;
 	}
 
 	//sold out
-	if (MaxUpgrades > -1 && m_numUpgrades >= MaxUpgrades)
+	if (upgradeDataObj->MaxUpgrades > -1 && m_numUpgrades >= upgradeDataObj->MaxUpgrades)
 	{
 		m_TowerWorldManager->GetTower()->GetHud()->PushNotification(FText::FromString("Upgrade limit reached..."), 2.f);
 		return false;
@@ -121,5 +137,3 @@ bool UUpgradeSlotWidget::TryUpgrade()
 
 	return result;
 }
-
-

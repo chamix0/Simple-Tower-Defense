@@ -108,13 +108,22 @@ private:
 	bool IsTargetPicked(ASimpleEnemy* target,ACrosshairActor* currentCroshair);
 
 public:
+	UFUNCTION(BlueprintCallable)
 	ASimpleEnemy* SelectEnemyTarget(ACrosshairActor* currentCroshair);
+	UFUNCTION(BlueprintCallable)
 	void ShootBullet(FVector target);
+	UFUNCTION(BlueprintCallable)
 	bool GetInRange(FVector target);
+	UFUNCTION(BlueprintCallable)
 	void TakeDamage(float amount);
+	UFUNCTION(BlueprintCallable)
 	void SetHealth(float value);
+	UFUNCTION(BlueprintCallable)
 	void AddHealth(float value);
+	UFUNCTION(BlueprintCallable)
 	void AddCrossHair();
+	UFUNCTION(BlueprintCallable)
 	float GetHealth()const;
+	UFUNCTION(BlueprintCallable)
 	int GetNumTargets() const;
 };

@@ -6,6 +6,7 @@
 #include "Game_Entities/Tower/Tower.h"
 #include "Settings/GameSettings.h"
 #include "UI/Hud/HudWidget.h"
+#include "UI/Hud/Branches/UpgradeData.h"
 
 void UPointsUpgradesWidget::Hide()
 {
@@ -32,74 +33,92 @@ void UPointsUpgradesWidget::NativeOnInitialized()
 
 	//add actions
 
-	m_DailyPointsUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::DailyPointsAction);
-	m_KillPointsMultiplierUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::KillPointMultiplierAction);
-	m_MaxPointsUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::MaxPointsAction);
-	m_MaxGameSpeedUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::MaxGameSpeedAction);
+	m_DailyPointsUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::UpgradeButtonsAction);
+	m_KillPointsMultiplierUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::UpgradeButtonsAction);
+	m_MaxPointsUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::UpgradeButtonsAction);
+	m_MaxGameSpeedUpgrade->OnButtonSelected.BindDynamic(this, &ThisClass::UpgradeButtonsAction);
 	
 	//initialize button
-	m_DailyPointsUpgrade->SetText(FText::FromString("Daily points"));
 	m_DailyPointsUpgrade->UpdateButton();
-
-	m_KillPointsMultiplierUpgrade->SetText(FText::FromString("Kill points multiplier"));
 	m_KillPointsMultiplierUpgrade->UpdateButton();
-
-	m_MaxPointsUpgrade->SetText(FText::FromString("Max points"));
 	m_MaxPointsUpgrade->UpdateButton();
-
-	m_MaxGameSpeedUpgrade->SetText(FText::FromString("Max Game speed"));
 	m_MaxGameSpeedUpgrade->UpdateButton();
 
 	ActivateWidget();
 }
-
-void UPointsUpgradesWidget::DailyPointsAction(USimpleButtonWidget* button)
+void UPointsUpgradesWidget::UpgradeButtonsAction(USimpleButtonWidget* UpgradeButton)
 {
-	bool result = m_DailyPointsUpgrade->TryUpgrade();
-	if (result)
+	UUpgradeSlotWidget* UpgradeSlot= Cast<UUpgradeSlotWidget>(UpgradeButton);
+	
+	//check it is an upgrade button
+	if (!UpgradeSlot)
 	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Daily points increased!!!"), 2.f);
-		m_towerWorldManger->IncrementDailyPoints(GetDefault<UGameSettings>()->DailyPointsIncrement);
-		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
+		return;
 	}
-	m_DailyPointsUpgrade->UpdateButton();
-}
+	
+	bool result = UpgradeSlot->TryUpgrade();
+	
+	if (!result)
+	{
+		return;
+	}
 
-void UPointsUpgradesWidget::KillPointMultiplierAction(USimpleButtonWidget* button)
-{
-	bool result = m_KillPointsMultiplierUpgrade->TryUpgrade();
-	if (result)
-	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("kill point multiplier increased!!!"), 2.f);
-		m_towerWorldManger->IncrementKillPointMultiplier(GetDefault<UGameSettings>()->KillPointsMultiplierIncrement);
-		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
-	}
-	m_KillPointsMultiplierUpgrade->UpdateButton();
+	//apply upgrade
+	UpgradeSlot->UpgradeData.GetDefaultObject()->ApplyUpgrade(m_towerWorldManger);
+	
+	//notify stats changed
+	m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
+	
+	//update button
+	UpgradeSlot->UpdateButton();
 }
-
-void UPointsUpgradesWidget::MaxGameSpeedAction(USimpleButtonWidget* button)
-{
-	bool result = m_MaxGameSpeedUpgrade->TryUpgrade();
-	if (result)
-	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Max game speed increased!!!"), 2.f);
-		m_towerWorldManger->IncrementTimeScale(GetDefault<UGameSettings>()->GameSpeedIncrement);
-		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
-	}
-	m_MaxGameSpeedUpgrade->UpdateButton();
-}
-
-void UPointsUpgradesWidget::MaxPointsAction(USimpleButtonWidget* button)
-{
-	bool result = m_MaxPointsUpgrade->TryUpgrade();
-	if (result)
-	{
-		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Max Points increased!!!"), 2.f);
-		m_towerWorldManger->IncrementMaxPoints(GetDefault<UGameSettings>()->MaxPointsIncrement);
-		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
-	}
-	m_MaxPointsUpgrade->UpdateButton();
-}
+// void UPointsUpgradesWidget::DailyPointsAction(USimpleButtonWidget* button)
+// {
+// 	bool result = m_DailyPointsUpgrade->TryUpgrade();
+// 	if (result)
+// 	{
+// 		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Daily points increased!!!"), 2.f);
+// 		m_towerWorldManger->IncrementDailyPoints(GetDefault<UGameSettings>()->DailyPointsIncrement);
+// 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
+// 	}
+// 	m_DailyPointsUpgrade->UpdateButton();
+// }
+//
+// void UPointsUpgradesWidget::KillPointMultiplierAction(USimpleButtonWidget* button)
+// {
+// 	bool result = m_KillPointsMultiplierUpgrade->TryUpgrade();
+// 	if (result)
+// 	{
+// 		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("kill point multiplier increased!!!"), 2.f);
+// 		m_towerWorldManger->IncrementKillPointMultiplier(GetDefault<UGameSettings>()->KillPointsMultiplierIncrement);
+// 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
+// 	}
+// 	m_KillPointsMultiplierUpgrade->UpdateButton();
+// }
+//
+// void UPointsUpgradesWidget::MaxGameSpeedAction(USimpleButtonWidget* button)
+// {
+// 	bool result = m_MaxGameSpeedUpgrade->TryUpgrade();
+// 	if (result)
+// 	{
+// 		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Max game speed increased!!!"), 2.f);
+// 		m_towerWorldManger->IncrementTimeScale(GetDefault<UGameSettings>()->GameSpeedIncrement);
+// 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
+// 	}
+// 	m_MaxGameSpeedUpgrade->UpdateButton();
+// }
+//
+// void UPointsUpgradesWidget::MaxPointsAction(USimpleButtonWidget* button)
+// {
+// 	bool result = m_MaxPointsUpgrade->TryUpgrade();
+// 	if (result)
+// 	{
+// 		m_towerWorldManger->GetTower()->GetHud()->PushNotification(FText::FromString("Max Points increased!!!"), 2.f);
+// 		m_towerWorldManger->IncrementMaxPoints(GetDefault<UGameSettings>()->MaxPointsIncrement);
+// 		m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
+// 	}
+// 	m_MaxPointsUpgrade->UpdateButton();
+// }
 
 void UPointsUpgradesWidget::ForceUpdateColors()
 {

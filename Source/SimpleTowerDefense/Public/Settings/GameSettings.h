@@ -75,33 +75,33 @@ public:
 
 
 	//upgrades
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-		meta = (DisplayName = "Tower Range Upgrade Increment"))
-	float TowerRangeUpgradeIncrement = 25.f;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-		meta = (DisplayName = "Shoots per second Upgrade Increment"))
-	float ShootsPerSecondUpgradeIncrement = 0.1f;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// 	meta = (DisplayName = "Tower Range Upgrade Increment"))
+	// float TowerRangeUpgradeIncrement = 25.f;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// 	meta = (DisplayName = "Shoots per second Upgrade Increment"))
+	// float ShootsPerSecondUpgradeIncrement = 0.1f;
 	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
 	// 	meta = (DisplayName = "damage Upgrade Increment"))
 	// float DamageUpgradeIncrement = 0.5f;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-		meta = (DisplayName = "Bullet speed Upgrade Increment"))
-	float BulletsSpeedIncrement = 10.f;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-		meta = (DisplayName = "Critical chance Upgrade Increment"))
-	int CriticalChanceIncrement = 1;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-		meta = (DisplayName = "critical multiplier Upgrade Increment"))
-	float CriticalMultiplierIncrement = 0.1f;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-		meta = (DisplayName = "daily points increment"))
-	int DailyPointsIncrement = 5;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-		meta = (DisplayName = "kill points multiplier increment"))
-	float KillPointsMultiplierIncrement = 0.1;
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
-	meta = (DisplayName = "MaxPoints points increment"))
-	int MaxPointsIncrement = 500;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// 	meta = (DisplayName = "Bullet speed Upgrade Increment"))
+	// float BulletsSpeedIncrement = 10.f;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// 	meta = (DisplayName = "Critical chance Upgrade Increment"))
+	// int CriticalChanceIncrement = 1;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// 	meta = (DisplayName = "critical multiplier Upgrade Increment"))
+	// float CriticalMultiplierIncrement = 0.1f;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// 	meta = (DisplayName = "daily points increment"))
+	// int DailyPointsIncrement = 5;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// 	meta = (DisplayName = "kill points multiplier increment"))
+	// float KillPointsMultiplierIncrement = 0.1;
+	// UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Tower",
+	// meta = (DisplayName = "MaxPoints points increment"))
+	// int MaxPointsIncrement = 500;
 
 	UGameSettings();
 };

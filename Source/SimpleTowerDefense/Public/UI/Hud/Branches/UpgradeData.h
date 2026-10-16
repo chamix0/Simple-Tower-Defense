@@ -15,10 +15,17 @@ class SIMPLETOWERDEFENSE_API UUpgradeData : public UObject
 {
 	GENERATED_BODY()
 
+public:
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FText UpgradeName;
+
 	UPROPERTY(EditAnywhere)
 	int baseCost = 0;
+	
 	UPROPERTY(EditAnywhere)
 	int CostIncrement = 0;
+	
 	UPROPERTY(EditAnywhere)
 	int unlockDay = 1;
 
