@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Settings/GameSettings.h"
 #include "UI/GameBaseWidget.h"
+#include "UI/Hud/Branches/UpgradesWidget.h"
 #include "Utils/UiUtils.h"
 
 void UHudWidget::NativeOnInitialized()

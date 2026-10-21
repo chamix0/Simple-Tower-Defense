@@ -6,6 +6,7 @@
 #include "UI/Basics/JustButtonsScreen.h"
 #include "UpgradesWidget.generated.h"
 
+class UUpgradeSlotWidget;
 class UUpgradeData;
 /**
  * 
@@ -19,16 +20,10 @@ class SIMPLETOWERDEFENSE_API UUpgradesWidget : public UJustButtonsScreen
 	TArray<TSubclassOf<UUpgradeData>> UpgradesList;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UUpgradeData> UpgradeButtonWidgetClass;
+	TSubclassOf<UUpgradeSlotWidget> UpgradeButtonWidgetClass;
 
 	UPROPERTY(meta=(BindWidget))
-	UUpgradeSlotWidget* m_DailyPointsUpgrade = nullptr;
-	UPROPERTY(meta=(BindWidget))
-	UUpgradeSlotWidget* m_KillPointsMultiplierUpgrade = nullptr;
-	UPROPERTY(meta=(BindWidget))
-	UUpgradeSlotWidget* m_MaxPointsUpgrade = nullptr;
-	UPROPERTY(meta=(BindWidget))
-	UUpgradeSlotWidget* m_MaxGameSpeedUpgrade = nullptr;
+	UPanelWidget* m_UpgradesPanel;
 
 public:
 	void Hide();
@@ -40,4 +35,7 @@ public:
 	void UpgradeButtonsAction(USimpleButtonWidget* UpgradeButton);
 
 	void ForceUpdateColors();
+
+private:
+	UUpgradeSlotWidget* GetUpgradeSlotWidget(TSubclassOf<UUpgradeData> data);
 };

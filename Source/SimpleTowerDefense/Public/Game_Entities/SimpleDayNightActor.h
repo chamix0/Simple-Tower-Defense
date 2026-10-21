@@ -25,6 +25,7 @@ protected:
 	FLinearColor m_dayColor = FColor::White;
 	UPROPERTY(EditAnywhere)
 	FLinearColor m_nightColor = FColor::Black;
+	
 	FLinearColor m_currentColor;
 	FLinearColor m_currentOppositeColor;
 	FLinearColor m_targetColor;

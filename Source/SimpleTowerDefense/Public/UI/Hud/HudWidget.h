@@ -20,6 +20,7 @@
 #include "UI/Menus/QuitToMenu/QuitToMenuScreen.h"
 #include "HudWidget.generated.h"
 
+class UUpgradesWidget;
 /**
  * 
  */
@@ -58,11 +59,11 @@ class SIMPLETOWERDEFENSE_API UHudWidget : public UJustButtonsScreen
 
 	//branch widgets
 	UPROPERTY(meta=(BindWidget))
-	UHealthUpgradesWidget* m_healthBranch = nullptr;
+	UUpgradesWidget* m_healthBranch = nullptr;
 	UPROPERTY(meta=(BindWidget))
-	UDamageUpgradesWidget* m_damageBranch = nullptr;
+	UUpgradesWidget* m_damageBranch = nullptr;
 	UPROPERTY(meta=(BindWidget))
-	UPointsUpgradesWidget* m_PointsBranch = nullptr;
+	UUpgradesWidget* m_PointsBranch = nullptr;
 
 	//indicators
 	UPROPERTY(meta=(BindWidget))
@@ -71,6 +72,7 @@ class SIMPLETOWERDEFENSE_API UHudWidget : public UJustButtonsScreen
 	USimpleTextWidget* m_daysCount = nullptr;
 	UPROPERTY(meta=(BindWidget))
 	USimpleTextWidget* m_pointsCount = nullptr;
+	
 	//notifications
 	UPROPERTY(meta=(BindWidget))
 	UHudNotificationsWidget* m_notificationsWidget = nullptr;

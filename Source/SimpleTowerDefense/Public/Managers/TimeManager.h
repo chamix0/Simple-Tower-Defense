@@ -15,7 +15,7 @@ class SIMPLETOWERDEFENSE_API ATimeManager : public AActor
 
 private:
 	UPROPERTY()
-	UTowerWorldManager* m_towerWorldManager=nullptr;
+	UTowerWorldManager* m_towerWorldManager = nullptr;
 	FStopWatch m_dayStopwatch;
 	bool halfDayReached = false;
 
@@ -30,5 +30,5 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	float GetCurrentTime()const;
+	float GetCurrentTime() const;
 };

@@ -14,7 +14,7 @@ void UUpgradeSlotWidget::update(const UTowerEvent event)
 
 	if (event == UTowerEvent::IS_DAY)
 	{
-		m_unlocked = m_TowerWorldManager->GetNumDays() >= UpgradeData.GetDefaultObject()->unlockDay;
+		m_unlocked = m_TowerWorldManager->GetNumDays() >= m_UpgradeData.GetDefaultObject()->unlockDay;
 		UpdateButton();
 	}
 	else
@@ -23,6 +23,25 @@ void UUpgradeSlotWidget::update(const UTowerEvent event)
 		UpdateButton();
 	}
 }
+
+void UUpgradeSlotWidget::SetUpgradeData(TSubclassOf<UUpgradeData> UpgradeData)
+{
+	m_UpgradeData = UpgradeData;
+
+	UpdateUpgradeName();
+}
+
+void UUpgradeSlotWidget::UpdateUpgradeName()
+{
+	//set name
+	if (m_UpgradeData != nullptr)
+	{
+		UUpgradeData* upgradeDataObj = m_UpgradeData.GetDefaultObject();
+		//set text
+		SetText(upgradeDataObj->UpgradeName);
+	}
+}
+
 
 void UUpgradeSlotWidget::NativeOnInitialized()
 {
@@ -34,11 +53,7 @@ void UUpgradeSlotWidget::NativeOnInitialized()
 	m_progressText->SetNightColor(m_dayColor);
 
 	//set name
-	UUpgradeData* upgradeDataObj = UpgradeData.GetDefaultObject();
-
-	//set text
-	SetText(upgradeDataObj->UpgradeName);
-	
+	UpdateUpgradeName();
 }
 
 void UUpgradeSlotWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -67,15 +82,14 @@ bool UUpgradeSlotWidget::GetIsUnlocked() const
 
 void UUpgradeSlotWidget::UpdateButton()
 {
-	UUpgradeData* upgradeDataObj = UpgradeData.GetDefaultObject();
-
+	UUpgradeData* upgradeDataObj = m_UpgradeData.GetDefaultObject();
 
 
 	int prize = upgradeDataObj->baseCost + upgradeDataObj->CostIncrement * m_numUpgrades;
 	bool highlighted = m_highlighted || m_mouseHighlight;
 	/*progress text*/
 	// possible cases
-	bool soldOut = m_numUpgrades >= UpgradeData.GetDefaultObject()->MaxUpgrades;
+	bool soldOut = m_numUpgrades >= m_UpgradeData.GetDefaultObject()->MaxUpgrades;
 	bool notEnoughPoints = m_TowerWorldManager->GetPoints() < prize;
 
 	if (m_unlocked)
@@ -110,7 +124,7 @@ void UUpgradeSlotWidget::UpdateButton()
 
 bool UUpgradeSlotWidget::TryUpgrade()
 {
-	UUpgradeData* upgradeDataObj = UpgradeData.GetDefaultObject();
+	UUpgradeData* upgradeDataObj = m_UpgradeData.GetDefaultObject();
 
 	int prize = upgradeDataObj->baseCost + upgradeDataObj->CostIncrement * m_numUpgrades;
 

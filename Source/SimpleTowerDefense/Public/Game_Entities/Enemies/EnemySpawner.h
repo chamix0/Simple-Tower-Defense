@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "SimpleEnemy.h"
+#include "Data/SpecialDaysEnemies.h"
 #include "Game_Entities/SimpleDayNightActor.h"
 #include "Utils/StopWatch.h"
 #include "EnemySpawner.generated.h"
@@ -15,10 +16,13 @@ class SIMPLETOWERDEFENSE_API AEnemySpawner : public ASimpleDayNightActor
 
 
 	FStopWatch m_timer;
-	
-	
+
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ASimpleEnemy> m_enemyTemplate;
+	UPROPERTY(EditAnywhere)
+	USpecialDaysEnemies* m_SpecialEnemies;
+
 	UPROPERTY(EditAnywhere)
 	float m_spawnRadius = 100;
 	UPROPERTY()
@@ -34,6 +38,10 @@ public:
 	virtual void update(const UTowerEvent event) override;
 
 protected:
+	UFUNCTION()
+	void OnDayStarted(int DayNumber);
+	UFUNCTION()
+	void OnHalfDayReached(int DayNumber);
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 

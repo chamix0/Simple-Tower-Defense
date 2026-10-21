@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "SimpleEnemy.h"
 #include "SimpleMenuEnemy.generated.h"
-
+/*This enemy is only for the main menu, is not a real enemy*/
 UCLASS()
 class SIMPLETOWERDEFENSE_API ASimpleMenuEnemy : public ASimpleEnemy
 {

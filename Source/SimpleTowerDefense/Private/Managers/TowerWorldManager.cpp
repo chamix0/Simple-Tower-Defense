@@ -37,6 +37,7 @@ void UTowerWorldManager::StartNight()
 	m_isDay = false;
 	//notify observers that is night
 	Notify(UTowerEvent::IS_NIGHT);
+	NotifyHalfDayReached(m_numDays);
 	FString aux = "Starting night: " + FString::FromInt(m_numDays);
 	MyDebugUtils::Print(aux);
 }
@@ -47,7 +48,7 @@ void UTowerWorldManager::StartDay()
 	AddDay();
 	//notify observers that is day
 	Notify(UTowerEvent::IS_DAY);
-
+	NotifyDayStart(m_numDays);
 	FString aux = "Starting day " + FString::FromInt(m_numDays);
 	m_tower->GetHud()->PushNotification(FText::FromString(aux), 2.f);
 }
@@ -259,6 +260,16 @@ void UTowerWorldManager::AddLifeStealChance(int value)
 void UTowerWorldManager::AddLifeStealAmount(int value)
 {
 	m_lifeStealAmmount += value;
+}
+
+void UTowerWorldManager::NotifyDayStart(int day)
+{
+	DayStartedDelegate.Broadcast(day);
+}
+
+void UTowerWorldManager::NotifyHalfDayReached(int day)
+{
+	HalfDayReachedDelegate.Broadcast(day);
 }
 
 ATimeManager* UTowerWorldManager::GetTimeManager() const

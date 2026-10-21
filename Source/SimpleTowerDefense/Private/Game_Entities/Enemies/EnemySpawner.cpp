@@ -3,6 +3,7 @@
 
 #include "Game_Entities/Enemies/EnemySpawner.h"
 
+#include "../../../../../../../../../../Program Files/Epic Games/UE_5.5/Engine/Plugins/Runtime/USDCore/Source/ThirdParty/USD/include/pxr/base/tf/pxrTslRobinMap/robin_growth_policy.h"
 #include "Managers/TimeManager.h"
 #include "Managers/TowerWorldManager.h"
 #include "Settings/GameSettings.h"
@@ -23,6 +24,10 @@ void AEnemySpawner::BeginPlay()
 
 	//start timer
 	m_timer.Start();
+
+	//bind events
+	m_towerWorldManager->DayStartedDelegate.AddDynamic(this,&ThisClass::OnDayStarted);
+	m_towerWorldManager->HalfDayReachedDelegate.AddDynamic(this,&ThisClass::OnHalfDayReached);
 }
 
 void AEnemySpawner::SpawnEnemy()
@@ -43,9 +48,11 @@ float AEnemySpawner::GetSpawnLimitator() const
 	{
 		return 1;
 	}
+	
 	float currentTime = m_towerWorldManager->GetTimeManager()->GetCurrentTime();
 	float dayLength = GetDefault<UGameSettings>()->DayLength;
-	//a cos curve that starts at 0 peacks at half of day and night and then goes down
+	
+	//a cos curve that starts at 0 peaks at half of day and night and then goes down
 	return (1 - FMath::Cos(currentTime * (4 * PI / dayLength))) / 2;
 }
 
@@ -83,4 +90,14 @@ void AEnemySpawner::update(const UTowerEvent event)
 		//spawn cooldown
 		m_spawnsPerSecond += m_towerWorldManager->GetNumDays() * GetDefault<UGameSettings>()->SpawnsPerSecondIncrement;
 	}
+}
+
+void AEnemySpawner::OnDayStarted(int DayNumber)
+{
+	
+}
+
+void AEnemySpawner::OnHalfDayReached(int DayNumber)
+{
+	
 }

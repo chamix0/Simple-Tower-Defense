@@ -13,6 +13,17 @@ ATimeManager::ATimeManager()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void ATimeManager::NotifyDayStart(int day)
+{
+	
+}
+
+void ATimeManager::NotifyHalfDayReached(int day)
+{
+	
+}
+
+
 // Called when the game starts or when spawned
 void ATimeManager::BeginPlay()
 {
@@ -42,11 +53,14 @@ void ATimeManager::Tick(float DeltaTime)
 	{
 		//start day
 		m_towerWorldManager->StartDay();
+		
 		//reset values
 		halfDayReached = false;
+		
 		//restart timer
 		m_dayStopwatch.ReStart();
 	}
+	
 }
 
 float ATimeManager::GetCurrentTime() const

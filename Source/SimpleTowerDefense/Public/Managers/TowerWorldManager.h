@@ -14,13 +14,25 @@ class ATower;
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDayUpdateDelegate, int, DayNumber);
+
+
 UCLASS()
 class SIMPLETOWERDEFENSE_API UTowerWorldManager : public UWorldSubsystem, public Publisher
 {
 	GENERATED_BODY()
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 	virtual void Deinitialize() override;
-
+	
+public:
+	/*Delegate*/
+	UPROPERTY(editAnywhere,BlueprintReadWrite)
+	FDayUpdateDelegate DayStartedDelegate;
+	
+	UPROPERTY(editAnywhere, BlueprintReadWrite)
+	FDayUpdateDelegate HalfDayReachedDelegate;
+	
 private:
 	bool m_paused = false;
 	bool m_isDay = true;
@@ -37,6 +49,7 @@ private:
 	UPROPERTY()
 	ATimeManager* m_TimeManager = nullptr;
 
+	
 	/* Tower attributes */
 	//health attributes
 	UPROPERTY()
@@ -176,6 +189,8 @@ public:
 	void AddLifeStealChance(int value);
 	UFUNCTION(BlueprintCallable)
 	void AddLifeStealAmount(int value);
+	void NotifyDayStart(int day);
+	void NotifyHalfDayReached(int day);
 	//time manager
 	UFUNCTION(BlueprintCallable)
 	ATimeManager* GetTimeManager() const;

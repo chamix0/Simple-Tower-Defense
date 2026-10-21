@@ -18,20 +18,9 @@ class SIMPLETOWERDEFENSE_API UUpgradeSlotWidget : public USimpleButtonWidget
 public:
 	//parameters
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<UUpgradeData> UpgradeData;
+	TSubclassOf<UUpgradeData> m_UpgradeData;
 
 private:
-	// UPROPERTY(EditAnywhere)
-	// int baseCost = 0;
-	// UPROPERTY(EditAnywhere)
-	// int CostIncrement = 0;
-	// UPROPERTY(EditAnywhere)
-	// int unlockDay = 1;
-	//
-	// /*-1 means no limit other, is the limit*/
-	// UPROPERTY(EditAnywhere)
-	// int MaxUpgrades = -1;
-
 	UPROPERTY(meta=(BindWidget))
 	USimpleTextWidget* m_priceText = nullptr;
 
@@ -44,6 +33,8 @@ private:
 	virtual void update(const UTowerEvent event) override;
 
 public:
+void SetUpgradeData(TSubclassOf<UUpgradeData> UpgradeData);
+	void UpdateUpgradeName();
 	virtual void NativeOnInitialized() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	virtual void SetHighLight(bool highlighted) override;

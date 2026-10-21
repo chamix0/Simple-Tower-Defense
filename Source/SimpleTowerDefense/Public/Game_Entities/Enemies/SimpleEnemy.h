@@ -18,13 +18,17 @@ class SIMPLETOWERDEFENSE_API ASimpleEnemy : public ASimpleDayNightActor
 protected:
 	UPROPERTY()
 	bool m_availible = true;
+	
 private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* m_EnemyMesh = nullptr;
+	
 	UPROPERTY(EditAnywhere)
 	USceneComponent* m_EnemyPivot = nullptr;
+	
 	UPROPERTY(EditDefaultsOnly)
 	UWidgetComponent* m_healthBarComponent = nullptr;
+	
 	UPROPERTY()
 	UHealthBar* m_healthBarWidget = nullptr;
 
@@ -35,9 +39,9 @@ private:
 	UPROPERTY(EditAnywhere)
 	float m_speed = 1;
 
-	bool m_isCriticalDamage = false;
 	float targetSpeed;
 
+	bool m_isCriticalDamage = false;
 	UPROPERTY(EditAnywhere)
 	UNiagaraSystem* m_ExplosionParticles = nullptr;
 	FStopWatch damageTimer;

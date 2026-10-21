@@ -18,8 +18,10 @@ ASimpleDayNightActor::ASimpleDayNightActor()
 void ASimpleDayNightActor::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	//get tower world manager
 	m_towerWorldManager = GetWorld()->GetSubsystem<UTowerWorldManager>();
+	
 	//subscribe to publisher
 	m_towerWorldManager->Subscribe(this);
 

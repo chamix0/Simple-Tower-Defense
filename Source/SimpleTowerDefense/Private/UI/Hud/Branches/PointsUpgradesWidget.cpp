@@ -64,7 +64,7 @@ void UPointsUpgradesWidget::UpgradeButtonsAction(USimpleButtonWidget* UpgradeBut
 	}
 
 	//apply upgrade
-	UpgradeSlot->UpgradeData.GetDefaultObject()->ApplyUpgrade(m_towerWorldManger);
+	UpgradeSlot->m_UpgradeData.GetDefaultObject()->ApplyUpgrade(m_towerWorldManger);
 	
 	//notify stats changed
 	m_towerWorldManger->Notify(UTowerEvent::STATS_CHANGED);
